@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33"
+                id="FoodItems_task_flow_FoodItems_task_flow_CreateFoodItemPageDef" Package="crud.FoodItems"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="root" RangeSize="25" DataControl="AisleService" id="AisleServiceIterator"/>
+    <accessorIterator MasterBinding="AisleServiceIterator" Binds="aisles" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.Aisle" id="aislesIterator"/>
+    <accessorIterator MasterBinding="aislesIterator" Binds="foodItems" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.FoodItem" id="foodItemsIterator"/>
+  </executables>
+  <bindings>
+    <methodAction IterBinding="foodItemsIterator" id="createFoodItem" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="createFoodItem" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.foodItemsIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33"
+                id="Aisles_task_flow_CreateAislePageDef" Package="crud.Aisles" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="root" RangeSize="25" DataControl="AisleService" id="AisleServiceIterator"/>
+    <accessorIterator MasterBinding="AisleServiceIterator" Binds="aisles" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.Aisle" id="aislesIterator"/>
+  </executables>
+  <bindings>
+    <methodAction IterBinding="aislesIterator" id="createAisle" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="createAisle" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+  </bindings>
+</pageDefinition>

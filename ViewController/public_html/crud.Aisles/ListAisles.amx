@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="Aisles" id="ot1"/>
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton id="cb1" action="recipes" icon="/images/back.png"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+          <amx:commandButton id="cb2" text="Add" action="add">
+                    <amx:setPropertyListener id="spl1" from="#{true}" to="#{pageFlowScope.newMode}"/>
+          </amx:commandButton>
+           <!--<amx:commandButton id="cb3" text="Edit" action="detail">
+                    <amx:setPropertyListener id="spl3" from="#{false}" to="#{pageFlowScope.newMode}"/>
+          </amx:commandButton>-->
+    </amx:facet>
+    <amx:panelStretchLayout id="psl1">
+      <amx:facet name="top"/>
+      <amx:facet name="center">
+        <amx:listView var="row" value="#{bindings.aisles.collectionModel}" 
+        fetchSize="#{bindings.aisles.rangeSize}"
+                      initialScrollRowKeys="#{bindings.aisles.collectionModel.selectedRow}"
+                      selectionListener="#{bindings.aisles.collectionModel.makeCurrent}" 
+                      showMoreStrategy="autoScroll"
+                      bufferStrategy="viewport" id="lv1">
+          <amx:listItem id="li1" action="foodItems"><!-- Loaded from AisleService -->
+            <amx:accessoryLayout id="al1">
+                    <amx:facet name="end">
+                    <amx:commandLink actionListener="#{bindings.Delete.execute}" text="Delete"
+                                         id="cl3" styleClass="amx-outputText.adfmf-listItem-Delete">
+                        <amx:setPropertyListener id="spl4" from="#{row.fgid}" to="#{viewScope.selectedId}"/>
+                        <amx:actionListener id="al3" binding="#{bindings.deleteFromStore.execute}"/>
+                        <amx:actionListener id="al4" binding="#{bindings.reloadFromStore.execute}"/>
+                    </amx:commandLink>
+                    </amx:facet>
+                    <amx:outputText value="#{row.foodGroup}" id="ot3" styleClass="amx-outputText.adfmf-listItem-MainText"/>
+            </amx:accessoryLayout>
+            <!--<amx:setPropertyListener id="spl3" from="#{bindings.aislesIterator.currentRowKeyString}" to="#{pageFlowScope.AisleSelected}"/>-->
+            <amx:setPropertyListener id="spl2" from="#{false}" to="#{pageFlowScope.newMode}"/>
+            <amx:setPropertyListener id="spl5" from="#{row.fgid}" to="#{pageFlowScope.fgid}"/>
+          </amx:listItem>
+        </amx:listView>
+      </amx:facet>      
+    </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>

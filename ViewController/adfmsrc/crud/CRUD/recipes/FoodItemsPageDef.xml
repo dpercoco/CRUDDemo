@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="FoodItemsPageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  <executables>
+    <iterator Binds="root" RangeSize="25" DataControl="AisleService" id="AisleServiceIterator"/>
+    <accessorIterator MasterBinding="AisleServiceIterator" Binds="aisles" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.Aisle" id="aislesIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="aislesIterator" id="aisles">
+      <nodeDefinition DefName="crud.JAVA.Aisle" Name="aisles0">
+        <AttrNames>
+          <Item Value="foodGroup"/>
+          <Item Value="fgid"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="aislesIterator" id="foodGroup">
+      <AttrNames>
+        <Item Value="foodGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="aislesIterator" id="fgid">
+      <AttrNames>
+        <Item Value="fgid"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="aislesIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action IterBinding="aislesIterator" id="setCurrentRowWithKey"
+        RequiresUpdateModel="false" Action="setCurrentRowWithKey" IsViewObjectMethod="true">
+          <NamedData NDName="rowKey" NDValue="#{bindings.aislesIterator.currentRowKeyString}" NDType="java.lang.String">
+      </NamedData>
+    </action>
+    <methodAction IterBinding="aislesIterator" id="deleteFromStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteFromStore" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true">
+      <NamedData NDName="fgid" NDValue="#{bindings.fgid.inputValue}" NDType="java.lang.Integer"/>
+    </methodAction>
+    <methodAction IterBinding="aislesIterator" id="reloadFromStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reloadFromStore" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+  </bindings>
+</pageDefinition>

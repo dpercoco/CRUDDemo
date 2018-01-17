@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="EditIngredients_NEWPageDef"
+                Package="crud.Recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipes" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
+    <accessorIterator MasterBinding="recipesIterator" Binds="ingredients" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="GeneralBean" id="GeneralBeanIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="recipesIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="ingredientsIterator" id="ingredients">
+      <nodeDefinition DefName="crud.JAVA.Ingredient" Name="ingredients0">
+        <AttrNames>
+          <Item Value="foodGroup"/>
+          <Item Value="toString"/>
+          <Item Value="id"/>
+          <Item Value="item"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="ingredientsIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="recipesIterator" id="deleteIngredientFromStore" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="deleteIngredientFromStore" IsViewObjectMethod="false"
+                  DataControl="RecipeService" InstanceName="bindings.recipesIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true">
+       <!--<NamedData NDName="id" NDValue="#{pageFlowScope.selectedId}" NDType="java.lang.Integer"/>-->
+    </methodAction>
+    <methodAction IterBinding="recipesIterator" id="reloadIngredients" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reloadIngredients" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <attributeValues IterBinding="ingredientsIterator" id="item">
+      <AttrNames>
+        <Item Value="item"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ingredientsIterator" id="Create" RequiresUpdateModel="true" Action="createRow"/>
+    <methodAction IterBinding="recipesIterator" id="addIngredientToStore" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="addIngredientToStore" IsViewObjectMethod="false"
+                  DataControl="RecipeService" InstanceName="bindings.recipesIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="recipesIterator" id="processIngredients" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="processIngredients" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction id="onIngredientItemChange" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="onIngredientItemChange" IsViewObjectMethod="false" DataControl="GeneralBean"
+                  InstanceName="data.GeneralBean.dataProvider">
+      <NamedData NDName="valueChangeEvent" NDType="oracle.adfmf.amx.event.ValueChangeEvent"/>
+    </methodAction>
+    <attributeValues IterBinding="ingredientsIterator" id="qty">
+      <AttrNames>
+        <Item Value="qty"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="amount">
+      <AttrNames>
+        <Item Value="amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="measurement">
+      <AttrNames>
+        <Item Value="measurement"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="container">
+      <AttrNames>
+        <Item Value="container"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="onIngredientItemChange1" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="onIngredientItemChange" IsViewObjectMethod="false" DataControl="GeneralBean"
+                  InstanceName="data.GeneralBean.dataProvider"/>
+  </bindings>
+</pageDefinition>

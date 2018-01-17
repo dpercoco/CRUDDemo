@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="GoogleSearchPageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="GoogleService" id="GoogleServiceIterator"/>
+    <accessorIterator MasterBinding="GoogleServiceIterator" Binds="googleResults" RangeSize="25"
+                      DataControl="GoogleService" BeanClass="crud.JAVA.Google" id="googleResultsIterator"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="googleResults" RangeSize="25"
+                      DataControl="RecipeService" BeanClass="crud.JAVA.Google" id="googleResultsIterator1"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="googleResultsIterator1" id="googleResults">
+      <nodeDefinition DefName="crud.JAVA.Google" Name="googleResults0">
+        <AttrNames>
+          <Item Value="url"/>
+          <Item Value="checked"/>
+          <Item Value="title"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="RecipeServiceIterator" id="googleCriteria">
+      <AttrNames>
+        <Item Value="googleCriteria"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callGoogle" RequiresUpdateModel="true" Action="invokeMethod" MethodName="callGoogle"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
+    <attributeValues IterBinding="googleResultsIterator" id="url">
+      <AttrNames>
+        <Item Value="url"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="processSelectedGoogleUrl" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="processSelectedGoogleUrl" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="url" NDValue="#{bindings.url}" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="openUrl" RequiresUpdateModel="true" Action="invokeMethod" MethodName="openUrl"
+                  IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="url" NDValue="#{bindings.selectedUrl}" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="RecipeServiceIterator" id="selectedUrl">
+      <AttrNames>
+        <Item Value="selectedUrl"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

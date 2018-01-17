@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
+  <task-flow-definition id="AislesTaskFlow">
+    <default-activity>Aisles</default-activity>
+    <view id="Aisles">
+      <page>/crud.Aisles/ListAisles.amx</page>
+    </view>
+    <task-flow-return id="returnToRecipes">
+      <outcome>
+        <name>returnToRecipes</name>
+      </outcome>
+    </task-flow-return>
+    <task-flow-call id="FoodItems">
+      <task-flow-reference>
+        <document>/crud.FoodItems/FoodItems-task-flow.xml</document>
+        <id>FoodItemsTaskFlow</id>
+      </task-flow-reference>
+    </task-flow-call>
+    <method-call id="CreateAisle">
+      <method>#{bindings.createAisle.execute}</method>
+      <outcome>
+        <fixed-outcome>Create</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="DetailAisle">
+      <page>/crud.Aisles/DetailAisle.amx</page>
+    </view>
+    <control-flow-rule id="__1">
+      <from-activity-id>Aisles</from-activity-id>
+      <control-flow-case id="__2">
+        <from-outcome>recipes</from-outcome>
+        <to-activity-id>returnToRecipes</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__3">
+        <from-outcome>foodItems</from-outcome>
+        <to-activity-id>FoodItems</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__4">
+        <from-outcome>add</from-outcome>
+        <to-activity-id>CreateAisle</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__5">
+        <from-outcome>edit</from-outcome>
+        <to-activity-id>DetailAisle</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__6">
+      <from-activity-id>CreateAisle</from-activity-id>
+      <control-flow-case id="__7">
+        <from-outcome>Create</from-outcome>
+        <to-activity-id>DetailAisle</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <page-flow-scope-behavior>
+      <push-new/>
+    </page-flow-scope-behavior>
+  </task-flow-definition>
+</adfc-mobile-config>

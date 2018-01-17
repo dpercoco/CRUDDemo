@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="DetailFoodItemPageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AisleService" id="AisleServiceIterator"/>
+    <accessorIterator MasterBinding="AisleServiceIterator" Binds="aisles" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.Aisle" id="aislesIterator"/>
+    <accessorIterator MasterBinding="aislesIterator" Binds="foodItems" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.FoodItem" id="foodItemsIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="foodItemsIterator" id="item">
+      <AttrNames>
+        <Item Value="item"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="foodItemsIterator" id="saveToStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="saveToStore" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.foodItemsIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <attributeValues IterBinding="foodItemsIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="aislesIterator" id="reloadFoodItems" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reloadFoodItems" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true"
+                  ReturnName="data.AisleService.methodResults.reloadFoodItems_reloadFoodItems_reloadFoodItems_result"/>
+    <attributeValues IterBinding="aislesIterator" id="foodGroup">
+      <AttrNames>
+        <Item Value="foodGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="aislesIterator" id="aisle_fgid">
+      <AttrNames>
+        <Item Value="fgid"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="foodItemsIterator" id="Create" InstanceName="crud.JAVA.Aisle.foodItems"
+            DataControl="AisleService" RequiresUpdateModel="true" Action="createRow"/>
+    <attributeValues IterBinding="foodItemsIterator" id="fgid">
+      <AttrNames>
+        <Item Value="fgid"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="TestPageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  
+</pageDefinition>

@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Workbook>	
+	<FoodGroup Name="Canned Goods">
+		<Item>Anchovies</Item>
+		<Item>Applesauce</Item>
+		<Item>Apple sauce</Item>
+		<Item>Bean salad</Item>
+		<Item>Baked Beans</Item>
+		<Item>Black Beans</Item>
+		<Item>Fava Beans</Item>
+		<Item>Fancy Green Beans</Item>
+		<Item>Green Beans</Item>
+		<Item>Lima Beans</Item>
+		<Item>Pork beans</Item>
+		<Item>Cream of Chicken</Item>
+		<Item>Cream of Celery</Item>
+		<Item>Soup</Item>
+		<Item>Stew</Item>
+		<Item>Chick peas</Item>
+		<Item>Can chicken</Item>
+		<Item>Chili</Item>
+		<Item>Chocolate sauce</Item>
+		<Item>Can Whole Corn</Item>
+		<Item>Can Creamed Corn</Item>
+		<Item>Escargot</Item>
+		<Item>Snails</Item>
+		<Item>Fruit salad</Item>
+		<Item>Can Peaches</Item>
+		<Item>Can Pears</Item>
+		<Item>Can Pineapple</Item>
+		<Item>Can Peas</Item>
+		<Item>Ravioli</Item>
+		<Item>Can Oysters</Item>
+		<Item>Can Salmon</Item>
+		<Item>Can Sardines</Item>
+		<Item>Spam</Item>
+		<Item>Can Tomatoes</Item>
+		<Item>Can Tuna</Item>
+		<Item>Tuna fish</Item>
+		<Item>Can Turkey</Item>
+		<Item>Cranberry Sauce</Item>
+		<Item>Can Crushed Tomatoes</Item>
+		<Item>Can Whole Tomatoes</Item>
+		<Item>Can artichoke hearts</Item>
+	</FoodGroup>
+	<FoodGroup Name="Dairy">
+		<Item>Butter</Item>
+		<Item>Salted Butter</Item>
+		<Item>American cheese</Item>
+		<Item>Ricottta cheese</Item>
+		<Item>Parmesan</Item>
+		<Item>Mozarella cheese</Item>
+		<Item>Parmesan cheese</Item>
+		<Item>Grated Parmesan cheese</Item>
+		<Item>Provolone cheese</Item>
+		<Item>Gruyere cheese</Item>
+		<Item>Cheese slices</Item>
+		<Item>Cheese spread</Item>
+		<Item>Cheese</Item>
+		<Item>Chip dip</Item>
+		<Item>Cottage cheese</Item>
+		<Item>Cream cheese</Item>
+		<Item>Heavy cream</Item>
+		<Item>EggNog</Item>
+		<Item>Egg substitute</Item>
+		<Item>Eggs</Item>
+		<Item>Egg</Item>
+		<Item>Fruit juice</Item>
+		<Item>Half &amp; half</Item>
+		<Item>Margarine</Item>
+		<Item>Milk</Item>
+		<Item>1% Milk</Item>
+		<Item>2% Milk</Item>
+		<Item>Chocolate Milk</Item>
+		<Item>Goat Milk</Item>
+		<Item>Homo Milk</Item>
+		<Item>Whole Milk</Item>
+		<Item>Skim Milk</Item>
+		<Item>Pate</Item>
+		<Item>Ready bake goods</Item>
+		<Item>Sour cream</Item>
+		<Item>Soy milk</Item>
+		<Item>Tofu</Item>
+		<Item>Whippingc ream</Item>
+		<Item>Yogurt</Item>
+		<Item>Goat cheese</Item>
+		<Item>Pepper jack cheese</Item>
+		<Item>Heavy cream</Item>
+		<Item>Cream</Item>
+	</FoodGroup>
+	<FoodGroup Name="Bread &amp; BakedGoods">
+		<Item>Bagels</Item>
+		<Item>Baguette</Item>
+		<Item>Brownies</Item>
+		<Item>Buns</Item>
+		<Item>Cake</Item>
+		<Item>Cheese bread</Item>
+		<Item>Cinnamon buns</Item>
+		<Item>Fresh Cookies</Item>
+		<Item>Croissants</Item>
+		<Item>Doughnuts</Item>
+		<Item>English muffins</Item>
+		<Item>French bread</Item>
+		<Item>Garlic bread</Item>
+		<Item>Hamburger buns</Item>
+		<Item>Hotdog buns</Item>
+		<Item>Pie</Item>
+		<Item>Bread</Item>
+		<Item>Pita bread</Item>
+		<Item>Pumpernickel</Item>
+		<Item>Raisin bread</Item>
+		<Item>Rye bread</Item>
+		<Item>Sandwich bread</Item>
+		<Item>Sourdough</Item>
+		<Item>Flour Tortillas</Item>
+		<Item>Corn Tortillas</Item>
+		<Item>Flour Burritos</Item>
+		<Item>Whole grain bread</Item>
+		<Item>Corn muffins</Item>
+		<Item>Dinner rolls</Item>
+		<Item>Dough</Item>
+	</FoodGroup>
+	<FoodGroup Name="Vegetables">
+		<Item>Asparagus</Item>
+		<Item>Avocados</Item>
+		<Item>FreshBasil</Item>
+		<Item>Beets</Item>
+		<Item>Broccoli</Item>
+		<Item>Brussels sprouts</Item>
+		<Item>Cabbage</Item>
+		<Item>Carrots</Item>
+		<Item>Cauliflower</Item>
+		<Item>Celery</Item>
+		<Item>Chard</Item>
+		<Item>Chives</Item>
+		<Item>Cilanto</Item>
+		<Item>Collards</Item>
+		<Item>Corn</Item>
+		<Item>Cucumbers</Item>
+		<Item>Eggplant</Item>
+		<Item>Endives</Item>
+		<Item>Garlic Clove</Item>
+		<Item>Garlic</Item>
+		<Item>Bell pepper</Item>
+		<Item>Red peppers</Item>
+		<Item>Green peppers</Item>
+		<Item>Kale</Item>
+		<Item>Kohlrabi</Item>
+		<Item>Iceberg Lettuce</Item>
+		<Item>Romaine Lettuce</Item>
+		<Item>Mushrooms</Item>
+		<Item>Onions</Item>
+		<Item>Shallots</Item>
+		<Item>Red Onions</Item>
+		<Item>Fresh Oregano</Item>
+		<Item>Fresh Parsley</Item>
+		<Item>Parsnips</Item>
+		<Item>Russet Potatoes</Item>
+		<Item>Red Potatoes</Item>
+		<Item>Peas</Item>
+		<Item>Potatoes</Item>
+		<Item>Pumpkin</Item>
+		<Item>Radishes</Item>
+		<Item>Rutabagas</Item>
+		<Item>Spinach</Item>
+		<Item>Sprouts</Item>
+		<Item>Squash</Item>
+		<Item>Tomatoes</Item>
+		<Item>Yams</Item>
+		<Item>Yellow peppers</Item>
+		<Item>Zucchini</Item>
+		<Item>Fresh Rosemary</Item>
+		<Item>Fresh hyme</Item>
+		<Item>Garlic</Item>
+		<Item>Clove Garlic</Item>
+		<Item>Cloves Garlic</Item>
+		<Item>Clove of Garlic</Item>
+		<Item>Cloves of Garlic</Item>
+	</FoodGroup>
+	<FoodGroup Name="Fruits">
+		<Item>Apples</Item>
+		<Item>Apricots</Item>
+		<Item>Bananas</Item>
+		<Item>Blueberries</Item>
+		<Item>Cantaloupe</Item>
+		<Item>Cherries</Item>
+		<Item>Cranberries</Item>
+		<Item>Grapes</Item>
+		<Item>Red Grapes</Item>
+		<Item>White Grapes</Item>
+		<Item>Grapefruit</Item>
+		<Item>Honeydew</Item>
+		<Item>Kiwi</Item>
+		<Item>Kumquats</Item>
+		<Item>Limes</Item>
+		<Item>Lemons</Item>
+		<Item>Mangoes</Item>
+		<Item>Melon</Item>
+		<Item>Nectarines</Item>
+		<Item>Oranges</Item>
+		<Item>Papaya</Item>
+		<Item>Peaches</Item>
+		<Item>Pears</Item>
+		<Item>Pineapple</Item>
+		<Item>Plums</Item>
+		<Item>Rasberries</Item>
+		<Item>Strawberries</Item>
+	</FoodGroup>
+	<FoodGroup Name="Seafood">
+		<Item>Clams</Item>
+		<Item>Cod</Item>
+		<Item>Crab</Item>
+		<Item>Flounder</Item>
+		<Item>Halibut</Item>
+		<Item>Lobster</Item>
+		<Item>Mussels</Item>
+		<Item>Oysters</Item>
+		<Item>Red snapper</Item>
+		<Item>Salmon</Item>
+		<Item>Shrimp</Item>
+		<Item>Tilapia</Item>
+		<Item>Tuna</Item>
+		<Item>Swordfish</Item>
+	</FoodGroup>
+	<FoodGroup Name="Meats &amp; Deli">
+		<Item>Bacon</Item>
+		<Item>CanadianBacon</Item>
+		<Item>Bologna</Item>
+		<Item>Chicken bologna</Item>
+		<Item>Chicken breast</Item>
+		<Item>Chicken legs</Item>
+		<Item>Chicken loaf</Item>
+		<Item>Chicken wings</Item>
+		<Item>Chicken</Item>
+		<Item>Whole Chicken</Item>
+		<Item>Corned beef</Item>
+		<Item>Ground beef</Item>
+		<Item>Ground pork</Item>
+		<Item>Ground chuck</Item>
+		<Item>Ham</Item>
+		<Item>BlackForest Ham</Item>
+		<Item>Smoked Ham</Item>
+		<Item>Honey Ham</Item>
+		<Item>Hamburgers</Item>
+		<Item>Hen</Item>
+		<Item>Hot dog</Item>
+		<Item>Hotdogs</Item>
+		<Item>Liver</Item>
+		<Item>Pizza</Item>
+		<Item>Porkchops</Item>
+		<Item>Pork chops</Item>
+		<Item>Roastbeef</Item>
+		<Item>Salami</Item>
+		<Item>Sausage</Item>
+		<Item>Pepperoni</Item>
+		<Item>Steak</Item>
+		<Item>Turkey</Item>
+		<Item>Turkey breast</Item>
+		<Item>Veggie dogs</Item>
+		<Item>Veggie burgers</Item>
+		<Item>Veal</Item>
+		<Item>Ground Veal</Item>
+	</FoodGroup>
+	<FoodGroup Name="Frozen">
+		<Item>Fresh Pasta</Item>
+		<Item>Frozen Carrots</Item>
+		<Item>Frozen Chicken</Item>
+		<Item>Frozen Fruit</Item>
+		<Item>Frozen Green Beans</Item>
+		<Item>Frozen Burger patties</Item>
+		<Item>Frozen Pie</Item>
+		<Item>Pie Crust</Item>
+		<Item>Pot pie</Item>
+		<Item>Burritos</Item>
+		<Item>Chicken nuggets</Item>
+		<Item>Chicken pot pie</Item>
+		<Item>Frozen Chicken wings</Item>
+		<Item>Corn dogs</Item>
+		<Item>Fish sticks</Item>
+		<Item>French fries</Item>
+		<Item>Frozen Berries</Item>
+		<Item>Frozen Peas</Item>
+		<Item>Frozen Veggie burgers</Item>
+		<Item>Froze Spinach</Item>
+		<Item>Hash browns</Item>
+		<Item>Ice cream</Item>
+		<Item>Juice concentrate</Item>
+		<Item>Mixed vegetables</Item>
+		<Item>Mozzarella sticks</Item>
+		<Item>Onion rings</Item>
+		<Item>Pancakes</Item>
+		<Item>Perogies</Item>
+		<Item>Frozen Pizza</Item>
+		<Item>Pizza snacks</Item>
+		<Item>Popsicles</Item>
+		<Item>Potato nuggets</Item>
+		<Item>Ready bake treats</Item>
+		<Item>Sorbet</Item>
+		<Item>Stirfry</Item>
+		<Item>Taquitos</Item>
+		<Item>Tater tots</Item>
+		<Item>Turkey pot pie</Item>
+		<Item>TV dinners</Item>
+		<Item>Waffles</Item>
+		<Item>Frozen Dough</Item>
+	</FoodGroup>
+	<FoodGroup Name="PackagedGoods">
+		<Item>Broccoli soup</Item>
+		<Item>Beef Bouillon cubes</Item>
+		<Item>Chicken Bouillon cubes</Item>
+		<Item>Chicken noodle soup</Item>
+		<Item>Coffee whitener</Item>
+		<Item>Ground Coffee</Item>
+		<Item>Instant Coffee</Item>
+		<Item>Cookies</Item>
+		<Item>Couscous</Item>
+		<Item>Crackers</Item>
+		<Item>Drink crystals</Item>
+		<Item>Mashed potatoes</Item>
+		<Item>Instant Noodles</Item>
+		<Item>Linguini</Item>
+		<Item>Mac cheese</Item>
+		<Item>Macaroni cheese</Item>
+		<Item>Macaroni</Item>
+		<Item>Onion soup</Item>
+		<Item>Potato soup</Item>
+		<Item>Brown Rice</Item>
+		<Item>Instant Rice</Item>
+		<Item>Long GrainR ice</Item>
+		<Item>Rotini</Item>
+		<Item>White Rice</Item>
+		<Item>Spaghetti</Item>
+		<Item>Tea</Item>
+		<Item>Herbal Tea</Item>
+		<Item>Green Tea</Item>
+		<Item>Black Tea</Item>
+		<Item>Breadcrumbs</Item>
+		<Item>Bread crumbs</Item>
+	</FoodGroup>
+	<FoodGroup Name="Spices">
+		<Item>Allspice</Item>
+		<Item>Basil</Item>
+		<Item>Bay leaf</Item>
+		<Item>Fresh Cilantro</Item>
+		<Item>Cinnamon</Item>
+		<Item>Clove</Item>
+		<Item>Ginger</Item>
+		<Item>Meat tenderizer</Item>
+		<Item>Mint</Item>
+		<Item>Montreal meat spice</Item>
+		<Item>Dry Mustard</Item>
+		<Item>Oregano</Item>
+		<Item>Paprika</Item>
+		<Item>Parsley</Item>
+		<Item>Pepper</Item>
+		<Item>Salt</Item>
+		<Item>Minced onion</Item>
+		<Item>Garlic Powder</Item>
+		<Item>Onion Powder</Item>
+		<Item>Thyme</Item>
+		<Item>Rosemary</Item>
+	</FoodGroup>
+	<FoodGroup Name="Condiments Sauces">
+		<Item>Alfredo sauce</Item>
+		<Item>Chili Sauce</Item>
+		<Item>BBQ sauce</Item>
+		<Item>Chicken Gravy</Item>
+		<Item>Turkey Gravy</Item>
+		<Item>Honey</Item>
+		<Item>Hot sauce</Item>
+		<Item>HP sauce</Item>
+		<Item>Jam</Item>
+		<Item>Jelly</Item>
+		<Item>Ketchup</Item>
+		<Item>Marmalade</Item>
+		<Item>Mayonnaise</Item>
+		<Item>Meat sauce</Item>
+		<Item>Dijon mustard</Item>
+		<Item>Mustard</Item>
+		<Item>Cheese dip</Item>
+		<Item>Nacho dip</Item>
+		<Item>Black olives</Item>
+		<Item>Green olives</Item>
+		<Item>Pasta sauce</Item>
+		<Item>Peanut butter</Item>
+		<Item>Pickles</Item>
+		<Item>Relish</Item>
+		<Item>Salad dressing</Item>
+		<Item>Salsa</Item>
+		<Item>Soy sauce</Item>
+		<Item>Steak sauce</Item>
+		<Item>Sweet sour sauce</Item>
+		<Item>Tartar Sauce</Item>
+		<Item>Tomato paste</Item>
+		<Item>Tomato sauce</Item>
+		<Item>Worcestershire</Item>
+		<Item>White vinegar</Item>
+		<Item>Balsamic vinegar</Item>
+		<Item>Hoisin sauce</Item>
+		<Item>Teriyaki sauce</Item>
+		<Item>Red wine vinegar</Item>
+		<Item>Hot Wings sauce</Item>
+		<Item>Barbeque sauce</Item>
+	</FoodGroup>
+	<FoodGroup Name="Baking Supplies">
+		<Item>Almond extract</Item>
+		<Item>Baking powder</Item>
+		<Item>Baking soda</Item>
+		<Item>Bisquick</Item>
+		<Item>Breadcrumbs</Item>
+		<Item>Brownie mix</Item>
+		<Item>Brown sugar</Item>
+		<Item>Cake mix</Item>
+		<Item>Cocoa powder</Item>
+		<Item>Cornmeal</Item>
+		<Item>Decorations</Item>
+		<Item>White Flour</Item>
+		<Item>Whole Wheat Flour</Item>
+		<Item>Graham crumbles</Item>
+		<Item>Graham crackers</Item>
+		<Item>Icing sugar</Item>
+		<Item>Icing</Item>
+		<Item>Lime juice</Item>
+		<Item>Lemon juice</Item>
+		<Item>Jell-O</Item>
+		<Item>Maple syrup</Item>
+		<Item>Non-stick spray</Item>
+		<Item>Nuts</Item>
+		<Item>Molasses</Item>
+		<Item>Muffin Mix</Item>
+		<Item>Oatmeal</Item>
+		<Item>Corn Oil</Item>
+		<Item>Vegetable Oil</Item>
+		<Item>Olive Oil</Item>
+		<Item>Virgin OliveO il</Item>
+		<Item>Pancake mix</Item>
+		<Item>Walnuts</Item>
+		<Item>Peanuts</Item>
+		<Item>Pectin</Item>
+		<Item>Raisins</Item>
+		<Item>Shortening</Item>
+		<Item>Sprinkles</Item>
+		<Item>Sugar</Item>
+		<Item>Sugar substitute</Item>
+		<Item>Vanilla extract</Item>
+		<Item>Corn Syrup</Item>
+		<Item>Yeast</Item>
+		<Item>Chocolate Chips</Item>
+		<Item>Coconut Flakes</Item>
+		<Item>Pistachios</Item>
+		<Item>Flour</Item>
+		<Item>Cocoa</Item>
+		<Item>Canola oil</Item>
+	</FoodGroup>
+	<FoodGroup Name="Cereals">
+		<Item>Bran</Item>
+		<Item>Corn flakes</Item>
+		<Item>Cream of wheat</Item>
+		<Item>Granola Bars</Item>
+		<Item>Grapenuts</Item>
+		<Item>Honeycomb</Item>
+		<Item>Honeynut ohs</Item>
+		<Item>Kid's cereal</Item>
+		<Item>Life</Item>
+		<Item>Mini wheats</Item>
+		<Item>Muslix</Item>
+		<Item>Oatmeal</Item>
+		<Item>Puffed wheat</Item>
+		<Item>Raisin bran</Item>
+		<Item>Rice crispies</Item>
+		<Item>Shreddies</Item>
+	</FoodGroup>
+	<FoodGroup Name="Beverages">
+		<Item>Orange Juice</Item>
+		<Item>Apple Juice</Item>
+		<Item>Prune Juice</Item>
+		<Item>Pomegranate Juice</Item>
+		<Item>Wine</Item>
+	</FoodGroup>
+</Workbook>

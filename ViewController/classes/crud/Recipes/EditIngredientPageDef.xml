@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="EditIngredientPageDef"
+                Package="crud.Recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipes" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
+    <accessorIterator MasterBinding="recipesIterator" Binds="ingredients" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="ingredientsIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipesIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="item">
+      <AttrNames>
+        <Item Value="item"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="qty">
+      <AttrNames>
+        <Item Value="qty"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="amount">
+      <AttrNames>
+        <Item Value="amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="measurement">
+      <AttrNames>
+        <Item Value="measurement"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="container">
+      <AttrNames>
+        <Item Value="container"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator" id="toString">
+      <AttrNames>
+        <Item Value="toString"/>
+      </AttrNames>
+    </attributeValues>    
+    <attributeValues IterBinding="ingredientsIterator" id="newItem">
+      <AttrNames>
+        <Item Value="newItem"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="ingredientsIterator" id="saveIngredientToStore" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="saveIngredientToStore" IsViewObjectMethod="false"
+                  DataControl="RecipeService" InstanceName="bindings.ingredientsIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="recipesIterator" id="reloadIngredients" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reloadIngredients" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="recipesIterator" id="refreshIngredients" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="refreshIngredients" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+  </bindings>
+</pageDefinition>

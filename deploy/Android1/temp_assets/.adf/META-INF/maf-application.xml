@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfmf:application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adfmf="http://xmlns.oracle.com/adf/mf"
+                   version="1.0" name="CRUDDemo" id="com.oraclecorp.internal.CRUDDemo" appControllerFolder="ApplicationController"
+                   listener-class="crud.application.LifeCycleListenerImpl">
+  <adfmf:featureReference refId="crud.Recipes" id="fr4"/>
+  <adfmf:featureReference refId="crud.About" id="fr3"/>
+  <adfmf:featureReference refId="crud.CRUD" id="fr1"/>
+  <adfmf:featureReference refId="crud.Springboard" id="fr2" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="crud.Aisles" id="fr5"/>
+  <adfmf:featureReference refId="crud.Ingredients" id="fr6" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:navigation>
+    <adfmf:navigationBar enabled="false"/>
+    <adfmf:springboard enabled="true" showSpringboardAtStartup="false" displayGotoSpringboardControl="false"
+                       width="250">
+      <adfmf:springboardFeatureReference refId="crud.Springboard" id="sfr1"/>
+    </adfmf:springboard>
+  </adfmf:navigation>
+  <adfmf:configuration>
+    <adfmf:launchScreen url="maf-launch-screen.html"/>
+  </adfmf:configuration>
+</adfmf:application>

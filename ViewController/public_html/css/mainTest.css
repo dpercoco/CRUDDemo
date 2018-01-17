@@ -1,0 +1,912 @@
+@charset "UTF-8";
+/* Copyright (c) 2005, 2013, Oracle and/or its affiliates. All rights reserved. */
+/* css-mobileFusionFx-1.1/amx-carousel.css */
+
+/*  OVERRIDES **/
+
+.amx-outputText.adfmf-listItem-captionText-New {
+  font-size: 14px;
+  opacity: .76;
+  margin-top: -10px;
+  margin-bottom: -2px;
+  color: #595960;
+  white-space: normal;
+}
+
+/* ------ <amx:listView> ------ */
+
+/* this hack prevents list view dividers from flickerring during scrolling */
+.amx-listView {
+  margin: 0;
+  background-color: #fff;
+  position: relative;
+  -webkit-transform: none;
+  transform: none;
+  display: flex;
+  display: -webkit-box; /* must be after flex for Chrome */
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.amx-panelPage-content > .amx-listView:only-child {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.amx-listView-scrollable-disabled {
+  overflow: hidden !important;
+}
+
+.amx-trident .amx-panelSplitter_navLandscape > .amx-listView,
+.amx-trident .amx-panelSplitter_navPortrait > .amx-listView {
+  height: 100%;
+}
+
+.amx-listView-main {
+  position: relative;
+  height: 100%;
+  -webkit-box-flex: 1;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  display: -webkit-box; /* must be after flex for Chrome */
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+}
+
+.amx-listView-innerList {
+  height: 100%;
+  overflow: auto;
+  -webkit-box-flex: 1;
+  flex: 1;
+}
+
+.amx-listView-group {
+  padding-top: 26px;
+  position: relative;
+  -webkit-transform: none;
+  transform: none;
+}
+
+.amx-listView-group.amx-static {
+  position: static;
+}
+
+.amx-listView-index {
+  position: absolute;
+  top: 0;
+  left: auto;
+  right: 0;
+  bottom: 0;
+  width: 22px;
+  z-index: 100;
+  display: flex;
+  display: -webkit-box; /* must be after flex for Chrome */
+  -webkit-box-orient: vertical;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  border-radius: 0 0 0 / 0 0 730px;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  background-color: rgba(89,89,89,0.2);
+}
+.amx-listView-index .amx-extendedTarget {
+  width: 44px;
+  z-index: -1;
+}
+HTML[dir=ltr] .amx-listView-index .amx-extendedTarget {
+  left: auto;
+}
+HTML[dir=rtl] .amx-listView-index .amx-extendedTarget {
+  right: auto;
+}
+
+HTML[dir=rtl] .amx-listView-index {
+   left: 0;
+   right: auto;
+}
+
+.amx-listView-indexItem {
+  text-align: center;
+  color: rgba(89, 89, 89, 0.5);
+  font-family: "Arial";
+  font-size: 12px;
+  font-weight: bold;
+  height:14px;
+  line-height:14px;
+}
+
+.amx-listView-indexItem-active {
+   color: rgba(89, 89, 89, 1);
+}
+
+HTML[dir=rtl] .amx-listView.amx-listView-has-index .amx-listItem-caret {
+  left: 27px;
+  right: auto;
+}
+
+HTML[dir=ltr] .amx-listView.amx-listView-has-index .amx-listItem-caret {
+  right: 27px;
+  left: auto;
+}
+
+.amx-listView.amx-listView-has-index .amx-listView-dividerCounter {
+  right: 27px;
+}
+
+.amx-listView.adfmf-listView-insetList,
+.amx-listView.amx-listView-insetList {
+  margin: 5px 2px 5px 20px; /** top, right, bottom, left **/
+  border-radius: 10px;
+}
+
+.amx-listView.adfmf-listView-insetList .amx-listItem:first-child,
+.amx-listView.amx-listView-insetList .amx-listItem:first-child {
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+}
+.amx-listView.adfmf-listView-insetList .amx-listItem:last-child,
+.amx-listView.amx-listView-insetList .amx-listItem:last-child {
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+}
+.amx-listView.notSelect * {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.amx-listView.amx-listView-editMode .amx-listItem .amx-listItem-caret {
+  display: none;
+}
+/* --- <facets> ---*/
+.amx-listView-header,
+.amx-listView-footer {
+  background: -webkit-gradient(linear, left top, left bottom, from(#DAE0E4), to(#B1BCC3));
+  background-image: linear-gradient(
+    180deg,
+    #DAE0E4 0%,
+    #B1BCC3 100%);
+}
+.amx-listView-facet-header > .amx-outputText,
+.amx-listView-facet-footer> .amx-outputText {
+  color: #595959;
+  font-size: 14px;
+  font-weight: bold;
+}
+/* --- </facets> --- */
+/* --- <dividers> --- */
+.amx-listView-divider {
+  background-color: #DDDDDD;
+  border-top: 1px solid #BBBBBB;
+  border-bottom: 1px solid #BBBBBB;
+  height: 26px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  z-index:50;
+}
+.amx-listItem,
+.amx-listView-divider {
+  -webkit-transform: translateZ(0);
+}
+.amx-listView-divider.amx-bottom {
+   top: auto;
+   bottom: 0px;
+}
+.amx-listView-divider .amx-listView-dividerText {
+  font-weight: bold;
+  font-size: 14px;
+  color: #595959;
+  position: absolute;
+  margin-left: 40px;
+  top: 5px;
+  font-family: Arial;
+  -webkit-text-transform: uppercase;
+  text-transform: uppercase;
+}
+.amx-listView-divider.amx-listView-nonCollapsibleDivider .amx-listView-dividerText {
+  font-weight: bold;
+  font-size: 14px;
+  color:#595959;
+  position: absolute;
+  margin-left: 9px;
+  top: 5px;
+  -webkit-text-transform: lowercase;
+  text-transform: uppercase;
+}
+.amx-listView-dividerCounter {
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  min-width: 20px;
+  padding: 0 3px;
+  height: 17px;
+  border-radius: 2px;
+  border-style: solid;
+  border-width: 3px 2px 2px 2px;
+  border-color: #999999;
+}
+/* Alta Mobile ADFMF Public Style Class for ListView when you dont want to show the square box around Item Count */
+.adfmf-listView-dividerCounterNoSquare.amx-listView .amx-listView-dividerCounterText {
+  border: none;
+}
+.amx-listView-dividerCounterText {
+  font-weight: bold;
+  font-size: 16px;
+  color: #595959;
+  position: relative;
+  text-align:center;
+  bottom: 0;
+}
+.amx-listView-disclosedIcon {
+  background-image: url(../css/images/amx-android-ltr.png);
+  position: relative;
+  background-repeat: no-repeat;
+  top: 6px;
+  background-size: 299px 180px;
+  height: 16px;
+  width: 16px;
+  background-position: -148px -93px;
+  left: 5px;
+}
+.amx-listView-undisclosedIcon {
+  background-image: url(../css/images/amx-android-ltr.png);
+  background-position: -132px -93px;
+  background-size: 299px 180px;
+  height: 16px;
+  width: 16px;
+  background-repeat: no-repeat;
+  top: 6px;
+  left: 5px;
+  position: relative;
+}
+/* --- </dividers> --- */
+
+.amx-listView-cards .amx-listView-content {
+  padding-right: 3px;
+  padding-bottom: 3px;
+}
+.amx-listView-cards .amx-listView-content.amx-listView-undisclosed {
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+
+.amx-listView-cards .amx-listItem {
+  display: inline-block;
+  vertical-align: top; /* top for removal of excess inline-block gaps */
+  width: 250px;
+  height: auto;
+  box-sizing: border-box;
+  background-image: none;
+  border: 1px solid #E7E7E9;
+  background-color: #FFFFFF;
+  margin-top: 3px;
+  margin-left: 3px;
+  margin-bottom: 0;
+  padding: 5px;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-undisclosed {
+  display: none;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-selected,  
+.amx-listView-cards .amx-listItem:active {
+  border: 1px solid #0572CE;
+  background-color: #FFFFFF;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-selected > .amx-listItem-caret,
+.amx-listView-cards .amx-listItem:active > .amx-listItem-caret {
+  background-position: -51px -1px;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-moreRows {
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 43px;
+  margin: 0;
+  margin-top: -8px;
+  margin-bottom: -1px;
+  padding: 0;
+  border-width: 0;
+}
+/* When not using dividers, we need to undo the -8px margin-top */
+.amx-listView-cards .amx-listView-content.amx-listView-innerList .amx-listItem.amx-listItem-moreRows {
+  margin-top: 0;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-moreRows > .amx-outputText {
+  margin: 0;
+  padding: 3px;
+}
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem,
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem:last-child {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background-color: transparent;
+}
+.amx-listView-cards .amx-listItem.adfmf-listItem-accent1 {
+  background-color: #F5F5F7;
+}
+.amx-listView-cards .amx-listItem.adfmf-listItem-accent2 {
+  background-color: #E2E2E5;
+}
+.amx-listView-cards .amx-listItem.adfmf-listItem-accent3,
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem.adfmf-listItem-accent3 {
+  border-color: transparent;
+}
+.amx-listView-cards .amx-listItem.adfmf-listItem-shadow {
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.15);
+}
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem.adfmf-listItem-accent1,
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem.adfmf-listItem-accent2 {
+  background-color: transparent;
+}
+.amx-listView-cards .amx-listItem.adfmf-listItem-accent3.amx-listItem-selected,
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem.amx-listItem-selected,
+.amx-listView-cards .adfmf-listItem-accent3.amx-listItem:active,
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem:active {
+  border: 1px solid #0572CE;
+}
+.adfmf-panelPage-springboard .amx-listView-cards .amx-listItem.amx-listItem-moreRows {
+  border-width: 0;
+}
+
+/* This requires a relative position so that the caret and drag handles can be positioned inside. */
+.amx-listItem {
+  position: relative;
+  border-bottom: solid 1px #BBBBBB;
+  min-height: 25px;
+}
+.amx-listItem-undisclosed {
+  display: none;
+}
+/* Android requires a larger min-height because of its larger font sizes (or else you can't scroll quadrant layouts) */
+/* [DenisT]  Instead of specifying min-height I have added padding on top/bottom.  Without this the text isn't centered vertically*/
+.amx-android-generic .amx-listItem,
+.amx-android-chrome .amx-listItem {
+  padding-top: 3px;
+  padding-bottom: 5px;
+}
+.amx-listItem.amx-listItem-selected,
+.amx-listItem:active {
+  border-bottom: solid 1px #BBBBBB;
+  background-color: #ADE8FE;
+}
+.amx-listItem.amx-listItem-selected.adfmf-listItem-selected-alternate1,
+.amx-listItem.adfmf-listItem-selected-alternate1:active {
+  border-bottom: solid 1px #BBBBBB;
+  background-color: #C2DDF7;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-selected.adfmf-listItem-selected-alternate1,
+.amx-listView-cards .amx-listItem.adfmf-listItem-selected-alternate1:active {
+  border: 1px solid #BBBBBB;
+}
+.amx-listItem.amx-listItem-selected.adfmf-listItem-selected-alternate2,
+.amx-listItem.adfmf-listItem-selected-alternate2:active {
+  border-bottom: solid 1px #BBBBBB;
+  background-color: #0572CE;
+}
+.amx-listView-cards .amx-listItem.amx-listItem-selected.adfmf-listItem-selected-alternate2,
+.amx-listView-cards .amx-listItem.adfmf-listItem-selected-alternate2:active {
+  border: 1px solid #BBBBBB;
+}
+.amx-listItem .amx-outputText.adfmf-outputText-badge {
+  display: inline-block;
+}
+.amx-listItem.move {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: solid 1px #BBBBBB;
+  box-shadow: 0 11px 10px rgba(0,0,0,.65);
+  opacity: 0.8;
+  display: block;
+  cursor: move;
+}
+
+/* Size adjustments for the presence of the indexer */
+HTML[dir=ltr] .amx-listView-has-index .amx-listView-innerList {
+  padding-right: 22px;
+}
+HTML[dir=rtl] .amx-listView-has-index .amx-listView-innerList {
+  padding-left: 22px;
+}
+HTML[dir=ltr] .amx-listView-has-index .amx-listView-innerList .amx-static .amx-listView-divider {
+  right: 22px;
+}
+HTML[dir=rtl] .amx-listView-has-index .amx-listView-innerList .amx-static .amx-listView-divider {
+  left: 22px;
+}
+
+/* Alta Mobile 1.0 Theme: Android does not have a caret for ListItem 1.0 Theme */
+.amx-listItem-caret {
+  display: none;
+}
+HTML[dir="ltr"] .amx-listItem-caret {
+  background-image: url(../css/images/amx-android-ltr.png);
+  background-position: 7px 0; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+  right: 5px;
+}
+HTML[dir="rtl"] .amx-listItem-caret {
+  background-image: url(../css/images/amx-android-rtl.png);
+  background-position: 2px 0; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+  left: 5px;
+}
+HTML[dir="ltr"] .amx-listItem-selected > .amx-listItem-caret,
+HTML[dir="ltr"] .amx-listItem:active > .amx-listItem-caret {
+  background-position: -11px 0; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+}
+HTML[dir="rtl"] .amx-listItem-selected > .amx-listItem-caret,
+HTML[dir="rtl"] .amx-listItem:active > .amx-listItem-caret {
+  background-position: -16px 0; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+}
+.amx-listItem-handle {
+  background-size: 299px 180px;
+  width: 21px;
+  height: 12px;
+  position: absolute;
+  top: 50%;
+  margin-top: -11px;
+  cursor: move;
+}
+HTML[dir="ltr"] .amx-listItem-handle {
+  background-image: url(../css/images/amx-android-ltr.png);
+  background-position: -165px -90px;
+  right: 8px;
+}
+HTML[dir="rtl"] .amx-listItem-handle {
+  background-image: url(../css/images/amx-android-rtl.png);
+  background-position: 7px -27px; /* LTR and RTL slices are not perfectly centered hence the unique positions */
+  left: 0;
+}
+.amx-listItem-drop-spacer {
+  height: 5px;
+}
+.amx-listItem .amx-image {
+  margin-top: 7px;
+}
+.amx-listItem .amx-outputText {
+  font-weight: bold;
+  white-space: normal;
+  text-overflow:clip;
+  overflow: hidden;
+  display: block;
+  height: 12px;
+}
+HTML[dir="ltr"] .amx-listItem > .amx-outputText {
+  margin-right: 30px;
+  padding: 3px 0 10px 3px;
+}
+HTML[dir="rtl"] .amx-listItem > .amx-outputText {
+  margin-left: 30px;
+  padding: 3px 3px 3px 0;
+}
+HTML[dir="ltr"] .amx-listItem.amx-listItem-noCaret > .amx-outputText {
+  margin-right: 10px;
+}
+HTML[dir="rtl"] .amx-listItem.amx-listItem-noCaret > .amx-outputText {
+  margin-left: 10px;
+}
+HTML[dir="ltr"] .amx-listItem > .amx-panelGroupLayout {
+  margin-right: 30px;
+}
+HTML[dir="rtl"] .amx-listItem > .amx-panelGroupLayout {
+  margin-left: 30px;
+}
+.amx-listItem > .amx-panelGroupLayout.amx-wrap {
+  display: block;
+}
+HTML[dir="ltr"] .amx-listItem > .amx-tableLayout {
+  margin-right: 30px;
+}
+HTML[dir="rtl"] .amx-listItem > .amx-tableLayout {
+  margin-left: 30px;
+}
+HTML[dir="ltr"] .amx-listItem.amx-listItem-noCaret > .amx-tableLayout {
+  margin-right: 10px;
+}
+HTML[dir="rtl"] .amx-listItem.amx-listItem-noCaret > .amx-tableLayout {
+  margin-left: 10px;
+}
+.amx-listItem .amx-tableLayout .amx-outputText.adfmf-listItem-captionText {
+  font-size: 14px;
+  opacity: .76;
+  margin-top: -10px;
+  margin-bottom: -2px;
+  color: #595960;
+}
+.amx-listItem .amx-tableLayout .amx-outputText.adfmf-listItem-highlightText {
+  color: #2F6BAC;
+}
+.amx-listItem.amx-listItem-selected .amx-tableLayout .amx-outputText.adfmf-listItem-highlightText,
+.amx-listItem:active .amx-tableLayout .amx-outputText.adfmf-listItem-highlightText {
+  color: #FFFFFF;
+}
+/* Start Deprecated listItem Styles */
+.amx-listItem.adfmf-listItem-hasStartIcon .amx-outputText {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  padding: 3px 0 3px 3px;
+  margin-right: 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: black;
+  right: 30px
+}
+.amx-listItem .amx-outputText.adfmf-listItem-mainText {
+  padding: 2px 0 0 3px;
+  font-weight: bold;
+  color: #000;
+}
+.amx-listItem .amx-outputText.adfmf-listItem-subText {
+  padding: 0 0 0 10px;
+  font-weight: normal;
+  font-size: 14px;
+  margin-top: -3px;
+  color: #8D8C8C;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon .adfmf-listItem-mainText {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  padding: 2px 0 10px 10px;
+  margin-right: 0;
+  right: 30px
+}
+.amx-listItem.adfmf-listItem-hasStartIcon .adfmf-listItem-subText {
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  padding: 4px 0 10px 10px;
+  margin-top: 0;
+  margin-right: 0;
+  right: 30px
+}
+.amx-listItem .amx-outputText.adfmf-listItem-startText {
+  padding: 10px 0 10px 10px;
+  margin-right: 0;
+  font-weight: bold;
+  color: #000;
+  width: 55%;
+}
+.amx-listItem .amx-outputText.adfmf-listItem-endText {
+  position: absolute;
+  margin-right: 0;
+  padding: 10px 0 10px 0;
+  top: 0;
+  right: 30px;
+  text-align: right;
+  color: #2F6BAC;
+  left: 60%;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon .amx-outputText.adfmf-listItem-startText {
+  position:absolute;
+  top: 0;
+  left: 30px;
+  padding: 10px 0 10px 10px;
+  margin-right: 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000;
+  width: 45%;
+}
+.amx-listItem .amx-outputText.adfmf-listItem-upperStartText {
+  padding: 2px 0 0 10px;
+  margin-right: 0;
+  font-weight: bold;
+  color: #000;
+  width: 55%;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon .adfmf-listItem-upperStartText {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  padding: 2px 0 10px 10px;
+  margin-right: 0;
+  right: 30px;
+  width: 45%;
+}
+.amx-listItem .amx-outputText.adfmf-listItem-upperEndText {
+  position: absolute;
+  padding: 2px 0 10px 10px;
+  top: 0;
+  right: 0;
+  text-align: right;
+  color: #2F6BAC;
+  left: 60%;
+}
+.amx-listItem .amx-outputText.adfmf-listItem-lowerStartText {
+  padding: 0 0 1px 10px;
+  font-weight: normal;
+  font-size: 14px;
+  color: #8D8C8C;
+  right: 0;
+  margin-top: -3px;
+  width: 55%;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon .adfmf-listItem-lowerStartText {
+  position: absolute;
+  top: 18px;
+  left: 30px;
+  padding: 4px 0 10px 10px;
+  margin-top: 0;
+  margin-right: 0;
+  right: 30px;
+  width: 45%;
+}
+.amx-listItem .amx-outputText.adfmf-listItem-lowerEndText {
+  position: absolute;
+  padding: 5px 0 10px 10px;
+  top: 18px;
+  right:0;
+  text-align: right;
+  color: #8D8C8C;
+  font-weight: normal;
+  font-size: 14px;
+  left: 60%;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon.amx-listItem-noLinkIcon .amx-outputText {
+  right: 0;
+}
+.amx-listItem.amx-listItem-noLinkIcon .amx-outputText {
+  margin-right: 10px;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon .adfmf-listItem-lowerEndText,
+.amx-listItem.adfmf-listItem-hasStartIcon .adfmf-listItem-upperEndText {
+  right: 30px;
+}
+.amx-listItem.adfmf-listItem-hasStartIcon.amx-listItem-noLinkIcon .adfmf-listItem-mainText,
+.amx-listItem.adfmf-listItem-hasStartIcon.amx-listItem-noLinkIcon .adfmf-listItem-endText,
+.amx-listItem.adfmf-listItem-hasStartIcon.amx-listItem-noLinkIcon .adfmf-listItem-upperEndText,
+.amx-listItem.adfmf-listItem-hasStartIcon.amx-listItem-noLinkIcon .adfmf-listItem-lowerEndText,
+.amx-listItem.amx-listItem-noLinkIcon .adfmf-listItem-endText,
+.amx-listItem.amx-listItem-noLinkIcon .adfmf-listItem-upperEndText,
+.amx-listItem.amx-listItem-noLinkIcon .adfmf-listItem-lowerEndText,
+.amx-listItem.adfmf-listItem-hasStartIcon.amx-listItem-noLinkIcon .adfmf-listItem-subText {
+  margin-right: 0;
+  right: 10px;
+}
+.amx-listItem .amx-outputText.amx-listItem-lefttext {
+  padding: 10px 0 10px 10px;
+  margin-right: 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000;
+  width: 45%;
+}
+.amx-listItem .amx-outputText.amx-listItem-lefttexticon {
+  position:absolute;
+  top: 0;
+  left: 30px;
+  padding: 10px 0 10px 10px;
+  margin-right: 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000;
+  width: 45%;
+}
+.amx-listItem .amx-outputText.amx-listItem-righttext {
+  position: absolute;
+  margin-right: 0;
+  padding: 10px 0 10px 0;
+  top: 0;
+  right: 30px;
+  text-align: right;
+  color: #2F6BAC;
+  width: 40%;
+}
+.amx-listItem .amx-outputText.amx-listItem-righttextnochevron {
+  position: absolute;
+  margin-right: 0;
+  padding: 10px 0 10px 0;
+  top: 0;
+  right: 10px;
+  text-align: right;
+  color: #2F6BAC;
+  width: 45%;
+}
+.amx-listItem .amx-outputText.amx-listItem-maintext {
+  padding: 1px 0 0 10px;
+  font-weight: bold;
+  color: #000;
+}
+.amx-listItem .amx-outputText.amx-listItem-subtext {
+  padding: 0 0 1px 10px;
+  font-weight: normal;
+  font-size: 14px;
+  color: #8D8C8C;
+}
+.amx-listItem .amx-outputText.amx-listItem-upperlefttext {
+  padding: 1px 0 0 10px;
+  margin-right: 0;
+  font-weight: bold;
+  color: #000;
+  width: 50%;
+}
+.amx-listItem .amx-outputText.amx-listItem-upperlefttexticon {
+  position:absolute;
+  top:  0;
+  left:  30px;
+  padding: 1px 0 0 10px;
+  margin-right: 0;
+  font-weight: bold;
+  color: #000;
+  width: 50%;
+}
+.amx-listItem .amx-outputText.amx-listItem-lowerlefttext {
+  padding: 0 0 1px 10px;
+  margin-right: 0;
+  font-weight: normal;
+  font-size: 14px;
+  color: #8D8C8C;
+  width: 50%;
+}
+.amx-listItem .amx-outputText.amx-listItem-lowerlefttexticon {
+  position:absolute;
+  top:  24px;
+  left:  30px;
+  padding: 0 0 1px 10px;
+  margin-right: 0;
+  font-weight: normal;
+  font-size: 14px;
+  color: #8D8C8C;
+  width: 50%;
+}
+.amx-listItem .amx-outputText.amx-listItem-upperrighttext {
+  position: absolute;
+  margin-right: 0;
+  padding: 2px 0 0 0;
+  top: 0;
+  right: 30px;
+  text-align: right;
+  color: #8D8C8C;
+  font-weight: normal;
+  width: 35%;
+  font-size: 16px;
+}
+.amx-listItem .amx-outputText.amx-listItem-upperrighttextnochevron {
+  position: absolute;
+  margin-right: 0;
+  padding: 2px 0 0 0;
+  top: 0;
+  right: 10px;
+  text-align: right;
+  color: #8D8C8C;
+  font-weight: normal;
+  width: 40%;
+  font-size: 16px;
+}
+.amx-listItem .amx-outputText.amx-listItem-lowerrighttext {
+  position: absolute;
+  margin-right: 0;
+  padding: 0 0 1px 0;
+  top: 24px;
+  right: 30px;
+  text-align: right;
+  color: #8D8C8C;
+  font-weight: normal;
+  width: 35%;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
+}
+.amx-listItem .amx-outputText.amx-listItem-lowerrighttextnochevron {
+  position: absolute;
+  margin-right: 0;
+  padding: 0 0 1px 0;
+  top: 24px;
+  right: 10px;
+  text-align: right;
+  color: #8D8C8C;
+  font-weight: normal;
+  width: 40%;
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
+}
+/* Stop Deprecated listItem Styles */
+.amx-panelSplitter_contentContainer .amx-listItem-moreRows .amx-outputText,
+.amx-listItem-moreRows .amx-outputText {
+  color: #2f6bac;
+}
+
+.amx-listView-editMode .amx-listItem-moreRows {
+  display: none;
+}
+
+/* Bug 18906354 - Android 4.0.x and 4.1.x (seen on Samsung Galaxy S2) has a
+   browser bug where sometimes the "Load More Rows..." link won't always respond
+   to taps. You can wiggle the scroll position of the listView to make it work
+   or use static positioning. */
+.amx-android-generic .amx-listItem-moreRows {
+  position: static;
+}
+
+/* For the scroll-based showMoreStrategy options, show an indicator in place of
+   the Load More Rows... link. However, in order to minimize memory use, use a
+   static image when idle and only use the animated GIF when actually doing a
+   load when the "show more" is invoked (with the idea that a refresh will occur
+   when it is complete at which point the PNG will then replace it or the row
+   will be removed completely). */
+.amx-listView-placeholder,
+.amx-listItem-scrollStrategy {
+  background-color: #EEEEEE;
+  background-image: url(../css/images/AndroidActivityIndicatorSmPageBackgrnd_C.png);
+  background-size: 20px 20px;
+}
+.amx-listView-placeholder,
+.amx-listItem-scrollStrategyLoading {
+  background-image: url(../css/images/AndroidActivityIndicatorSmPageBackgrnd_C.gif);
+}
+.amx-listView-placeholder {
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height: 43px;
+}
+.amx-listItem-scrollStrategy .amx-outputText,
+.amx-listItem-scrollStrategyLoading .amx-outputText {
+  display: none;
+}
+.amx-listItem-outsideOfBuffer {
+  box-sizing: border-box;
+}
+.amx-listView-cards .amx-listItem-outsideOfBuffer.adfmf-listItem-shadow {
+  box-shadow: none;
+}
+.amx-listItem.amx-listItem-outsideOfBuffer > * {
+  display: none;
+}
+.amx-listItem-moreRows {
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* listItem disclosure animation */
+.amx-listItem.amx-listItem-disclosing,
+.amx-listItem.amx-listItem-undisclosing {
+  -webkit-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+  overflow: hidden;
+}
+
+/* listItem insert (CRUD) animation */
+.amx-listItem.amx-listItem-insert,
+.amx-listView-group.amx-listItem-insert {
+  overflow: hidden;
+}
+.amx-listItem.amx-listItem-insert:not(.adfmf-listItem-use-custom-insert) {
+  opacity: 0;
+}
+.amx-listItem.amx-listItem-insert-active,
+.amx-listView-group.amx-listItem-insert-active {
+  -webkit-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+}
+.amx-listItem.amx-listItem-insert-active:not(.adfmf-listItem-use-custom-insert) {
+  opacity: 1;
+}
+
+/* listItem delete (CRUD) animation */
+.amx-listItem.amx-listItem-delete,
+.amx-listView-group.amx-listItem-delete {
+  overflow: hidden;
+}
+.amx-listItem.amx-listItem-delete-active,
+.amx-listView-group.amx-listItem-delete-active {
+  -webkit-transition: all .25s ease-in-out;
+  transition: all .25s ease-in-out;
+}
+.amx-listItem.amx-listItem-delete-active:not(.adfmf-listItem-use-custom-delete),
+.amx-listView-group.amx-listItem-delete-active {
+  opacity: 0;
+}
+
+/* ------ </amx:listView> ------ */
+

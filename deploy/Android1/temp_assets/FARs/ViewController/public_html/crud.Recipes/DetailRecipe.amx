@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="#{bindings.title.inputValue}" id="ot1"/>
+    </amx:facet>
+    <amx:facet name="primary">
+        <amx:commandButton id="cb1" action="__back" icon="/images/back.png"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+      <amx:commandButton id="cb2" action="clear" text="" icon="/images/edit.png">
+            <amx:setPropertyListener id="spl2" from="#{false}" to="#{pageFlowScope.newMode}"/>
+        </amx:commandButton>
+    </amx:facet>
+    
+    <amx:commandLink text="#{bindings.recipeUrl.inputValue}" id="cl1" inlineStyle=" margin-left: 10px;white-space: normal; "
+                     actionListener="#{generalBean.getUrl}"/>
+    
+    <amx:panelFormLayout id="pfl2" fieldHalign="start" fieldWidth="70%" labelWidth="30%" showHorizontalDividers="false"> 
+        <amx:panelLabelAndMessage label="#{bindings.prepTime.hints.label}" id="plam11">
+            <amx:outputText value="#{bindings.prepTime.inputValue}" id="ot13">
+                <amx:convertNumber groupingUsed="false" id="cn4"/>
+            </amx:outputText>
+        </amx:panelLabelAndMessage>
+    </amx:panelFormLayout>
+    <amx:listView var="row" value="#{bindings.ingredients.collectionModel}"
+                  fetchSize="#{bindings.ingredients.rangeSize}"
+                  initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}" 
+                  dividerAttribute="foodGroup"
+                  dividerMode="all" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2"
+                  styleClass="" collapsibleDividers="true">
+          <amx:listItem id="li1">
+                <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} 
+                          #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
+          </amx:listItem>
+    </amx:listView>
+   </amx:panelPage>
+</amx:view>

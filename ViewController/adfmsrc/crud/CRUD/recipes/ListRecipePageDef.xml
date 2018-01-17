@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="ListRecipePageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipes" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="recipesIterator" id="recipes">
+      <nodeDefinition DefName="crud.JAVA.Recipe" Name="recipes0">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="prepTime"/>
+          <Item Value="recipeUrl"/>
+          <Item Value="title"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="recipesIterator" id="removeRow" InstanceName="crudmodel.RecipeService.recipes"
+            DataControl="RecipeService" RequiresUpdateModel="false" Action="removeRowWithKey">
+      <NamedData NDName="rowKey" NDType="java.lang.String"/>
+    </action>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
+    <action IterBinding="recipesIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction IterBinding="recipesIterator" id="deleteFromStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteFromStore" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true">
+      <NamedData NDName="id" NDValue="#{bindings.id.inputValue}" NDType="java.lang.Integer"/>
+    </methodAction>
+    <methodAction IterBinding="recipesIterator" id="reloadFromStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reloadFromStore" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <attributeValues IterBinding="recipesIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

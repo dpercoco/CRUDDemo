@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="AisleItemsPageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  <executables>
+    <iterator Binds="root" RangeSize="25" DataControl="AisleService" id="AisleServiceIterator"/>
+    <accessorIterator MasterBinding="AisleServiceIterator" Binds="aisles" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.Aisle" id="aislesIterator"/>
+    <accessorIterator MasterBinding="aislesIterator" Binds="foodItems" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.FoodItem" id="foodItemsIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="foodItemsIterator" id="foodItems">
+      <nodeDefinition DefName="crud.JAVA.FoodItem" Name="foodItems0">
+        <AttrNames>
+          <Item Value="item"/>
+          <Item Value="id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="foodItemsIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="foodItemsIterator" id="item">
+      <AttrNames>
+        <Item Value="item"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="aislesIterator" id="foodGroup">
+      <AttrNames>
+        <Item Value="foodGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="foodItemsIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="aislesIterator" id="fgid">
+      <AttrNames>
+        <Item Value="fgid"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

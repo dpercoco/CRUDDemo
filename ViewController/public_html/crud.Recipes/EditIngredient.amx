@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="#{bindings.title.inputValue}" id="ot3"/>
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton id="cb1" action="__back" icon="/images/back.png" shortDesc="This will return you the Edit Ingredients"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+       <amx:commandButton actionListener="#{bindings.saveIngredientToStore.execute}" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}"
+                         disabled="#{!bindings.saveIngredientToStore.enabled}" id="cb3"
+                         action="goFindAll"/>
+    
+      <!--<amx:commandButton id="cb2" action="__back" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}" > 
+          <amx:actionListener id="al6" binding="#{bindings.saveIngredientToStore.execute}"/>
+          <amx:actionListener id="al3" binding="#{bindings.refreshIngredients.execute}" type="action"/>
+      </amx:commandButton>-->
+    </amx:facet>
+    <amx:panelStretchLayout id="psl1">
+      <amx:facet name="top">
+        <!--<amx:validationGroup id="vg1">
+            <amx:panelFormLayout id="pfl1" labelWidth="0%" fieldWidth="100%">-->
+              <amx:inputText value="#{bindings.newItem.inputValue}" label="" id="it3"
+                required="true" showClear="on"/>
+            <!--</amx:panelFormLayout>-->
+      <!--</amx:validationGroup>-->
+      </amx:facet>
+    </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>

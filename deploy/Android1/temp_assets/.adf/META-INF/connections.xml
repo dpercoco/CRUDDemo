@@ -1,0 +1,13 @@
+<References xmlns="http://xmlns.oracle.com/adf/jndi">
+  <Reference name="urlMain" className="oracle.adf.model.connection.url.HttpURLConnection" xmlns="">
+    <Factory className="oracle.adf.model.connection.url.URLConnectionFactory"/>
+    <RefAddresses>
+      <XmlRefAddr addrType="urlMain">
+        <Contents>
+          <urlconnection name="urlMain"
+                         url="http://www.foodnetwork.com/recipes/paula-deen/chicken-and-dumplings-recipe.html"/>
+        </Contents>
+      </XmlRefAddr>
+    </RefAddresses>
+  </Reference>
+</References>

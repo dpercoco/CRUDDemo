@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="Aisle" id="ot1"/>
+    </amx:facet>
+    <amx:facet name="primary">
+       <amx:commandButton id="cb1" action="__back" icon="/images/back.png"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+        <amx:commandButton id="cb2" action="__back" text="#{pageFlowScope.newMode=='false'?'Save':'Add New'}" >
+            <!--<amx:validationBehavior id="vb1" group="vg1"/>-->
+            <amx:actionListener id="al2" binding="#{bindings.saveToStore.execute}"/>
+            <!--<amx:actionListener id="al3" binding="#{bindings.deleteFromStore.execute}"/>-->
+            <amx:actionListener id="al4" binding="#{bindings.reloadFromStore.execute}"/>
+        </amx:commandButton>
+        <amx:commandButton actionListener="#{bindings.deleteFromStore.execute}" text="Delete"
+                 disabled="#{!bindings.deleteFromStore.enabled}" id="cb3"
+                 rendered="#{pageFlowScope.newMode=='false'?'true':'false'}" />
+    </amx:facet>
+    <amx:panelStretchLayout id="psl1">
+      <amx:facet name="top"/>
+      <amx:facet name="center">
+        <amx:inputText value="#{bindings.foodGroup.inputValue}" simple="true" id="it1"/>
+        <!--<amx:outputText value="#{bindings.fgid.inputValue}" id="ot2">
+          <amx:convertNumber groupingUsed="false" id="cn1"/>
+        </amx:outputText>-->
+       </amx:facet>
+    </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>

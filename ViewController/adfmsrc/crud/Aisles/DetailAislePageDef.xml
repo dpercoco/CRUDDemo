@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="DetailAislePageDef"
+                Package="crud.Aisles">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="AisleService" id="AisleServiceIterator"/>
+    <accessorIterator MasterBinding="AisleServiceIterator" Binds="aisles" RangeSize="25" DataControl="AisleService"
+                      BeanClass="crud.JAVA.Aisle" id="aislesIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="aislesIterator" id="foodGroup">
+      <AttrNames>
+        <Item Value="foodGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="aislesIterator" id="fgid">
+      <AttrNames>
+        <Item Value="fgid"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="aislesIterator" id="saveToStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="saveToStore" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="aislesIterator" id="reloadFromStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="reloadFromStore" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
+    <methodAction IterBinding="aislesIterator" id="deleteFromStore" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="deleteFromStore" IsViewObjectMethod="false" DataControl="AisleService"
+                  InstanceName="bindings.aislesIterator.currentRow.dataProvider" IsLocalObjectReference="true">
+      <NamedData NDName="fgid" NDValue="#{bindings.fgid.inputValue}" NDType="java.lang.Integer"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

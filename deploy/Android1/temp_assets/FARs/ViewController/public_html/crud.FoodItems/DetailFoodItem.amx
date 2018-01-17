@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+    <amx:facet name="header">
+      <amx:outputText value="#{bindings.foodGroup.inputValue}" id="ot4"/>
+      <!--<amx:outputText value="#{bindings.fgid.inputValue}" id="ot3">
+        <amx:convertNumber groupingUsed="false" id="cn1"/>
+      </amx:outputText>-->
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton action="__back" actionListener="#{bindings.saveToStore.execute}" icon="/images/back.png"
+                         disabled="#{!bindings.saveToStore.enabled}" id="cb3"/>
+    </amx:facet>
+    <amx:facet name="secondary">
+      <amx:commandButton id="cb2" action="__back" text="#{pageFlowScope.newMode=='false'?'Save':'Add'}" >
+                <!--<amx:setPropertyListener id="spl2" from="#{bindings.fgid.inputValue}" to="#{bindings.fgid.inputValue}"/>-->
+                <amx:actionListener id="al2" binding="#{bindings.saveToStore.execute}"/>
+                <amx:actionListener id="al3" binding="#{bindings.deleteFromStore.execute}"/>
+                <amx:actionListener id="al4" binding="#{bindings.reloadFoodItems.execute}"/>
+      </amx:commandButton>
+      <amx:commandButton actionListener="#{bindings.deleteFromStore.execute}" text="Delete"
+                 disabled="#{!bindings.deleteFromStore.enabled}" id="cb1"
+                 rendered="#{pageFlowScope.newMode=='false'?'true':'false'}" />
+    </amx:facet>
+    <amx:panelStretchLayout id="psl1">
+      <amx:facet name="top"/>
+      <amx:facet name="center">
+        <amx:inputText value="#{bindings.item.inputValue}" simple="true" id="it1"/>
+      </amx:facet>
+    </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>

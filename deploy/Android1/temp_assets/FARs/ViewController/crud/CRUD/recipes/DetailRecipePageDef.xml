@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="DetailRecipePageDef"
+                Package="crud.CRUD.recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Type="java.lang.String" Name="findGoogleSearchResults_searchStr" IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipes" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="googleResults" RangeSize="25"
+                      DataControl="RecipeService" BeanClass="crud.JAVA.Google" id="googleResultsIterator"/>
+    <accessorIterator MasterBinding="recipesIterator" Binds="ingredients" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="recipesIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipesIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipesIterator" id="recipeUrl">
+      <AttrNames>
+        <Item Value="recipeUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipesIterator" id="prepTime">
+      <AttrNames>
+        <Item Value="prepTime"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="recipesIterator" ListOperMode="navigation" ListIter="recipesIterator" id="recipes"
+          DTSupportsMRU="true" SelectItemValueMode="ListObject">
+      <AttrNames>
+        <Item Value="id"/>
+        <Item Value="title"/>
+        <Item Value="recipeUrl"/>
+        <Item Value="photo"/>
+        <Item Value="description"/>
+        <Item Value="prepTime"/>
+      </AttrNames>
+    </list>
+    <tree IterBinding="googleResultsIterator" id="googleResults">
+      <nodeDefinition DefName="crud.JAVA.Google" Name="googleResults0">
+        <AttrNames>
+          <Item Value="url"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ingredientsIterator" id="ingredients">
+      <nodeDefinition DefName="crud.JAVA.Ingredient" Name="ingredients0">
+        <AttrNames>
+          <Item Value="amountStr"/>
+          <Item Value="item"/>
+          <Item Value="measurement"/>
+          <Item Value="qtyStr"/>
+          <Item Value="container"/>
+          <Item Value="foodGroup"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

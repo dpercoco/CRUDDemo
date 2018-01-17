@@ -421,7 +421,7 @@ public class Ingredient {
     public void saveIngredientToStore() {
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, Ingredient.class, "saveIngredientToStore", 
-                  "Recipe ID: " + this.rid + ", Ingredient ID: " + this.id
+                  "##############saveIngredientToStore Recipe ID: " + this.rid + ", Ingredient ID: " + this.id
                   + ", item:" + this.newItem);
         
         //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newModeIngredient}", Boolean.class);
@@ -468,10 +468,10 @@ public class Ingredient {
                 
                 int updateCount = stmt.executeUpdate(sql);                
                 if (updateCount == 0) {
-                    Trace.log(Utility.ApplicationLogger, Level.SEVERE, Ingredient.class, "saveIngredientToStore", "Update Failed!");
+                    Trace.log(Utility.ApplicationLogger, Level.SEVERE, Ingredient.class, "##############saveIngredientToStore", "saveIngredientToStore Update Failed!");
                 }
                 else {
-                    Trace.log(Utility.ApplicationLogger, Level.SEVERE, Ingredient.class, "saveIngredientToStore", "Update Passed! " + i.getToString());
+                    Trace.log(Utility.ApplicationLogger, Level.SEVERE, Ingredient.class, "##############saveIngredientToStore", "saveIngredientToStore Update Passed! " + i.getToString());
                 }
                 conn.commit();
                 

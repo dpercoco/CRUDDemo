@@ -6,7 +6,10 @@
       <amx:outputText value="#{bindings.title.inputValue}" id="ot3"/>
     </amx:facet>
     <amx:facet name="primary">
-      <amx:commandButton id="cb1" action="__back" icon="/images/back.png" shortDesc="This will return you the Edit Ingredients"/>
+            <amx:commandButton action="__back" actionListener="#{bindings.saveIngredientToStore.execute}" text=""
+                               disabled="#{!bindings.saveIngredientToStore.enabled}" id="cb1"  icon="/images/back.png">
+                <!--<amx:actionListener id="al1" binding="#{bindings.reloadRecipes.execute}"/>-->
+            </amx:commandButton>
     </amx:facet>
     <amx:facet name="secondary">
        <amx:commandButton actionListener="#{bindings.saveIngredientToStore.execute}" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}"

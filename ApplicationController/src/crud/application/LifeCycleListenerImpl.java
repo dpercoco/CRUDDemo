@@ -470,10 +470,10 @@ public class LifeCycleListenerImpl implements LifeCycleListener {
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, LifeCycleListenerImpl.class, "InitMenusDB",
                       "##############InitMenusDB Start");
             ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            InputStream is = cl.getResourceAsStream(".adf/META-INF/menus.sql");
+            InputStream is = cl.getResourceAsStream(".adf/META-INF/menu.sql");
             if (is == null) {
                 Trace.log(Utility.ApplicationLogger, Level.SEVERE, LifeCycleListenerImpl.class, "InitMenusDB",
-                          "##############Could not look up : /META-INF/menus.sql");
+                          "##############Could not look up : /META-INF/menu.sql");
                 return;
             }
 

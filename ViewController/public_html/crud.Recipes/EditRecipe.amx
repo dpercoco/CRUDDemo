@@ -60,60 +60,44 @@
             </amx:panelFormLayout> 
         </amx:validationGroup>
         
-         <amx:tableLayout width="100%" id="tl2">
-            <amx:rowLayout id="rl3">
-                <amx:cellFormat width="25px" rowSpan="1" id="cf4" columnSpan="2">
-                    <amx:commandButton icon="/images/add.png" text="add Ingredient" id="cl2" 
-                            action="createIngredient" styleClass="left:15px" iconPosition="leading">
-                            <!--<amx:actionListener id="al7" binding="#{bindings.addIngredientToStore.execute}"/>-->
-                            <amx:setPropertyListener id="spl7" from="#{true}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
-                    </amx:commandButton>
-                </amx:cellFormat>
-            </amx:rowLayout>
-        <!--</amx:tableLayout>-->
-       
-        <!--<amx:refreshContainer id="rc1" action="goFindAll" pullText="Pull down to refresh" busyText="Refreshing...">-->
-         
-            <amx:listView var="row" value="#{bindings.ingredients.collectionModel}"
-                          fetchSize="#{bindings.ingredients.rangeSize}" dividerAttribute="foodGroup"
-                          initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
-                          selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}"
-                          showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1">
-                <amx:listItem id="li1" action="editIngredient">
-                    <amx:setPropertyListener id="spl1" from="#{row.id}" to="#{pageFlowScope.selectedId}" type="action"/>
-                    <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
-                    <amx:tableLayout width="100%" id="tl1">
-                    <amx:rowLayout id="rl1">
-                        <amx:cellFormat width="25px" rowSpan="1" id="cf1">
-                            <amx:commandButton text="" id="cb4" icon="/images/delete.png" styleClass="adfmf-listItem-captionText-Detail">
-                                  <amx:setPropertyListener id="spl5" from="#{row.id}" to="#{pageFlowScope.selectedId}" type="action"/>
-                                  <amx:setPropertyListener id="spl6" from="#{row.item}" to="#{pageFlowScope.selectedItem}" type="action"/>
-                                  <amx:actionListener id="al6" binding="#{bindings.deleteIngredientFromStore.execute}" type="action"/>
-                                  <amx:actionListener id="al9" binding="#{bindings.reloadIngredients.execute}" type="action"/>
-                            </amx:commandButton>
-                        </amx:cellFormat>
-                        <amx:cellFormat rowSpan="1" id="cf2">
-                            <amx:outputText value="#{row.bindings.toString.inputValue}" id="it2" styleClass="adfmf-listItem-captionText-Detail" />
-                        </amx:cellFormat><!--valueChangeListener="#{generalBean.onIngredientItemChange}"-->
-                    </amx:rowLayout>
-                  </amx:tableLayout>
-                </amx:listItem>
-            </amx:listView>
-        <!--</amx:refreshContainer>-->
         
-        <!--<amx:tableLayout width="100%" id="tl3">-->
-            <amx:rowLayout id="rl4">
-                <amx:cellFormat width="25px" rowSpan="1" id="cf5" columnSpan="2">
-                    <amx:commandButton icon="/images/add.png" text="add Ingredient" id="cl3" 
+        <amx:panelStretchLayout id="psl1">  
+              <amx:facet name="center">
+                <amx:listView var="row" value="#{bindings.ingredients.collectionModel}"
+                              fetchSize="#{bindings.ingredients.rangeSize}" dividerAttribute="foodGroup"
+                              initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}"
+                              showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1">
+                    <amx:listItem id="li1" action="editIngredient">
+                        <amx:setPropertyListener id="spl1" from="#{row.id}" to="#{pageFlowScope.selectedId}" type="action"/>
+                        <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
+                        <amx:tableLayout width="100%" id="tl1">
+                        <amx:rowLayout id="rl1">
+                            <amx:cellFormat width="25px" rowSpan="1" id="cf1">
+                                <amx:commandButton text="" id="cb4" icon="/images/delete.png" styleClass="adfmf-listItem-captionText-Detail">
+                                      <amx:setPropertyListener id="spl5" from="#{row.id}" to="#{pageFlowScope.selectedId}" type="action"/>
+                                      <amx:setPropertyListener id="spl6" from="#{row.item}" to="#{pageFlowScope.selectedItem}" type="action"/>
+                                      <amx:actionListener id="al6" binding="#{bindings.deleteIngredientFromStore.execute}" type="action"/>
+                                      <amx:actionListener id="al9" binding="#{bindings.reloadIngredients.execute}" type="action"/>
+                                </amx:commandButton>
+                            </amx:cellFormat>
+                            <amx:cellFormat rowSpan="1" id="cf2">
+                                <amx:outputText value="#{row.bindings.toString.inputValue}" id="it2" styleClass="adfmf-listItem-captionText-Detail" />
+                            </amx:cellFormat><!--valueChangeListener="#{generalBean.onIngredientItemChange}"-->
+                        </amx:rowLayout>
+                      </amx:tableLayout>
+                    </amx:listItem>
+                </amx:listView>
+             </amx:facet>
+              <amx:facet name="bottom">
+                     <amx:commandButton icon="/images/add.png" text="add Ingredient" id="cl3" 
                             action="createIngredient" styleClass="left:15px" iconPosition="leading">
                             <!--<amx:actionListener id="al7" binding="#{bindings.addIngredientToStore.execute}"/>-->
                             <amx:setPropertyListener id="spl9" from="#{true}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
                     </amx:commandButton>
-                </amx:cellFormat>
-            </amx:rowLayout>
-        </amx:tableLayout>
+              </amx:facet>
+         </amx:panelStretchLayout>
         
   </amx:panelPage> <!--background-color:#bcd1bc; -->
-  
   
 </amx:view>

@@ -270,7 +270,9 @@ public class RecipeService {
     private void insertIngredient(Ingredient ingredient) {
         boolean success = ingredient.saveIngredientToStore(ingredient);
         if (success) {
-            ingredients.add(ingredient);
+            //ingredients.add(ingredient);
+            ingredients.clear();
+            getIngredients(); //To ensure sort order by foodGroup
         }
     }
 

@@ -275,7 +275,6 @@ public class Recipe {
         this.id = recipeId;
 
         Utility.ApplicationLogger.severe("getIngredientsFromStore RECIPE# " + this.getId());
-        
         recipeIngredients.clear();
         
         try {
@@ -309,7 +308,7 @@ public class Recipe {
         try {
             Connection conn = DBConnectionFactory.getConnection();
             Statement stmt = conn.createStatement();
-            String sql = "SELECT * FROM INGREDIENTS WHERE RID =" + id;
+            String sql = "SELECT * FROM INGREDIENTS WHERE RID =" + id + " ORDER BY FOODGROUP, IID";;
             ResultSet result = stmt.executeQuery(sql);
             result.beforeFirst();
             while (result.next()) {

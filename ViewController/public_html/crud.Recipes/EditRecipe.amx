@@ -60,9 +60,9 @@
                                   dividerAttribute="foodGroup" dividerMode="all" showMoreStrategy="autoScroll"
                                   bufferStrategy="viewport" id="lv1">
                           <amx:listItem id="li1" action="editIngredient">
-                                    <amx:actionListener id="al03" binding="#{bindings.prepareIngredientToEdit.execute}"/>
-                                    <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
-                                    <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
+                                <amx:actionListener id="al03" binding="#{bindings.prepareIngredientToEdit.execute}"/>
+                                <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
+                                <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
                           </amx:listItem>
                     </amx:listView>
               </amx:facet>

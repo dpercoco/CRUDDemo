@@ -26,12 +26,12 @@
     </amx:facet>
     <amx:panelStretchLayout id="psl1">
         <amx:facet name="top">
-         <!--<amx:validationGroup id="vg1">-->
-            <amx:panelFormLayout id="pfl1" fieldHalign="start">
+         <!--<amx:validationGroup id="vg1">
+            <amx:panelFormLayout id="pfl1" fieldHalign="start">-->
                 <amx:inputText value="#{bindings.newItem.inputValue}" label="" id="it3"
                         required="true" showClear="on" />
-            </amx:panelFormLayout>
-        <!--</amx:validationGroup>--> 
+          <!--</amx:panelFormLayout>
+        </amx:validationGroup>--> 
       </amx:facet>      
     </amx:panelStretchLayout>
   </amx:panelPage>

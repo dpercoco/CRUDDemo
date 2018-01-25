@@ -55,16 +55,14 @@
               <amx:facet name="center">
                     <amx:listView var="row" value="#{bindings.ingredients.collectionModel}"
                                   fetchSize="#{bindings.ingredients.rangeSize}"
-                                  selectedRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
                                   initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
                                   selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}"
                                   dividerAttribute="foodGroup" dividerMode="all" showMoreStrategy="autoScroll"
                                   bufferStrategy="viewport" id="lv1">
                           <amx:listItem id="li1" action="editIngredient">
-                                    <amx:actionListener id="al03" binding="#{bindings.prepareIngredientToEdit.execute}"/>
-                                    <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
-                                    <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
-                                    <!--<amx:outputText value="#{row.bindings.toString.inputValue}" styleClass="adfmf-listItem-captionText-Detail" id="it2"/>-->
+                                <amx:actionListener id="al03" binding="#{bindings.prepareIngredientToEdit.execute}"/>
+                                <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
+                                <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
                           </amx:listItem>
                     </amx:listView>
               </amx:facet>

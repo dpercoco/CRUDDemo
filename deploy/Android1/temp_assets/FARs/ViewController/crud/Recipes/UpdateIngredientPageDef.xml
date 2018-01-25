@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="UpdateIngredientPageDef"
+                Package="crud.Recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipes" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="ingredients" RangeSize="25"
+                      DataControl="RecipeService" BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="recipesIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
+    <methodAction id="saveRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="saveRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="recipe" NDValue="#{bindings.recipesIterator.currentRow.dataProvider}"
+                 NDType="crud.JAVA.Recipe"/>
+    </methodAction>
+    <tree IterBinding="ingredientsIterator" id="ingredients">
+      <nodeDefinition DefName="crud.JAVA.Ingredient" Name="ingredients0">
+        <AttrNames>
+          <Item Value="foodGroup"/>
+          <Item Value="id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="saveIngredient" RequiresUpdateModel="true" Action="invokeMethod" MethodName="saveIngredient"
+                  IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="ingredient" NDValue="#{bindings.ingredientsIterator.currentRow.dataProvider}"
+                 NDType="crud.JAVA.Ingredient"/>
+    </methodAction>
+    <methodAction id="deleteIngredient" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteIngredient"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
+  </bindings>
+</pageDefinition>

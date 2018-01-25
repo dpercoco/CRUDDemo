@@ -3,33 +3,36 @@
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
   <amx:panelPage id="pp1">
     <amx:facet name="header">
-      <amx:outputText value="#{bindings.title.inputValue}" id="ot3"/>
+      <amx:outputText value="#{bindings.title.inputValue}" id="ot1"/>
     </amx:facet>
     <amx:facet name="primary">
-            <amx:commandButton action="__back" actionListener="#{bindings.saveIngredientToStore.execute}" text=""
-                               disabled="#{!bindings.saveIngredientToStore.enabled}" id="cb1"  icon="/images/back.png">
-                <!--<amx:actionListener id="al1" binding="#{bindings.reloadRecipes.execute}"/>-->
-            </amx:commandButton>
+      <amx:commandButton action="__back" id="cb1"  icon="/images/back.png">
+            <amx:setPropertyListener id="spl0" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
+      </amx:commandButton>
     </amx:facet>
     <amx:facet name="secondary">
-       <amx:commandButton actionListener="#{bindings.saveIngredientToStore.execute}" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}"
-                         disabled="#{!bindings.saveIngredientToStore.enabled}" id="cb3"
-                         action="goFindAll"/>
-    
-      <!--<amx:commandButton id="cb2" action="__back" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}" > 
-          <amx:actionListener id="al6" binding="#{bindings.saveIngredientToStore.execute}"/>
-          <amx:actionListener id="al3" binding="#{bindings.refreshIngredients.execute}" type="action"/>
-      </amx:commandButton>-->
+       <amx:commandButton action="__back" actionListener="#{bindings.saveIngredient.execute}" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}"
+                         disabled="#{!bindings.saveIngredient.enabled}" id="cb3">
+               <amx:setPropertyListener id="spl1" from="#{bindings.newItem.inputValue}" to="#{pageFlowScope.newItem}"/>
+               <amx:validationBehavior group="vg1" id="vb1"/>
+               <amx:actionListener id="al2" binding="#{bindings.reloadIngredients.execute}" />
+        </amx:commandButton>
+        <amx:commandButton icon="/images/delete.png" actionListener="#{bindings.Delete.execute}" text=""
+                         disabled="#{!bindings.Delete.enabled}" id="cb2">
+             <amx:validationBehavior group="vg1" id="vb2"/>
+             <amx:setPropertyListener id="spl2" from="#{bindings.id.inputValue}" to="#{pageFlowScope.selectedId}"/>            
+             <amx:actionListener id="al3" binding="#{bindings.deleteIngredient.execute}" />
+       </amx:commandButton>
     </amx:facet>
     <amx:panelStretchLayout id="psl1">
-      <amx:facet name="top">
-        <!--<amx:validationGroup id="vg1">
-            <amx:panelFormLayout id="pfl1" labelWidth="0%" fieldWidth="100%">-->
-              <amx:inputText value="#{bindings.newItem.inputValue}" label="" id="it3"
-                required="true" showClear="on"/>
-            <!--</amx:panelFormLayout>-->
-      <!--</amx:validationGroup>-->
-      </amx:facet>
+        <amx:facet name="top">
+         <!--<amx:validationGroup id="vg1">-->
+            <amx:panelFormLayout id="pfl1" fieldHalign="start">
+                <amx:inputText value="#{bindings.newItem.inputValue}" label="" id="it3"
+                        required="true" showClear="on" />
+            </amx:panelFormLayout>
+        <!--</amx:validationGroup>--> 
+      </amx:facet>      
     </amx:panelStretchLayout>
   </amx:panelPage>
 </amx:view>

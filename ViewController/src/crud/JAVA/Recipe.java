@@ -3,14 +3,7 @@ package crud.JAVA;
  * https://github.com/google/search-samples/blob/master/app-indexing/app/src/main/java/com/recipe_app/client/Recipe.java
  */
 
-import com.gargoylesoftware.htmlunit.WebClient;
-
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
-import com.tangosol.dev.assembler.Try;
-
 import crud.application.DBConnectionFactory;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,23 +14,19 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
-
 import javax.el.ValueExpression;
 
-import oracle.adfmf.amx.event.ValueChangeEvent;
-import oracle.adfmf.bindings.dbf.AmxAttributeBinding;
 import oracle.adfmf.bindings.dbf.AmxIteratorBinding;
 import oracle.adfmf.bindings.dbf.AmxTreeBinding;
 import oracle.adfmf.bindings.iterator.BasicIterator;
-import oracle.adfmf.dc.bean.ConcreteJavaBeanObject;
 import oracle.adfmf.framework.api.AdfmfJavaUtilities;
 import oracle.adfmf.java.beans.PropertyChangeListener;
 import oracle.adfmf.java.beans.PropertyChangeSupport;
@@ -45,9 +34,6 @@ import oracle.adfmf.java.beans.ProviderChangeListener;
 import oracle.adfmf.java.beans.ProviderChangeSupport;
 import oracle.adfmf.util.Utility;
 import oracle.adfmf.util.logging.Trace;
-
-import org.jaxen.expr.Step;
-
 import org.jsoup.Jsoup;
 import org.jsoup.examples.HtmlToPlainText;
 
@@ -59,14 +45,13 @@ public class Recipe {
    private String prepTime="";
    private String recipeUrl="";
    private String item="";
-   private List<Ingredient> ingredients = new ArrayList<Ingredient>();
+   private List<Ingredient> recipeIngredients = new ArrayList<Ingredient>();
    private static Map<String, Map<String, Ingredient>> shoppingItems = null;
    private static shoppingListProcess slp = new shoppingListProcess();
-   private static int endOfIngredients;
    private static AisleService aisle = new AisleService();
-   private transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-   protected transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);  
-   
+   protected transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+   protected transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
+
    public void addPropertyChangeListener(PropertyChangeListener l) {
         propertyChangeSupport.addPropertyChangeListener(l);
    }
@@ -75,13 +60,13 @@ public class Recipe {
         propertyChangeSupport.removePropertyChangeListener(l);
    }
    
-   public void addProviderChangeListener(ProviderChangeListener l) {  
-         providerChangeSupport.addProviderChangeListener(l);  
-   } 
-   
-   public void removeProviderChangeListener(ProviderChangeListener l) {  
-         providerChangeSupport.removeProviderChangeListener(l);  
-   }  
+   public void addProviderChangeListener(ProviderChangeListener l) {
+        providerChangeSupport.addProviderChangeListener(l);
+   }
+
+    public void removeProviderChangeListener(ProviderChangeListener l) {
+        providerChangeSupport.removeProviderChangeListener(l);
+    }
       
    public Recipe() {
    }
@@ -106,6 +91,29 @@ public class Recipe {
    public int getId() {
        return id;
    }
+   public void setId() {
+        this.id = getRecipeID();
+   }
+   public Integer getRecipeID(){
+        
+        Integer newId=0;       
+    
+        try {
+            Connection conn = DBConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MAX(IID) FROM RECIPES");
+            rs.beforeFirst();
+            if (rs.next()) {
+                newId = rs.getInt(1) + 1;
+            }
+        }
+        catch (Exception e) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "getRecipeID",
+                      "#####EXCEPTION RECIPE ID:" + newId + " " + e.getMessage()); 
+        }  
+        return newId;
+        
+    }
    public void setId(int id) {
         int oldId = this.id;
         this.id = id;
@@ -167,28 +175,108 @@ public class Recipe {
    }
    public void setPrepTime(String prepTime) {
        this.prepTime = prepTime;
+   }     
+   public String getKey() {
+        Integer i = new Integer(id);
+        return i.toString();        
+   } 
+    
+   public List<Ingredient> getIngredients() {
+       return getIngredientsFromStore();  
    }
    
-   public void setIngredients(List <Ingredient> ingredients) {
-           
-            List <Ingredient> oldIngredients = this.ingredients;
-            this.ingredients = ingredients;
-            propertyChangeSupport.firePropertyChange("ingredients", oldIngredients, ingredients);
+   public Recipe createRecipe(Recipe recipe) {
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe", recipe.getTitle());
+
+        try {
+            Connection conn = DBConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            int newId = 1;
+
+            ResultSet rs = stmt.executeQuery("SELECT MAX(RID) FROM RECIPES");
+            rs.beforeFirst();
+            if (rs.next()) {
+                newId = rs.getInt(1) + 1;
+            }
+            recipe.setId(newId);
+
+            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.id}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), newId);
+
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
+        } catch (SQLException e) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe",
+                      "##############SQL Exception:  " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception exception) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe",
+                      "##############Exception:  " + exception.getMessage());
+        }
+        return recipe;
     }
-       
-   public List <Ingredient> getIngredients() {
-               
-       if(ingredients.isEmpty()) {
-           getIngredientsFromStore();
-       }
-       return ingredients;           
-   }
-       
-   private List <Ingredient> getIngredientsFromStore() {
+   
+   public List<Recipe> getRecipesFromStore() {
+
+        List<Recipe> recipes = new ArrayList<Recipe>();
+        try {
+            Connection conn = DBConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM RECIPES ORDER BY TITLE");
+
+            rs.beforeFirst();
+            while (rs.next()) {
+                int id = rs.getInt("RID");
+                String title = rs.getString("TITLE");
+                if (title.equals("null")) {
+                    title = "";
+                }
+                String url = rs.getString("RECIPEURL");
+                if (url.equals("null")) {
+                    url = "";
+                }
+                String description = rs.getString("DESCRIPTION");
+                if (description.equals("null")) {
+                    description = "";
+                }
+                String preptime = rs.getString("PREPTIME");
+                if (preptime.equals("null")) {
+                    preptime = "";
+                }
+
+                Recipe r = new Recipe(id, title, url, description, preptime);
+
+                if (!title.isEmpty()) {
+                    recipes.add(r);
+                }
+            }
+            //providerChangeSupport.fireProviderRefresh("recipes");
+
+        } catch (SQLException e) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes",
+                      "##############SQL Exception:  " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception exception) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes",
+                      "##############Exception:  " + exception.getMessage());
+
+        }
+        return recipes;
+    }
+    public List<Ingredient> getIngredientsFromStore() {
         
-        Utility.ApplicationLogger.severe("getIngredientsFromStore RECIPE# " + this.getId() + " " + this.getRecipeUrl());
-        ingredients.clear();
-        Integer ct=0;
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRid}", Integer.class);
+        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());
+        Integer recipeId = (Integer) obj1;
+        this.id = recipeId;
+
+        Utility.ApplicationLogger.severe("getIngredientsFromStore RECIPE# " + this.getId());
+        
+        recipeIngredients.clear();
         
         try {
             Connection conn = DBConnectionFactory.getConnection();
@@ -196,26 +284,27 @@ public class Recipe {
             String sql = "SELECT * FROM INGREDIENTS WHERE RID =" + this.getId();
             ResultSet result = stmt.executeQuery(sql);
             result.beforeFirst();
-            
-            if (!result.next()) {                
+
+            if (!result.next()) {
                 getIngredientsFromWeb(this.getRecipeUrl());
-            } 
-            
-            getIngredientsFromDB(); 
-            Utility.ApplicationLogger.severe("Recipe #" + this.getId() + " Ingredients: " + ingredients.size());
-            
+            }
+
+            getIngredientsFromDB();
+            Utility.ApplicationLogger.severe("Recipe #" + this.getId() + " Ingredients: " + recipeIngredients.size());
+
         } catch (Exception ex) {
             Utility.ApplicationLogger.severe("EXCEPTION" + " " + ex.getMessage());
             ex.printStackTrace();
             throw new RuntimeException(ex);
-        }        
-        return ingredients;
+        }
+        return recipeIngredients;
     }
-    
+
    private void getIngredientsFromDB() {
         
-        Utility.ApplicationLogger.severe("RECIPE# " + id + " " + this.getRecipeUrl());
-        ingredients.clear();
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "##############getIngredientsFromDB", "RECIPE# " + id);
+        
+        recipeIngredients.clear();
         
         try {
             Connection conn = DBConnectionFactory.getConnection();
@@ -234,10 +323,10 @@ public class Recipe {
                 ingredient.setQty(result.getDouble("QTY"));
                 ingredient.setAmount(result.getDouble("AMOUNT"));
                 ingredient.setNewItem(ingredient.getToString());
-                ingredients.add(ingredient); 
-                Utility.ApplicationLogger.severe("Ingredient #" + ingredient.getId() + " " + ingredient.getItem());
+                recipeIngredients.add(ingredient); 
+                //Utility.ApplicationLogger.severe("Ingredient #" + ingredient.getId() + " " + ingredient.getItem());
             }           
-            Utility.ApplicationLogger.severe("Recipe #" + this.getId() + " Ingredients: " + ingredients.size());
+            Utility.ApplicationLogger.severe("Recipe #" + this.getId() + " Ingredients: " + recipeIngredients.size());
             
         } catch (Exception ex) {
             Utility.ApplicationLogger.severe("getIngredientsFromDB EXCEPTION" + " " + ex.getMessage());
@@ -265,7 +354,7 @@ public class Recipe {
    public void getIngredientsFromHTTP() throws MalformedURLException, ProtocolException, IOException {
         
         //http://www.rgagnon.com/javadetails/java-0085.html
-        
+        int endOfIngredients;        
         Utility.ApplicationLogger.severe("getIngredientsFromWeb: " + recipeUrl);
         
         URL url = new URL(recipeUrl);
@@ -325,16 +414,16 @@ public class Recipe {
    
    private void getIngredientsFromWeb(String recipeUrl) throws IOException {
            
-       Utility.ApplicationLogger.severe("getIngredientsFromWeb: " + recipeUrl);
+        Utility.ApplicationLogger.severe("RECIPE - getIngredientsFromWeb: " + recipeUrl);
     
         boolean bKeepGoing=true;
         int ct=0;
         String content = "";
         while (bKeepGoing) {
                 ct++;
-                if (ct==1) content = setContentFromJSoup(recipeUrl);
-                if (ct==2) content = setContentFromUrl(recipeUrl);
-                if (content.trim().length()>0 | ct==2) bKeepGoing = false;
+                if (ct==1 | ct==3) content = setContentFromJSoup(recipeUrl);
+                if (ct==2 | ct==4) content = setContentFromUrl(recipeUrl);
+                if (content.trim().length()>0 | ct==4) bKeepGoing = false;
         }
         
         if (content.trim().length()>0) {
@@ -353,7 +442,7 @@ public class Recipe {
         }
     }
     
-   private static String setContentFromJSoup(String recipeUrl) throws IOException {
+    private static String setContentFromJSoup(String recipeUrl) throws IOException {
     
             Utility.ApplicationLogger.severe("setContentFromJSoup: " + recipeUrl);
             String content = "";
@@ -406,7 +495,8 @@ public class Recipe {
     
    public void loadIngredientsIntoDB () {
         
-        Utility.ApplicationLogger.severe("recipeID - " + id + ", shopping Items: " + shoppingItems.size());
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "loadIngredientsIntoDB",
+                  "recipeID - " + id + ", shopping Items: " + shoppingItems.size());
         
         Ingredient i;
         Map.Entry<String, Map<String, Ingredient>> foodGroupEntry=null;
@@ -462,39 +552,7 @@ public class Recipe {
         }
     }
     
-    /** Used by CREATE Method 
-     *  This will add an entry to the Listview iterator
-     *  This does not add a row to the Table
-     **/ 
-    
-    public void addIngredient(Ingredient i) {
-        
-        int newId = 0;
-        try {
-            Connection conn = DBConnectionFactory.getConnection();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT MAX(IID) FROM INGREDIENTS");
-            rs.beforeFirst();
-            if (rs.next()) {
-                newId = rs.getInt(1) + 1;
-            }
-            i.setId(newId);
-            i.setRid(this.id);
-            i.setNewItem("");
-            i.setFoodGroup("Misc");
-            rs.close();            
-            Utility.ApplicationLogger.info("addIngredient ********** ID:" + newId);
-        }
-        catch (Exception e) {
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "addIngredient",
-                      "#####EXCEPTION INGREDIENT ID:" + newId + " " + e.getMessage()); 
-        }        
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "addIngredientToStore",
-                  "RECIPE ID:" + this.id + "INGREDIENT ID:" + newId);      
-        
-    }
-    
-   public void addIngredientLocal(Ingredient ingredient) {
+    public void addIngredientLocal(Ingredient ingredient) {
         try {
             Connection conn = DBConnectionFactory.getConnection();
             Statement stmt = conn.createStatement();
@@ -517,7 +575,7 @@ public class Recipe {
                 Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "addIngredient", "Insert Failed!");
             } 
             else {
-                Utility.ApplicationLogger.severe("Recipe.addIngredientLocal Inserted RECIPE ID:" + id + ", INGREDIENT ID:" + newId + " " + ingredient.getItem() + "\n" + sql);
+                //Utility.ApplicationLogger.severe("Recipe.addIngredientLocal Inserted RECIPE ID:" + id + ", INGREDIENT ID:" + newId + " " + ingredient.getItem() + "\n" + sql);
             }
             conn.commit();
             
@@ -531,54 +589,40 @@ public class Recipe {
         }
     }
    
-    public void refreshIngredients() {
-            
-         Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "refreshIngredients", "");
-         ingredients.clear();
-         getIngredientsFromDB();
-         propertyChangeSupport.firePropertyChange("ingredients", null, ingredients);
-         providerChangeSupport.fireProviderRefresh("ingredients");
-    }
-   
-   public void reloadIngredients(Integer rid) {
+   public void reloadIngredientsXXX(Integer rid) {
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "reloadIngredients",
                   " ***** Recipe:" + rid);
+        
         this.id = rid;
-        ingredients.clear();
-        getIngredientsFromDB();
-        propertyChangeSupport.firePropertyChange("ingredients", null, ingredients);
-        providerChangeSupport.fireProviderRefresh("ingredients"); //Used to fire changes made to a collection
-    }
-    
-   public void processIngredients() throws MalformedURLException, ProtocolException, IOException {
+        recipeIngredients.clear();
+        getIngredientsFromDB(); 
+        //propertyChangeSupport.firePropertyChange("ingredients", null, recipeIngredients);
+        //providerChangeSupport.fireProviderRefresh("ingredients"); //Used to fire changes made to a collection
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "processIngredients",
-                  "RECIPE ID: " + id);    
+    }    
+  
+   public void removeIngredient() throws MalformedURLException, ProtocolException, IOException {
         
-       for (Integer i=1; i<ingredients.size(); i++) {
-            Ingredient ingredient = (Ingredient) ingredients.get(i);
-            if (ingredient.getToString().trim().length()==0) {
-                deleteFromStore(ingredient.getId());
-            }
-        }
-
-    }
-    
-   public void removeIngredient(Integer id) throws MalformedURLException, ProtocolException, IOException {
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedId}", Integer.class);
+        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        Integer ingredientId = (Integer)obj1; 
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "removeIngredient",
-                  "INGREDIENT ID: " + id);    
+                  "INGREDIENT ID: " + ingredientId);    
         
-       for (Integer i=1; i<ingredients.size(); i++) {
-            Ingredient ingredient = (Ingredient) ingredients.get(i);
-            if (ingredient.getId() == id) {
-                ingredients.remove(ingredient);
+       for (Integer i=1; i<recipeIngredients.size(); i++) {
+            Ingredient ingredient = (Ingredient) recipeIngredients.get(i);
+            if (ingredient.getId() == ingredientId) {
+                recipeIngredients.remove(ingredient);
                 Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "removeIngredient",
-                          "REMOVED INGREDIENT ID: " + id + ", " + ingredient.getItem()); 
+                          "##############REMOVED INGREDIENT ID: " + ingredientId + ", " + ingredient.getItem()); 
                 break;
             }
         }
+        
+        propertyChangeSupport.firePropertyChange("ingredients", null, recipeIngredients);
+        //providerChangeSupport.fireProviderRefresh("ingredients");
         
         /**
         AmxTreeBinding ingredientList = (AmxTreeBinding) AdfmfJavaUtilities.getELValue("#{bindings.ingredients}");
@@ -605,178 +649,10 @@ public class Recipe {
     
     //public void removeIngredient(Ingredient ingredient) {
     //    ingredient.deleteFromStore();
-    //}
+    //}   
+  
     
-   public void onIngredientItemChange(Integer ingredientID, String oldVal, String newVal) throws MalformedURLException, ProtocolException, IOException {
-         
-         Ingredient i = getCurrentIngredient();
-         Utility.ApplicationLogger.severe("onIngredientItemChange: ID#" + i.getId() + " " + i.getItem() 
-                                          + ", newVal:" + newVal); 
-         try {                
-             if (i.getFoodGroup().trim().length()==0){ //NEW ingredient          
-                 i = i.buildIngredient(newVal);
-                 String foodGroup = aisle.findFoodGroup(i.getItem());
-                 i.setFoodGroup(foodGroup);
-             } 
-             i.setItem(newVal);
-             i.saveIngredientToStore(); 
-             removeIngredient(i.getId());
-             addIngredientLocal(i);
-             providerChangeSupport.fireProviderRefresh("ingredients");
-         }
-        catch(Exception e)     {
-            Utility.ApplicationLogger.severe("EXCEPTION " + e.getMessage());    
-        }
-    }
-    
-    private Integer getCurrentIngredientID() {
-        
-        //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{bindings.id.inputValue}", String.class);
-                        
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedId}", Integer.class);
-        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());
-        String idStr = obj1.toString();
-        
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "getCurrentIngredientID", 
-                  " INGREDIENT ID:" + idStr);
-        
-        Integer id = Integer.parseInt(idStr);
-        return id;
-        
-    }
-    
-    private Ingredient getCurrentIngredient() {
-        
-        Ingredient ingredient = new Ingredient();
-        Integer id = getCurrentIngredientID();
-        for (Integer i=1; i<ingredients.size(); i++) {
-             ingredient = (Ingredient) ingredients.get(i);
-             if (ingredient.getId()==id) {
-                 return ingredient;
-             }
-         }
-        return ingredient;
-    }
-    
-    private Ingredient getCurrentIngredient(Integer id) {
-        
-        Ingredient ingredient = new Ingredient();
-        for (Integer i=1; i<ingredients.size(); i++) {
-             ingredient = (Ingredient) ingredients.get(i);
-             if (ingredient.getId()==id) {
-                 return ingredient;
-             }
-         }
-        return ingredient;
-    }
-    
-    private String getCurrentIngredientItem() {
-        
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedItem}", String.class);
-        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());
-        String item = obj1.toString();
-        return item;
-        
-    }
-    
-    private Ingredient getCurrentIngredient1() {
-        
-        AmxTreeBinding ingredientList = (AmxTreeBinding) AdfmfJavaUtilities.getELValue("#{bindings.ingredients}");
-        AmxIteratorBinding amxListIterator =  ingredientList.getIteratorBinding();
-        BasicIterator basicIterator = amxListIterator.getIterator();  
-        Ingredient ingredient = (Ingredient) basicIterator.getDataProvider();
-        return ingredient;
-        
-    }
-    
-    private Ingredient getCurrentIngredient2() {
-        
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{bindings.ingredientsIterator.currentRow.dataProvider}",  Object.class);
-        Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());
-        Ingredient i = new Ingredient(); 
-        if (obj instanceof ConcreteJavaBeanObject) {
-            ConcreteJavaBeanObject cjbo = (ConcreteJavaBeanObject)obj;
-            i = (Ingredient)cjbo.getInstance();
-        }
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "getCurrentIngredient2", 
-                  " INGREDIENT ID:" + i.getId() + " ITEM:" + i.getItem());
-        return i;
-        
-    } 
-    
-    public void setCurrentIngredient(Integer id) {
-        
-        AmxTreeBinding ingredientList = (AmxTreeBinding) AdfmfJavaUtilities.getELValue("#{bindings.ingredients}");
-        AmxIteratorBinding amxListIterator =  ingredientList.getIteratorBinding();
-        BasicIterator basicIterator = amxListIterator.getIterator();
-        
-        try  { 
-            if (basicIterator.getRangeSize()>0) {
-                for (Integer i=1; i<basicIterator.getRangeSize(); i++) {
-                    basicIterator.setCurrentIndex(i);
-                    Ingredient ingredient = (Ingredient) basicIterator.getDataProvider();
-                    if (ingredient.getId() == id) {
-                        break;
-                    }
-                }
-            }
-        }
-        catch(Exception e)     {
-        }  
-        
-        /**
-        for (Integer i=1; i<ingredients.size(); i++) {
-             Ingredient ingredient = (Ingredient) ingredients.get(i);
-             if (ingredient.getId() == id) {
-                 break;
-             }
-         }
-        **/
-    }
-    public void deleteIngredientFromStoreXXXX() throws SQLException, Exception {
-         
-         try {             
-             Connection conn = DBConnectionFactory.getConnection();
-             Statement stmt = conn.createStatement();
-             Integer ingredientID = getCurrentIngredientID();
-             String item = getCurrentIngredientItem();
-             
-             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore", 
-                       "RECIPE ID:" + id + ", INGREDIENT ID:" + ingredientID + " " + item);
-             
-             if (id>0) {
-                 String sql = "DELETE FROM INGREDIENTS WHERE RID =" + id + " AND IID=" + ingredientID;
-                 int updateCount = stmt.executeUpdate(sql);
-                 if (updateCount == 0) {
-                     Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                               "Delete Failed!");
-                     Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                               sql);
-                 }
-                 else {
-                     Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                               "Delete Passed! ID:" + ingredientID);
-                     
-                     /** REMOVE INGREDIENT **/
-                     
-                     removeIngredient(ingredientID);
-                     providerChangeSupport.fireProviderRefresh("ingredients");
-                 }
-             }
-             conn.commit();
-             
-         } catch (SQLException e) {
-             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                       "##############SQL Exception:  " + e.getMessage());
-             e.printStackTrace();
-         } catch (Exception exception) {
-             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                       "##############Exception:  " + exception.getMessage());
-
-         }
-     }    
-    
-    public void reloadFromStore() {
+    public void reloadFromStoreXXX() {
             
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "reloadFromStore",
                   "RECIPE ID:  " + this.id);
@@ -827,10 +703,17 @@ public class Recipe {
          }
     }
     
-    public void saveToStore() {
-        try {
-            
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "Recipe: " + this.id);
+    public Boolean saveRecipeToStore(Recipe recipe) {
+        
+        Boolean success = false;
+        this.id = recipe.id;
+        this.title = recipe.title;
+        this.recipeUrl = recipe.recipeUrl;
+        this.description = recipe.description;
+        this.prepTime = recipe.prepTime;
+        
+        try {            
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Recipe: " + this.id);
             
             RecipeService rSvc = new RecipeService();
             rSvc.clearParms();
@@ -843,7 +726,7 @@ public class Recipe {
             if (this.getTitle().length()==0) {
                 rs = stmt.executeQuery(sql);
                 conn.commit();
-                return;
+                return false;
             }
             
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "title: " + this.getTitle());
@@ -865,59 +748,57 @@ public class Recipe {
            
             int updateCount = stmt.executeUpdate(sql);
             if (updateCount == 0) {
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "Update Failed!");
+                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Update Failed!");
             }
             else {
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "Update PASSED!");
+                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Update PASSED!");
+                success = true;
             }
             
             conn.commit();
             
         } catch (SQLException e) {
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore",
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore",
                       "##############SQL Exception:  " + e.getMessage());
             e.printStackTrace();
         } catch (Exception exception) {
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore",
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore",
                       "##############Exception:  " + exception.getMessage());
 
         }
+        return success;
     }
    
     public void deleteFromStore(Integer id) {
-            
-            try {
-                if (this.getTitle().trim().length()==0) {
-                    
-                    Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteFromStore",
-                              "RECIPE ID:  " + id);        
-                    
-                    Connection conn = DBConnectionFactory.getConnection();
-                    Statement stmt = conn.createStatement();            
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM RECIPES WHERE RID = " + id);
-                    rs.beforeFirst();
-                    if (rs.next()) {
-                        String sql = "DELETE FROM RECIPES WHERE RID = " + id;    
-                        int updateCount = stmt.executeUpdate(sql);
-                        if (updateCount == 0) {
-                            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteFromStore",
-                                      "Delete Failed!");
-                        }
-                        else {
-                            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteFromStore",
-                                                  "DELETED Recipe ID: " + id);
-                        }
-                    }
-                    conn.commit();
-                }
-            } catch (SQLException e) {
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                          "##############SQL Exception:  " + e.getMessage());
-                e.printStackTrace();
-            } catch (Exception exception) {
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteIngredientFromStore",
-                          "##############Exception:  " + exception.getMessage());
 
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe", "RECIPE ID:  " + id);
+
+        try {
+            Connection conn = DBConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM RECIPES WHERE RID = " + id);
+            rs.beforeFirst();
+            if (rs.next()) {
+                if (rs.getString("TITLE").trim().length()==0) {
+                    String sql = "DELETE FROM RECIPES WHERE RID = " + id;
+                    int updateCount = stmt.executeUpdate(sql);
+                    if (updateCount == 0) {
+                        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe",
+                                  "Delete Failed!");
+                    }
+                }
             }
+            conn.commit();
+            //}
+        } catch (SQLException e) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe",
+                      "##############SQL Exception:  " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception exception) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteRecipe",
+                      "##############Exception:  " + exception.getMessage());
+
         }
+    } 
+    
 }

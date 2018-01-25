@@ -27,11 +27,6 @@
                   IsViewObjectMethod="false" DataControl="ApplicationFeatures"
                   InstanceName="data.ApplicationFeatures.dataProvider"/>
     <action IterBinding="recipesIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
-    <methodAction IterBinding="recipesIterator" id="deleteFromStore" RequiresUpdateModel="true" Action="invokeMethod"
-                  MethodName="deleteFromStore" IsViewObjectMethod="false" DataControl="RecipeService"
-                  InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true">
-      <NamedData NDName="id" NDValue="#{bindings.id.inputValue}" NDType="java.lang.Integer"/>
-    </methodAction>
     <methodAction IterBinding="recipesIterator" id="reloadFromStore" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="reloadFromStore" IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="bindings.recipesIterator.currentRow.dataProvider" IsLocalObjectReference="true"/>
@@ -40,5 +35,14 @@
         <Item Value="id"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="removeRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="removeRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
+    <methodAction id="reloadRecipes" RequiresUpdateModel="true" Action="invokeMethod" MethodName="reloadRecipes"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
+    <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
   </bindings>
 </pageDefinition>

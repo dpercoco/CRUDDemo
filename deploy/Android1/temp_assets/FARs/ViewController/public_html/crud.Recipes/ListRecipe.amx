@@ -25,13 +25,16 @@
                               showMoreStrategy="autoScroll" 
                               bufferStrategy="viewport" id="lv2">
                     <amx:listItem id="li1" action="detail">
+                        <amx:actionListener id="al2">
+                        </amx:actionListener>
+                        <amx:setPropertyListener id="spl01" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                         <amx:accessoryLayout id="al1">
                             <amx:facet name="end">
-                                <amx:commandLink actionListener="#{bindings.Delete.execute}" text="Delete"
-                                                 disabled="#{!bindings.Delete.enabled}" id="cl3">
-                                     <amx:setPropertyListener id="spl3" from="#{row.id}" to="#{viewScope.selectedId}"/>
-                                     <amx:actionListener id="al3" binding="#{bindings.deleteFromStore.execute}"/>
-                                     <amx:actionListener id="al4" binding="#{bindings.reloadFromStore.execute}"/>
+                                <amx:commandLink actionListener="#{bindings.Delete.execute}"
+                                                 disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">
+                                     <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
+                                     <amx:actionListener id="al3" binding="#{bindings.deleteRecipe.execute}"/>
+                                     <amx:actionListener id="al4" binding="#{bindings.reloadRecipes.execute}"/>
                                 </amx:commandLink>
                             </amx:facet>
                             <amx:tableLayout width="100%" id="tl1">
@@ -40,7 +43,7 @@
                                         <amx:selectBooleanCheckbox text="" label=""  styleClass="adfmf-listItem-captionText-Checkbox" id="sbc1"/>
                                     </amx:cellFormat>
                                     <amx:cellFormat id="cf1" width="90%"> 
-                                        <amx:outputText value="#{row.title}" id="ot3" styleClass="amx-outputText.adfmf-listItem-MainText"/>
+                                        <amx:outputText value="#{row.title} (#{row.id})" id="ot3" styleClass="amx-outputText.adfmf-listItem-MainText"/>
                                     </amx:cellFormat>
                                 </amx:rowLayout>
                                  <amx:rowLayout id="rl3"> 

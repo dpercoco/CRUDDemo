@@ -39,13 +39,13 @@
    <View
       id="View5">
       <property
-         name="activityId">Detail</property>
+         name="activityId">DetailRecipe</property>
       <property
-         name="x">363.0</property>
+         name="x">368.0</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>Detail&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>DetailRecipe&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">-2.4023438</property>
+         name="y">-39.609375</property>
       <property
          name="page">/crud.Recipes/DetailRecipe.amx</property>
       <property
@@ -56,11 +56,11 @@
       <property
          name="activityId">clearParms</property>
       <property
-         name="x">477.0</property>
+         name="x">481.0</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>clearParms&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
       <property
-         name="y">-3.1552734</property>
+         name="y">-89.16699</property>
       <property
          name="exceptionHandler">false</property>
    </MethodCall>
@@ -80,11 +80,11 @@
    <View
       id="View12">
       <property
-         name="activityId">EditRecipes</property>
+         name="activityId">EditRecipe</property>
       <property
          name="x">478.0</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>EditRecipes&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>EditRecipe&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
          name="y">113.49414</property>
       <property
@@ -97,11 +97,11 @@
       <property
          name="activityId">Google</property>
       <property
-         name="x">598.0</property>
+         name="x">478.0</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>Google&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">113.44238</property>
+         name="y">258.7412</property>
       <property
          name="page">/crud.Recipes/Google.amx</property>
       <property
@@ -112,29 +112,16 @@
       <property
          name="activityId">EditIngredient</property>
       <property
-         name="x">662.0</property>
+         name="x">655.0</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>EditIngredient&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">257.88477</property>
+         name="y">114.06836</property>
       <property
          name="page">/crud.Recipes/EditIngredient.amx</property>
       <property
          name="exceptionHandler">false</property>
    </View>
-   <MethodCall
-      id="MethodCall20">
-      <property
-         name="activityId">CreateIngredient</property>
-      <property
-         name="x">479.0</property>
-      <property
-         name="description">&lt;html>&lt;p>&lt;b>CreateIngredient&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
-      <property
-         name="y">312.58594</property>
-      <property
-         name="exceptionHandler">false</property>
-   </MethodCall>
    <WildcardControlFlowRule
       id="WildcardControlFlowRule30">
       <property
@@ -190,34 +177,6 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase34"
-      from="View2"
-      to="View5">
-      <property
-         name="tosrcid">__5</property>
-      <property
-         name="fromOutcome">detail</property>
-      <property
-         name="fromsrcid">__1</property>
-      <property
-         name="sdm:polyPoints">R46,273.0,51.591797,322.0,-2.7529297,L50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase35"
-      from="MethodCall20"
-      to="View21">
-      <property
-         name="tosrcid">__9</property>
-      <property
-         name="fromOutcome">Create</property>
-      <property
-         name="fromsrcid">__8</property>
-      <property
-         name="sdm:polyPoints">R50,520.0,312.23535,621.0,264.53418,L58</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
       id="ControlFlowCase36"
       from="View5"
       to="MethodCall6">
@@ -228,21 +187,7 @@
       <property
          name="fromsrcid">__6</property>
       <property
-         name="sdm:polyPoints">R50,404.0,-2.7529297,436.0,-3.5058594,L50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase37"
-      from="View12"
-      to="MethodCall20">
-      <property
-         name="tosrcid">__16</property>
-      <property
-         name="fromOutcome">createIngredient</property>
-      <property
-         name="fromsrcid">__14</property>
-      <property
-         name="sdm:polyPoints">B39,471.0,173.11292,479.0,258.23535,T50</property>
+         name="sdm:polyPoints">R50,409.0,-39.95996,440.0,-89.51758,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -256,7 +201,7 @@
       <property
          name="fromsrcid">__10</property>
       <property
-         name="sdm:polyPoints">B50,477.0,50.49414,478.0,59.143555,T50</property>
+         name="sdm:polyPoints">B50,481.0,-35.51758,481.5,56.815647,T56</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -270,7 +215,7 @@
       <property
          name="fromsrcid">__14</property>
       <property
-         name="sdm:polyPoints">R50,519.0,113.143555,557.0,113.0918,L50</property>
+         name="sdm:polyPoints">B50,478.0,167.14355,478.0,205.0918,T50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -284,11 +229,21 @@
       <property
          name="fromsrcid">__14</property>
       <property
-         name="sdm:polyPoints">B61,485.0,167.14355,621.0,250.53418,L42</property>
+         name="sdm:polyPoints">R50,519.0,113.143555,614.0,113.71777,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase25"
+      id="ControlFlowCase42"
+      from="View2"
+      to="View5">
+      <property
+         name="fromOutcome">detail</property>
+      <property
+         name="sdm:polyPoints">R46,273.0,51.591797,327.0,-39.95996,L50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase27"
       from="WildcardControlFlowRule30">
       <property
          name="tosrcid">__20</property>
@@ -299,7 +254,7 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase26"
+      id="ControlFlowCase28"
       to="View12">
       <property
          name="tosrcid">__22</property>
@@ -310,16 +265,12 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase30"
-      from="View21"
+      id="ControlFlowCase34"
+      from="View5"
       to="View12">
       <property
-         name="tosrcid">__25</property>
+         name="fromOutcome">editRecipe</property>
       <property
-         name="fromOutcome">saveIngredient</property>
-      <property
-         name="fromsrcid">__17</property>
-      <property
-         name="sdm:polyPoints">L50,619.03613,257.53418,478.0,171.03128,B50</property>
+         name="sdm:polyPoints">B50,368.0,14.040039,474.5,59.143555,T44</property>
    </ControlFlowCase>
 </SDM>

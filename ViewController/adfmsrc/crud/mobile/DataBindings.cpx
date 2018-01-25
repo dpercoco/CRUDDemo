@@ -47,8 +47,7 @@
     <page path="/crud.Recipes/EditIngredientsOLD.amx" usageId="crud_mobile_EditIngredientsPageDef"/>
     <page path="/crud.Recipes/EditIngredientsOLD.amx" usageId="crud_mobile_EditIngredients_NEWPageDef"/>
     <page path="/crud.Recipes/EditIngredient.amx" usageId="crud_mobile_EditIngredientPageDef"/>
-    <page path="/crud.Recipes/Recipes-task-flow.xml#Recipes-task-flow@CreateIngredient"
-          usageId="crud_mobile_Recipes_task_flow_Recipes_task_flow_CreateIngredientPageDef"/>
+    <page path="/crud.Recipes/UpdateRecipe.amx" usageId="crud_mobile_UpdateIngredientPageDef"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="crud_mobile_PeoplePageDef" path="crud.CRUD.PeoplePageDef"/>
@@ -92,8 +91,7 @@
     <page id="crud_mobile_EditIngredientsPageDef" path="crud.Recipes.EditIngredientsPageDef"/>
     <page id="crud_mobile_EditIngredients_NEWPageDef" path="crud.Recipes.EditIngredients_NEWPageDef"/>
     <page id="crud_mobile_EditIngredientPageDef" path="crud.Recipes.EditIngredientPageDef"/>
-    <page id="crud_mobile_Recipes_task_flow_Recipes_task_flow_CreateIngredientPageDef"
-          path="crud.Recipes.Recipes_task_flow_Recipes_task_flow_CreateIngredientPageDef"/>
+    <page id="crud_mobile_UpdateIngredientPageDef" path="crud.Recipes.UpdateIngredientPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <dc id="AisleService" path="crud.mobile.AisleService"/>

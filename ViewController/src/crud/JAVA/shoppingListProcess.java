@@ -298,7 +298,7 @@ public class shoppingListProcess {
         foodGroups = aisle.loadFoodGroups();
         totalIngredients = 0;
         
-        Utility.ApplicationLogger.severe("loaded Food Groups : " + foodGroups.size());
+        //Utility.ApplicationLogger.severe("loaded Food Groups : " + foodGroups.size());
         
         content = InContent;
         content = content.replaceAll("½", "1/2"); 
@@ -383,7 +383,9 @@ public class shoppingListProcess {
     }
     
     public static void findIngredients(String line) {
-
+        
+        //Utility.ApplicationLogger.severe("shoppingListProcess - findIngredients!!!!\n");
+        
         int ct = 0;
         line = line.replace("cans", "can").trim();
         line = line.replace("-", " ").trim();
@@ -421,6 +423,9 @@ public class shoppingListProcess {
             while (m.find()) {
                    ct++;
                    bFoundIngredient = true;
+                
+                   //Utility.ApplicationLogger.severe("shoppingListProcess - foundIngredient: " + m.group());
+               
                    ingredient = m.group();
                    ingredient = ingredient.replace("  "," ");
                    ingredient = ingredient.toLowerCase().replace("ingredients","");
@@ -738,7 +743,9 @@ public class shoppingListProcess {
     }    
     
     private static void addShoppingItem(String foodGroup, String foodItemRaw) {
-		 
+	
+    //Utility.ApplicationLogger.severe("shoppingListProcess - addShoppingItem: " + foodItemRaw);
+        	 
     try {
        Map<String, Ingredient> temp = new HashMap<String, Ingredient>();
        String foodItem=""; 
@@ -748,7 +755,10 @@ public class shoppingListProcess {
               temp = shoppingItems.get(foodGroup);
               if(temp == null)
                  temp = new HashMap<String, Ingredient>();
+              
+            //ingredient = ingredient.buildIngredient(foodItemRaw);               
               ingredient = ingredient.buildIngredient(foodGroup, foodItemRaw);
+              
               foodItem = ingredient.getFoodItem();
               if (temp.containsKey(foodItem)) {
                  prevIngredient = temp.get(foodItem);

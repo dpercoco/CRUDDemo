@@ -42,7 +42,7 @@
                             <amx:listItem id="li1">
                                 <amx:accessoryLayout id="al1">
                                     <amx:facet name="end">
-                                        <amx:commandLink id="cl1" text="Delete"
+                                        <amx:commandLink id="cl11" text="Delete"
                                                          actionListener="#{bindings.RemoveRow.execute}">
                                             <amx:setPropertyListener id="spl3" from="#{row.id}"
                                                                      to="#{viewScope.selectedId}"/>

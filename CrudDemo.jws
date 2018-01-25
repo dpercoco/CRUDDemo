@@ -265,9 +265,9 @@
       </hash>
       <list n="profileList">
          <string v="Android1"/>
+         <string v="CrudDemo"/>
          <string v="iOS1"/>
          <string v="Windows1"/>
-         <string v="CrudDemo"/>
       </list>
    </hash>
    <hash n="oracle.jdeveloper.model.ApplicationLibraries">

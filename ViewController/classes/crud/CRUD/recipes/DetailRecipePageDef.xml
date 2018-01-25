@@ -35,7 +35,7 @@
         <Item Value="prepTime"/>
       </AttrNames>
     </attributeValues>
-    <list IterBinding="recipesIterator" ListOperMode="navigation" ListIter="recipesIterator" id="recipes"
+   <list IterBinding="recipesIterator" ListOperMode="navigation" ListIter="recipesIterator" id="recipes"
           DTSupportsMRU="true" SelectItemValueMode="ListObject">
       <AttrNames>
         <Item Value="id"/>
@@ -65,5 +65,9 @@
         </AttrNames>
       </nodeDefinition>
     </tree>
+    <action IterBinding="recipesIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
   </bindings>
 </pageDefinition>

@@ -167,7 +167,7 @@ public class GeneralBean {
             
               DataControl dc = AdfmfJavaUtilities.getDataControlById(iterator.getDataControl().getName());
               RecipeService dcImpl = (RecipeService)dc.getDataProvider();
-              dcImpl.refreshIngredients();
+              //dcImpl.refreshIngredients();
         }
         catch (Exception e) {
             Utility.ApplicationLogger.severe("######## EXCEPTION: " + e.getMessage());    
@@ -228,7 +228,7 @@ public class GeneralBean {
               DataControl dc = AdfmfJavaUtilities.getDataControlById(iterator.getDataControl().getName());
               RecipeService dcImpl = (RecipeService)dc.getDataProvider();
               List<Recipe> recipes = (List<Recipe>) dcImpl.getRecipes();
-              dcImpl.refreshIngredients();
+              //dcImpl.refreshIngredients();
         }
         catch (Exception e) {
             Utility.ApplicationLogger.severe("######## EXCEPTION: " + e.getMessage());    

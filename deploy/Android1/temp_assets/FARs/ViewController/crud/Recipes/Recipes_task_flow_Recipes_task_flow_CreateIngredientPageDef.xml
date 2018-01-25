@@ -5,10 +5,8 @@
   <parameters/>
   <executables>
     <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
-    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipes" RangeSize="25" DataControl="RecipeService"
-                      BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
-    <accessorIterator MasterBinding="recipesIterator" Binds="ingredients" RangeSize="25" DataControl="RecipeService"
-                      BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="ingredients" RangeSize="25"
+                      DataControl="RecipeService" BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
   </executables>
   <bindings>
     <action IterBinding="ingredientsIterator" id="Create" RequiresUpdateModel="true" Action="createRow"/>

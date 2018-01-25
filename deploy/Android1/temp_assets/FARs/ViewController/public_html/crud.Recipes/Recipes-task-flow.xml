@@ -2,6 +2,11 @@
 <adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
   <task-flow-definition id="Recipes-task-flow">
     <default-activity>Recipes</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name>IngredientsBean</managed-bean-name>
+      <managed-bean-class>crud.JAVA.IngredientsBean</managed-bean-class>
+      <managed-bean-scope>application</managed-bean-scope>
+    </managed-bean>
     <view id="Recipes">
       <page>/crud.Recipes/ListRecipe.amx</page>
     </view>
@@ -11,7 +16,7 @@
         <id>AislesTaskFlow</id>
       </task-flow-reference>
     </task-flow-call>
-    <view id="Detail">
+    <view id="DetailRecipe">
       <page>/crud.Recipes/DetailRecipe.amx</page>
     </view>
     <method-call id="clearParms">
@@ -26,7 +31,7 @@
         <fixed-outcome>Create</fixed-outcome>
       </outcome>
     </method-call>
-    <view id="EditRecipes">
+    <view id="EditRecipe">
       <page>/crud.Recipes/EditRecipe.amx</page>
     </view>
     <view id="Google">
@@ -35,12 +40,6 @@
     <view id="EditIngredient">
       <page>/crud.Recipes/EditIngredient.amx</page>
     </view>
-    <method-call id="CreateIngredient">
-      <method>#{bindings.Create.execute}</method>
-      <outcome>
-        <fixed-outcome>Create</fixed-outcome>
-      </outcome>
-    </method-call>
     <!--<method-call id="findAll">
     </method-call>-->
     <control-flow-rule id="__1">
@@ -53,51 +52,44 @@
         <from-outcome>add</from-outcome>
         <to-activity-id>Create</to-activity-id>
       </control-flow-case>
-      <control-flow-case id="__5">
+      <control-flow-case id="__24">
         <from-outcome>detail</from-outcome>
-        <to-activity-id>Detail</to-activity-id>
+        <to-activity-id>DetailRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__6">
-      <from-activity-id>Detail</from-activity-id>
+      <from-activity-id>DetailRecipe</from-activity-id>
       <control-flow-case id="__7">
         <from-outcome>clear</from-outcome>
         <to-activity-id>clearParms</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__9">
+        <from-outcome>editRecipe</from-outcome>
+        <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__10">
       <from-activity-id>clearParms</from-activity-id>
       <control-flow-case id="__11">
         <from-outcome>edit</from-outcome>
-        <to-activity-id>EditRecipes</to-activity-id>
+        <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__12">
       <from-activity-id>Create</from-activity-id>
       <control-flow-case id="__13">
         <from-outcome>Create</from-outcome>
-        <to-activity-id>EditRecipes</to-activity-id>
+        <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__14">
-      <from-activity-id>EditRecipes</from-activity-id>
+      <from-activity-id>EditRecipe</from-activity-id>
       <control-flow-case id="__15">
         <from-outcome>google</from-outcome>
         <to-activity-id>Google</to-activity-id>
       </control-flow-case>
       <control-flow-case id="__2">
         <from-outcome>editIngredient</from-outcome>
-        <to-activity-id>EditIngredient</to-activity-id>
-      </control-flow-case>
-      <control-flow-case id="__16">
-        <from-outcome>createIngredient</from-outcome>
-        <to-activity-id>CreateIngredient</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
-    <control-flow-rule id="__8">
-      <from-activity-id>CreateIngredient</from-activity-id>
-      <control-flow-case id="__9">
-        <from-outcome>Create</from-outcome>
         <to-activity-id>EditIngredient</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
@@ -112,14 +104,7 @@
       <from-activity-id>findAll</from-activity-id>
       <control-flow-case id="__22">
         <from-outcome>goEditRecipes</from-outcome>
-        <to-activity-id>EditRecipes</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
-    <control-flow-rule id="__17">
-      <from-activity-id>EditIngredient</from-activity-id>
-      <control-flow-case id="__25">
-        <from-outcome>saveIngredient</from-outcome>
-        <to-activity-id>EditRecipes</to-activity-id>
+        <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <page-flow-scope-behavior>

@@ -9,14 +9,17 @@
         <amx:commandButton id="cb1" action="__back" icon="/images/back.png"/>
     </amx:facet>
     <amx:facet name="secondary">
-      <amx:commandButton id="cb2" action="clear" text="" icon="/images/edit.png">
+       <amx:commandButton id="cb2" action="clear" text="" icon="/images/edit.png">
             <amx:setPropertyListener id="spl2" from="#{false}" to="#{pageFlowScope.newMode}"/>
         </amx:commandButton>
+        <amx:commandButton action="__back" icon="/images/delete.png" actionListener="#{bindings.Delete.execute}" text=""
+                         disabled="#{!bindings.Delete.enabled}" id="cb3">
+             <amx:setPropertyListener id="spl9" from="#{bindings.id.inputValue}" to="#{pageFlowScope.selectedRid}"/>
+             <amx:actionListener id="al3" binding="#{bindings.deleteRecipe.execute}"/>
+        </amx:commandButton>                             
     </amx:facet>
-    
     <amx:commandLink text="#{bindings.recipeUrl.inputValue}" id="cl1" inlineStyle=" margin-left: 10px;white-space: normal; "
-                     actionListener="#{generalBean.getUrl}"/>
-    
+                     actionListener="#{generalBean.getUrl}"/>    
     <amx:panelFormLayout id="pfl2" fieldHalign="start" fieldWidth="70%" labelWidth="30%" showHorizontalDividers="false"> 
         <amx:panelLabelAndMessage label="#{bindings.prepTime.hints.label}" id="plam11">
             <amx:outputText value="#{bindings.prepTime.inputValue}" id="ot13">
@@ -28,10 +31,10 @@
                   fetchSize="#{bindings.ingredients.rangeSize}"
                   initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
                   selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}" 
-                  dividerAttribute="foodGroup"
+                  dividerAttribute="foodGroup" showDividerCount="true" 
                   dividerMode="all" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2"
                   styleClass="" collapsibleDividers="true">
-          <amx:listItem id="li1">
+          <amx:listItem id="li1" action="editRecipe">
                 <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} 
                           #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
           </amx:listItem>

@@ -5,13 +5,13 @@
    <View
       id="View2">
       <property
-         name="activityId">Recipes</property>
+         name="activityId">ListRecipes</property>
       <property
          name="x">232.0</property>
       <property
          name="start">true</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>Recipes&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>ListRecipes&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
          name="y">55.442383</property>
       <property
@@ -64,19 +64,6 @@
       <property
          name="exceptionHandler">false</property>
    </MethodCall>
-   <MethodCall
-      id="MethodCall7">
-      <property
-         name="activityId">Create</property>
-      <property
-         name="x">365.0</property>
-      <property
-         name="description">&lt;html>&lt;p>&lt;b>Create&lt;/b>&lt;/p>&lt;p>Activity Type:  Method Call&lt;/p></property>
-      <property
-         name="y">113.5459</property>
-      <property
-         name="exceptionHandler">false</property>
-   </MethodCall>
    <View
       id="View12">
       <property
@@ -97,11 +84,11 @@
       <property
          name="activityId">Google</property>
       <property
-         name="x">478.0</property>
+         name="x">316.0</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>Google&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">258.7412</property>
+         name="y">217.04004</property>
       <property
          name="page">/crud.Recipes/Google.amx</property>
       <property
@@ -135,20 +122,6 @@
    </WildcardControlFlowRule>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase31"
-      from="View2"
-      to="MethodCall7">
-      <property
-         name="tosrcid">__4</property>
-      <property
-         name="fromOutcome">add</property>
-      <property
-         name="fromsrcid">__1</property>
-      <property
-         name="sdm:polyPoints">R54,273.0,58.591797,324.0,113.19531,L50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
       id="ControlFlowCase32"
       from="View2"
       to="TaskFlowCall5">
@@ -160,20 +133,6 @@
          name="fromsrcid">__1</property>
       <property
          name="sdm:polyPoints">L50,191.0,55.091797,83.0,55.844727,R50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase33"
-      from="MethodCall7"
-      to="View12">
-      <property
-         name="tosrcid">__13</property>
-      <property
-         name="fromOutcome">Create</property>
-      <property
-         name="fromsrcid">__12</property>
-      <property
-         name="sdm:polyPoints">R50,406.0,113.19531,437.0,113.143555,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -205,20 +164,6 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase39"
-      from="View12"
-      to="View16">
-      <property
-         name="tosrcid">__15</property>
-      <property
-         name="fromOutcome">google</property>
-      <property
-         name="fromsrcid">__14</property>
-      <property
-         name="sdm:polyPoints">B50,478.0,167.14355,478.0,205.0918,T50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
       id="ControlFlowCase40"
       from="View12"
       to="View21">
@@ -243,7 +188,17 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase27"
+      id="ControlFlowCase34"
+      from="View5"
+      to="View12">
+      <property
+         name="fromOutcome">editRecipe</property>
+      <property
+         name="sdm:polyPoints">B50,368.0,14.040039,474.5,59.143555,T44</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase24"
       from="WildcardControlFlowRule30">
       <property
          name="tosrcid">__20</property>
@@ -254,7 +209,7 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase28"
+      id="ControlFlowCase25"
       to="View12">
       <property
          name="tosrcid">__22</property>
@@ -265,12 +220,26 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase34"
-      from="View5"
+      id="ControlFlowCase23"
+      from="View2"
       to="View12">
       <property
-         name="fromOutcome">editRecipe</property>
+         name="fromOutcome">edit</property>
       <property
-         name="sdm:polyPoints">B50,368.0,14.040039,474.5,59.143555,T44</property>
+         name="sdm:polyPoints">R54,273.0,58.591797,437.0,113.143555,L50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase26"
+      from="View2"
+      to="View16">
+      <property
+         name="tosrcid">__12</property>
+      <property
+         name="fromOutcome">google</property>
+      <property
+         name="fromsrcid">__1</property>
+      <property
+         name="sdm:polyPoints">B50,232.0,109.0918,316.0,162.68945,T50</property>
    </ControlFlowCase>
 </SDM>

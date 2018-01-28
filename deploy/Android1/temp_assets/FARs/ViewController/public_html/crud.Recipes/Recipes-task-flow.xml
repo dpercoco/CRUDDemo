@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <adfc-mobile-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.0">
   <task-flow-definition id="Recipes-task-flow">
-    <default-activity>Recipes</default-activity>
+    <default-activity>ListRecipes</default-activity>
     <managed-bean id="__5">
       <managed-bean-name>IngredientsBean</managed-bean-name>
       <managed-bean-class>crud.JAVA.IngredientsBean</managed-bean-class>
       <managed-bean-scope>application</managed-bean-scope>
     </managed-bean>
-    <view id="Recipes">
+    <view id="ListRecipes">
       <page>/crud.Recipes/ListRecipe.amx</page>
     </view>
     <task-flow-call id="Aisles">
@@ -25,12 +25,6 @@
         <fixed-outcome>edit</fixed-outcome>
       </outcome>
     </method-call>
-    <method-call id="Create">
-      <method>#{bindings.Create.execute}</method>
-      <outcome>
-        <fixed-outcome>Create</fixed-outcome>
-      </outcome>
-    </method-call>
     <view id="EditRecipe">
       <page>/crud.Recipes/EditRecipe.amx</page>
     </view>
@@ -43,18 +37,22 @@
     <!--<method-call id="findAll">
     </method-call>-->
     <control-flow-rule id="__1">
-      <from-activity-id>Recipes</from-activity-id>
+      <from-activity-id>ListRecipes</from-activity-id>
       <control-flow-case id="__3">
         <from-outcome>aisles</from-outcome>
         <to-activity-id>Aisles</to-activity-id>
       </control-flow-case>
-      <control-flow-case id="__4">
-        <from-outcome>add</from-outcome>
-        <to-activity-id>Create</to-activity-id>
-      </control-flow-case>
       <control-flow-case id="__24">
         <from-outcome>detail</from-outcome>
         <to-activity-id>DetailRecipe</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__8">
+        <from-outcome>edit</from-outcome>
+        <to-activity-id>EditRecipe</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__12">
+        <from-outcome>google</from-outcome>
+        <to-activity-id>Google</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__6">
@@ -75,19 +73,8 @@
         <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
-    <control-flow-rule id="__12">
-      <from-activity-id>Create</from-activity-id>
-      <control-flow-case id="__13">
-        <from-outcome>Create</from-outcome>
-        <to-activity-id>EditRecipe</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
     <control-flow-rule id="__14">
       <from-activity-id>EditRecipe</from-activity-id>
-      <control-flow-case id="__15">
-        <from-outcome>google</from-outcome>
-        <to-activity-id>Google</to-activity-id>
-      </control-flow-case>
       <control-flow-case id="__2">
         <from-outcome>editIngredient</from-outcome>
         <to-activity-id>EditIngredient</to-activity-id>

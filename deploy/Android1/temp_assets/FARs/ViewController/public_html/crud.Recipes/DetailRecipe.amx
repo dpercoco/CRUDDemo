@@ -31,7 +31,7 @@
                   fetchSize="#{bindings.ingredients.rangeSize}"
                   initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
                   selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}" 
-                  dividerAttribute="foodGroup" showDividerCount="true" 
+                  dividerAttribute="foodGroup" showDividerCount="false" 
                   dividerMode="all" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2"
                   styleClass="" collapsibleDividers="true">
           <amx:listItem id="li1" action="editRecipe">

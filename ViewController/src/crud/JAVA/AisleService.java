@@ -89,7 +89,7 @@ public class AisleService {
          
          if (foodGroups!= null){
              if (foodGroups.size()>0) {
-                 Utility.ApplicationLogger.severe("Load pre-loaded food Groups " + foodGroups.size());
+                 //Utility.ApplicationLogger.severe("Load pre-loaded food Groups " + foodGroups.size());
                  return foodGroups;
              }
          }  

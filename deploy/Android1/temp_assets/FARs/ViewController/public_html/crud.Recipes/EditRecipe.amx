@@ -6,15 +6,20 @@
             <amx:outputText value="#{bindings.title.inputValue}" id="ot1"/>
         </amx:facet>
         <amx:facet name="primary">
-            <amx:commandButton actionListener="#{bindings.deleteRecipe.execute}" text="Delete"
-                               disabled="#{!bindings.deleteRecipe.enabled}" id="cb3"/>            
+            <amx:commandButton action="__back" id="cb1"  icon="/images/back.png">
+            <amx:setPropertyListener id="spl0" from="#{false}" to="#{pageFlowScope.newMode}" type="action"/>
+        </amx:commandButton>    
         </amx:facet>        
         <amx:facet name="secondary">
-            <amx:commandButton id="cb2" action="__back" text="Save" inlineStyle="left:-5px" >
+                  <!--<amx:commandButton icon="/images/add.png" actionListener="#{bindings.prepareRecipeToAdd.execute}" text="Add Recipe"
+                                     disabled="#{!bindings.prepareRecipeToAdd.enabled}" id="cb5"/>-->
+                  <amx:commandButton id="cb2" action="__back" text="Save" inlineStyle="left:-5px" >
                     <amx:actionListener id="al2" binding="#{bindings.saveRecipe.execute}"/>
-                    <!--<amx:actionListener id="al3" binding="#{bindings.deleteFromStore.execute}"/>
-                    <amx:actionListener id="al4" binding="#{bindings.reloadRecipes.execute}"/>-->
+                    <!--<amx:actionListener id="al3" binding="#{bindings.addRecipe.execute}"/>
+                        <amx:actionListener id="al4" binding="#{bindings.reloadRecipes.execute}"/>-->
                 </amx:commandButton>
+                 <amx:commandButton action="__back" icon="/images/delete.png" actionListener="#{bindings.deleteRecipe.execute}" text=""
+                               disabled="#{!bindings.deleteRecipe.enabled}" id="cb4"/>       
                 <!--<amx:commandButton id="cb3" action="editIngredients" text="" icon="/images/edit.png"/>-->
                 
             <!-- Only display Google Search if in 'Create' mode 
@@ -59,10 +64,19 @@
                                   selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}"
                                   dividerAttribute="foodGroup" dividerMode="all" showMoreStrategy="autoScroll"
                                   bufferStrategy="viewport" id="lv1">
-                          <amx:listItem id="li1" action="editIngredient">
+                          <amx:listItem id="li1" action="editIngredient"> 
+                          <amx:accessoryLayout id="al1">
+                                <amx:facet name="end">
+                                     <amx:commandButton actionListener="#{bindings.Delete.execute}"
+                                             text="Delete" disabled="#{!bindings.Delete.enabled}" id="cb5">
+                                         <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedId}"/>
+                                         <amx:actionListener id="al3" binding="#{bindings.deleteIngredient.execute}"/>
+                                    </amx:commandButton>
+                                </amx:facet>
                                 <amx:actionListener id="al03" binding="#{bindings.prepareIngredientToEdit.execute}"/>
                                 <amx:setPropertyListener id="spl8" from="#{false}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
                                 <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
+                            </amx:accessoryLayout> 
                           </amx:listItem>
                     </amx:listView>
               </amx:facet>

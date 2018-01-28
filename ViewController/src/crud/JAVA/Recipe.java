@@ -101,7 +101,7 @@ public class Recipe {
         try {
             Connection conn = DBConnectionFactory.getConnection();
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT MAX(IID) FROM RECIPES");
+            ResultSet rs = stmt.executeQuery("SELECT MAX(RID) FROM RECIPES");
             rs.beforeFirst();
             if (rs.next()) {
                 newId = rs.getInt(1) + 1;
@@ -186,8 +186,9 @@ public class Recipe {
    }
    
    public Recipe createRecipe(Recipe recipe) {
+       
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe", recipe.getTitle());
-
+        //Recipe recipe = new Recipe();
         try {
             Connection conn = DBConnectionFactory.getConnection();
             Statement stmt = conn.createStatement();
@@ -200,15 +201,6 @@ public class Recipe {
             }
             recipe.setId(newId);
 
-            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.id}", String.class);
-            ve.setValue(AdfmfJavaUtilities.getELContext(), newId);
-
-            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
-            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
-
-            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
-            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
-
         } catch (SQLException e) {
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe",
                       "##############SQL Exception:  " + e.getMessage());
@@ -220,6 +212,16 @@ public class Recipe {
         return recipe;
     }
    
+    public Recipe (String url, String prepTime, String title) {
+        
+       //Recipe recipe = new Recipe(); 
+       this.setId(0);
+       this.setPrepTime(prepTime);
+       this.setRecipeUrl(url);
+       this.setTitle(title);
+       
+   }
+    
    public List<Recipe> getRecipesFromStore() {
 
         List<Recipe> recipes = new ArrayList<Recipe>();
@@ -354,7 +356,7 @@ public class Recipe {
         
         //http://www.rgagnon.com/javadetails/java-0085.html
         int endOfIngredients;        
-        Utility.ApplicationLogger.severe("getIngredientsFromWeb: " + recipeUrl);
+        Utility.ApplicationLogger.severe("getIngredientsFromHTTP: " + recipeUrl);
         
         URL url = new URL(recipeUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -378,7 +380,7 @@ public class Recipe {
               }
               
               if (bufferedReader.ready()) {
-                  Utility.ApplicationLogger.severe("getIngredientsFromWeb: READING BUFFER!");
+                  Utility.ApplicationLogger.severe("getIngredientsFromHTTP: READING BUFFER!");
                   endOfIngredients = -1;
                   line = bufferedReader.readLine();
                   while (line!= null)      {
@@ -394,15 +396,20 @@ public class Recipe {
                       line = bufferedReader.readLine();
                   }  
                   
-                  Utility.ApplicationLogger.severe("getIngredientsFromWeb: FINISHED READING BUFFER!");
-                  String content = contentBuilder.toString();
-                  if (endOfIngredients>-1) content = content.substring(0,endOfIngredients);
+                  Utility.ApplicationLogger.severe("getIngredientsFromHTTP: FINISHED READING BUFFER!");
                   
-                  shoppingListProcess.findIngredients(content);
-                  shoppingItems = slp.getShoppingItems();
-                  Utility.ApplicationLogger.severe("getIngredientsFromWeb: ShoppingItems Count:" + shoppingItems.size() + "\n");
-
-                  loadIngredientsIntoDB ();
+                  String content = contentBuilder.toString();
+                  if (endOfIngredients>-1) { //NEW JAN 2018
+                      content = content.substring(0,endOfIngredients);                  
+                      shoppingListProcess.findIngredients(content);
+                      shoppingItems = slp.getShoppingItems();
+                      Utility.ApplicationLogger.severe("getIngredientsFromHTTP: ShoppingItems Count:" + shoppingItems.size() + "\n");
+                      if (shoppingItems.size()>0)
+                        loadIngredientsIntoDB ();
+                  }
+                  else {
+                      Utility.ApplicationLogger.severe("getIngredientsFromHTTP: ##### DID NOT FIND ANY INGREDIENTS!");
+                  }
               }
         }
         catch(Exception e)     {
@@ -412,7 +419,12 @@ public class Recipe {
     }
    
    private void getIngredientsFromWeb(String recipeUrl) throws IOException {
-           
+        
+        if (recipeUrl.trim().length()==0)   {
+            Utility.ApplicationLogger.severe("RECIPE - getIngredientsFromWeb: BLANK RECIPE URL");
+            return;   
+        }
+        
         Utility.ApplicationLogger.severe("RECIPE - getIngredientsFromWeb: " + recipeUrl);
     
         boolean bKeepGoing=true;
@@ -429,7 +441,7 @@ public class Recipe {
             slp.setContent(content);
             shoppingItems = slp.getShoppingItems();
             if (shoppingItems!=null) {
-                Utility.ApplicationLogger.severe("getIngredientsFromWeb: ShoppingItems Count:" + shoppingItems.size() + "\n");
+                Utility.ApplicationLogger.severe("getIngredientsFromWeb: " + recipeUrl + " ###ShoppingItems Count:" + shoppingItems.size() + "\n");
                 
                 /** Load Ingredients Into Database **/                
                 
@@ -710,9 +722,29 @@ public class Recipe {
         this.recipeUrl = recipe.recipeUrl;
         this.description = recipe.description;
         this.prepTime = recipe.prepTime;
+        int newId = 1;
+
+        try {
+            Connection conn = DBConnectionFactory.getConnection();
+            Statement stmt = conn.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("SELECT MAX(RID) FROM RECIPES");
+            rs.beforeFirst();
+            if (rs.next()) {
+                newId = rs.getInt(1) + 1;
+                this.id = newId;
+            }
+        } catch (SQLException e) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe",
+                      "##############SQL Exception:  " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception exception) {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe",
+                      "##############Exception:  " + exception.getMessage());
+        }
         
         try {            
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Recipe: " + this.id);
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Recipe: " + this.id + ", " + this.title);
             
             RecipeService rSvc = new RecipeService();
             rSvc.clearParms();
@@ -722,14 +754,14 @@ public class Recipe {
             ResultSet rs = null;
             String sql = "DELETE FROM RECIPES WHERE RID = " + this.id;
             
-            if (this.getTitle().length()==0) {
+            if (this.title.length()==0) {
                 rs = stmt.executeQuery(sql);
                 conn.commit();
                 return false;
             }
             
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "title: " + this.getTitle());
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "url: " + this.getRecipeUrl());
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "title: " + this.getTitle()
+                        + ", url: " + this.getRecipeUrl());
             
             rs = stmt.executeQuery("SELECT * FROM RECIPES WHERE RID = " + this.id);
             rs.beforeFirst();
@@ -755,6 +787,19 @@ public class Recipe {
             }
             
             conn.commit();
+
+            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.id}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), newId);
+
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+            
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.prepTime}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
             
         } catch (SQLException e) {
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore",
@@ -770,7 +815,7 @@ public class Recipe {
    
     public void deleteFromStore(Integer id) {
 
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe", "RECIPE ID:  " + id);
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteFromStore", "RECIPE ID:  " + id);
 
         try {
             Connection conn = DBConnectionFactory.getConnection();
@@ -778,14 +823,18 @@ public class Recipe {
             ResultSet rs = stmt.executeQuery("SELECT * FROM RECIPES WHERE RID = " + id);
             rs.beforeFirst();
             if (rs.next()) {
-                if (rs.getString("TITLE").trim().length()==0) {
+                //if (rs.getString("TITLE").trim().length()==0) {
                     String sql = "DELETE FROM RECIPES WHERE RID = " + id;
                     int updateCount = stmt.executeUpdate(sql);
                     if (updateCount == 0) {
-                        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe",
+                        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteFromStore",
                                   "Delete Failed!");
                     }
-                }
+                    else {
+                        Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "deleteFromStore",
+                                  "Delete Passed!");
+                    }
+                //}
             }
             conn.commit();
             //}

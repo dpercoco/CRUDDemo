@@ -12,7 +12,7 @@
             </amx:commandLink>
         </amx:facet>
         <amx:facet name="secondary">
-            <amx:commandButton id="cb2" text="Add" action="add">
+            <amx:commandButton id="cb2" icon="/images/add.png" text="add recipe" action="google">
                 <amx:setPropertyListener id="spl1" from="#{true}" to="#{pageFlowScope.newMode}"/>
             </amx:commandButton>
         </amx:facet>        
@@ -24,17 +24,15 @@
                               selectionListener="#{bindings.recipes.collectionModel.makeCurrent}" 
                               showMoreStrategy="autoScroll" 
                               bufferStrategy="viewport" id="lv2">
-                    <amx:listItem id="li1" action="detail">
-                        <amx:actionListener id="al2">
-                        </amx:actionListener>
+                    <amx:listItem id="li1" action="edit">
+                        <amx:actionListener id="al3" binding="#{bindings.prepareRecipeToEdit.execute}"/>
                         <amx:setPropertyListener id="spl01" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                         <amx:accessoryLayout id="al1">
                             <amx:facet name="end">
                                 <amx:commandLink actionListener="#{bindings.Delete.execute}"
                                                  disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">
                                      <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
-                                     <amx:actionListener id="al3" binding="#{bindings.deleteRecipe.execute}"/>
-                                     <amx:actionListener id="al4" binding="#{bindings.reloadRecipes.execute}"/>
+                                     <amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>
                                 </amx:commandLink>
                             </amx:facet>
                             <amx:tableLayout width="100%" id="tl1">

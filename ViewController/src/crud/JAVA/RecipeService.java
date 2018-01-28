@@ -61,6 +61,8 @@ import oracle.adfmf.framework.api.AdfmfContainerUtilities;
 import oracle.adfmf.framework.api.AdfmfJavaUtilities;
 import oracle.adfmf.java.beans.PropertyChangeListener;
 import oracle.adfmf.java.beans.PropertyChangeSupport;
+import oracle.adfmf.java.beans.ProviderChangeListener;
+import oracle.adfmf.java.beans.ProviderChangeSupport;
 import oracle.adfmf.util.Utility;
 import oracle.adfmf.util.logging.Trace;
 //import java.beans.PropertyChangeSupport;
@@ -74,7 +76,7 @@ public class RecipeService {
     private List<Ingredient> ingredients = new ArrayList<Ingredient>();
     private static Map<String, Map<String, Ingredient>> shoppingItems = null;
     private transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-    //private transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
+    private transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
     private static shoppingListProcess slp = new shoppingListProcess();
     List<Google> googleResults = new ArrayList<Google>(); //This will automatically produce CREATE, DELETE methods in Data Controls, Operations
     String googleCriteria = "";
@@ -115,8 +117,7 @@ public class RecipeService {
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes", "");
         recipes.clear();
         recipe = new Recipe();
-        recipes = recipe.getRecipesFromStore();
-        
+        recipes = recipe.getRecipesFromStore();        
     }
     
     public void reloadIngredients() {
@@ -335,23 +336,64 @@ public class RecipeService {
         return ingredient;
     }  
     
-    public void callGoogle() throws MalformedURLException, UnsupportedEncodingException, IOException {
+    
+    public void clearGoogle() throws MalformedURLException, UnsupportedEncodingException, IOException {
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "callGoogle",  "### criteria:  " + googleCriteria);
-        
+        this.googleCriteria = "";
         googleResults.clear();
-        GoogleService gs = new GoogleService();
         
-        gs.setGoogleCriteria(googleCriteria);
-        setGoogleResults(gs.findSearchResults());        
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.prepTime}", String.class);
+        ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
+        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
+        ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
+        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
+        ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+
+        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleCriteria}", String.class);
+        ve.setValue(AdfmfJavaUtilities.getELContext(), "");        
     }
+    
+    public void callGoogle(String googleCriteria) throws MalformedURLException, UnsupportedEncodingException, IOException {
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "callGoogle",  "### criteria:  " + googleCriteria);
+        this.googleCriteria = googleCriteria;
+        googleResults = loadGoogleResultsFromWeb();
+        providerChangeSupport.fireProviderRefresh("googleResults");
+        AdfmfJavaUtilities.flushDataChangeEvent();
+        
+    }
+    public List<Google> loadGoogleResultsFromWeb() throws MalformedURLException, UnsupportedEncodingException,   IOException {       
+        
+        List<Google> googleResults = null;
+        if (googleCriteria.trim().length()>0) {
+            GoogleService gs = new GoogleService();        
+            gs.setGoogleCriteria(googleCriteria);
+            googleResults = gs.findSearchResults();      
+            //setGoogleResults(googleResults);
+            Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: '" + googleCriteria 
+                            + "' count: " + googleResults.size());
+        }
+        else
+            Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: 'CRITERIA NOT SPECIFIED'");
+        
+        return googleResults;
+    }
+    
+    public List<Google> getGoogleResults() throws MalformedURLException, UnsupportedEncodingException, IOException {
+    
+        if (googleResults.isEmpty()) 
+            googleResults = loadGoogleResultsFromWeb();
+        
+       return googleResults;
+    }     
     
     public void setGoogleResults(List<Google> googleResults) {
         
         List<Google> oldGoogleResults = this.googleResults;
         this.googleResults = googleResults;
-        Utility.ApplicationLogger.severe("RecipeService - setGoogleResults: '" + googleCriteria 
-                        + "' count: " + this.googleResults.size());
     } 
     
     public void openUrl(String url) {
@@ -360,7 +402,7 @@ public class RecipeService {
           
         try {
            
-            if (url.trim().length()>0) {
+            if (url.trim().length()>0) { //Open Browser
                 AdfmfContainerUtilities.invokeContainerJavaScriptFunction(
                     AdfmfJavaUtilities.getFeatureId(), "displayUrl", new Object[] {url});
                 
@@ -379,25 +421,14 @@ public class RecipeService {
 
         }   
     }
-    public void processSelectedGoogleUrl(String urlIn) throws MalformedURLException, ProtocolException, IOException {
+    public void processSelectedGoogleUrl(Google googleResult) throws MalformedURLException, ProtocolException, IOException {
         
-        /** Show on EditRecipe.amx page **/
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "processSelectedGoogleUrl","");
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "processSelectedGoogleUrl",googleResult.getUrl());
         
         try {
-            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
-            Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());
-            String url = obj1.toString();
-            
-            if (url.trim().length()>0) {
-                String prepTime="";
-                GoogleService gs = new GoogleService();
-                prepTime = gs.getPrepTime(url);
-                ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.prepTime}", String.class);            
-                ve.setValue(AdfmfJavaUtilities.getELContext(), prepTime);
-                            
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "processSelectedGoogleUrl",  "URL:  " + url );             
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "processSelectedGoogleUrl",  "prepTime:  " + prepTime );          
+            if (googleResult.getUrl().trim().length()>0) { 
+                Recipe recipe = new Recipe(googleResult.getUrl(), googleResult.getPrepTime(), googleResult.getTitle());
+                recipe.saveRecipeToStore(recipe);       
             }   
         }
         catch(Exception e)     {
@@ -447,10 +478,6 @@ public class RecipeService {
     }
     **/
     
-    public List<Google> getGoogleResults() {
-        return googleResults;
-    }
-    
     public void addPropertyChangeListener(PropertyChangeListener l) {
         propertyChangeSupport.addPropertyChangeListener(l);
     }
@@ -499,6 +526,8 @@ public class RecipeService {
         
         recipe = new Recipe();
         recipe.setId();
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
+        ve.setValue(AdfmfJavaUtilities.getELContext(), "true");
         
     }   
     
@@ -584,10 +613,15 @@ public class RecipeService {
             if(ingredients.isEmpty()) {
                 ingredients = recipe.getIngredients();
             }
-        }
-        
+        }        
         return ingredients;
     }
-
     
+    public void addProviderChangeListener(ProviderChangeListener listener)  {
+      providerChangeSupport.addProviderChangeListener(listener);
+    }
+
+    public void removeProviderChangeListener(ProviderChangeListener listener)   {
+      providerChangeSupport.removeProviderChangeListener(listener);
+    }
 }

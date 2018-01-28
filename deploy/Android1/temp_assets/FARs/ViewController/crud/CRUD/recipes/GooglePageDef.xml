@@ -12,10 +12,7 @@
       <AttrNames>
         <Item Value="googleCriteria"/>
       </AttrNames>
-    </attributeValues>
-    <methodAction id="callGoogle" RequiresUpdateModel="true" Action="invokeMethod" MethodName="callGoogle"
-                  IsViewObjectMethod="false" DataControl="RecipeService"
-                  InstanceName="data.RecipeService.dataProvider"/>
+    </attributeValues>    
     <tree IterBinding="googleResultsIterator" id="googleResults">
       <nodeDefinition DefName="crud.JAVA.Google" Name="googleResults0">
         <AttrNames>
@@ -35,10 +32,21 @@
       </AttrNames>
     </attributeValues>
     <action IterBinding="googleResultsIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction id="callGoogle" RequiresUpdateModel="true" Action="invokeMethod" MethodName="callGoogle"
+                  IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="googleCriteria" NDValue="#{bindings.googleCriteria.inputValue}" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="clearGoogle" RequiresUpdateModel="true" Action="invokeMethod" MethodName="clearGoogle"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
     <methodAction id="processSelectedGoogleUrl" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="processSelectedGoogleUrl" IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider">
-      <NamedData NDName="url" NDValue="#{bindings.url}" NDType="java.lang.String"/>
+      <NamedData NDName="googleResult" NDValue="#{bindings.googleResultsIterator.currentRow.dataProvider}"
+                 NDType="crud.JAVA.Google"/>
     </methodAction>
+    <methodAction id="reloadRecipes" RequiresUpdateModel="true" Action="invokeMethod" MethodName="reloadRecipes"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
   </bindings>
 </pageDefinition>

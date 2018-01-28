@@ -2,39 +2,47 @@
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
   <amx:panelPage id="pp1">
-    <amx:facet name="header">
-        <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
-            <amx:setPropertyListener id="spl6"  from="''" to="#{bindings.googleCriteria.inputValue}"/>
-        </amx:commandButton>
-    </amx:facet>    
-    
-    <amx:facet name="primary"> 
+        <amx:facet name="header">
+            <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
+                <amx:actionListener id="al03" binding="#{bindings.clearGoogle.execute}" />            
+                <amx:actionListener id="al3" binding="#{bindings.reloadRecipes.execute}" />
+                <amx:setPropertyListener id="spl6"  from="''" to="#{bindings.googleCriteria.inputValue}"/>
+            </amx:commandButton>
+        </amx:facet>
+        <amx:facet name="primary"> 
         <amx:outputText value="#{pageFlowScope.id}" id="ot2" inlineStyle="display:none; "/>
         <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
             hintText="Search Google" showClear="on" keyboardDismiss="search" 
-            autoCapitalize="none" inlineStyle="width:90%"/>
-        <amx:commandButton actionListener="#{bindings.callGoogle.execute}" 
-            id="cb6" icon="/images/search.png" shortDesc="Google Search" disabled="false">
-        </amx:commandButton>
-    </amx:facet>   
-     
-    <amx:listView var="row" value="#{bindings.googleResults.collectionModel}"
+            autoCapitalize="none" inlineStyle="width:88%"/>
+        <amx:commandButton icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
+                               disabled="#{!bindings.callGoogle.enabled}" id="cb1"/>
+    </amx:facet>
+    
+    <!--<amx:refreshContainer id="rc1" busyText="Loading ..." actionListener="#{bindings.callGoogle.execute}" >
+         <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it3" 
+            hintText="Search Google" showClear="on" keyboardDismiss="search"  
+            autoCapitalize="none" inlineStyle="width:80%"/>
+        <amx:commandButton icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
+                               disabled="#{!bindings.callGoogle.enabled}" id="cb4"/>-->
+        <amx:listView var="row" value="#{bindings.googleResults.collectionModel}"
                       fetchSize="#{bindings.googleResults.rangeSize}" 
                       initialScrollRowKeys="#{bindings.googleResults.collectionModel.selectedRow}"
                       selectionListener="#{bindings.googleResults.collectionModel.makeCurrent}"
-                      showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv1">
+                      showMoreStrategy="autoScroll" bufferStrategy="viewport" id="googleResults">
            <amx:listItem id="li1" shortDesc="result">
                 <amx:accessoryLayout id="al1">
-                    <amx:facet name="end"> 
-                        <amx:commandButton action="__back" text="Select" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
-                                inlineStyle="background-color:green; color:white" id="cl2">
+                    <!--<amx:facet name="end">
+                        <amx:commandButton action="__back" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
+                                inlineStyle="background-color:green; color:white" id="cl2" text="Select" >-->
+                        <amx:commandButton icon="/images/add.png" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
+                                id="cl2" text="add" >        
                             <amx:validationBehavior id="vb1" group="vg1"/>
                             <amx:setPropertyListener id="spl1"  from="#{row.url}" to="#{pageFlowScope.url}"/>
                             <amx:setPropertyListener id="spl4"  from="#{row.title}" to="#{pageFlowScope.title}"/>
                             <amx:setPropertyListener id="spl8"  from="#{row.prepTime}" to="#{pageFlowScope.prepTime}"/>
                             <amx:setPropertyListener id="spl7"  from="" to="#{bindings.googleCriteria.inputValue}"/>
                         </amx:commandButton>
-                    </amx:facet>
+                    <!--</amx:facet>-->
                     <amx:outputText value="#{row.title}" id="ot3" inlineStyle="margin-left: 10px;white-space: normal;"/>
                     <amx:commandLink actionListener="#{bindings.openUrl.execute}" text="#{row.url}" shortDesc="urlDisplay"
                                  inlineStyle="margin-left: 10px;white-space: normal;" id="cl1">
@@ -43,6 +51,7 @@
                 </amx:accessoryLayout>
             </amx:listItem>
         </amx:listView>
-        
+      <!--</amx:refreshContainer>-->
+          
   </amx:panelPage>
 </amx:view>

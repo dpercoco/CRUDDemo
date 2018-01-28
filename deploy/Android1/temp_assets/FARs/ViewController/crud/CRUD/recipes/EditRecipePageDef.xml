@@ -104,5 +104,17 @@
         <Item Value="qtyStr"/>
       </AttrNames>
     </attributeValues>
+    <methodAction id="addRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="addRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="recipe" NDValue="#{bindings.recipesIterator.currentRow.dataProvider}"
+                 NDType="crud.JAVA.Recipe"/>
+    </methodAction>
+    <methodAction id="prepareRecipeToAdd" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="prepareRecipeToAdd" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
+    <action IterBinding="ingredientsIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <methodAction id="deleteIngredient" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteIngredient"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
   </bindings>
 </pageDefinition>

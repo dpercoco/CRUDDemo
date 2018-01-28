@@ -298,7 +298,7 @@ public class shoppingListProcess {
         foodGroups = aisle.loadFoodGroups();
         totalIngredients = 0;
         
-        //Utility.ApplicationLogger.severe("loaded Food Groups : " + foodGroups.size());
+        Utility.ApplicationLogger.severe("shoppingListProcess : loading content size" + InContent.length());
         
         content = InContent;
         content = content.replaceAll("½", "1/2"); 

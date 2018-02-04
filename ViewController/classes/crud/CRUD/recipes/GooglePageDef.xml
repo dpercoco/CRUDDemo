@@ -48,5 +48,8 @@
     <methodAction id="reloadRecipes" RequiresUpdateModel="true" Action="invokeMethod" MethodName="reloadRecipes"
                   IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider"/>
+    <methodAction id="toggleSpringboard" RequiresUpdateModel="true" Action="invokeMethod" MethodName="toggleSpringboard"
+                  IsViewObjectMethod="false" DataControl="ApplicationFeatures"
+                  InstanceName="data.ApplicationFeatures.dataProvider"/>
   </bindings>
 </pageDefinition>

@@ -82,6 +82,7 @@ public class RecipeService {
     String googleCriteria = "";
     String selectedUrl = "";
     String selectedTitle = "";
+    boolean isPopupOpen = false;
     
     public RecipeService() {
         super();
@@ -113,11 +114,16 @@ public class RecipeService {
     }
 
     public void reloadRecipes() {
-
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes", "");
-        recipes.clear();
-        recipe = new Recipe();
-        recipes = recipe.getRecipesFromStore();        
+        
+        try {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes", "");
+            recipes.clear();
+            recipe = new Recipe();
+            recipes = recipe.getRecipesFromStore(); 
+        }
+        catch (Exception e){
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes", e.getMessage());
+        }
     }
     
     public void reloadIngredients() {
@@ -339,21 +345,26 @@ public class RecipeService {
     
     public void clearGoogle() throws MalformedURLException, UnsupportedEncodingException, IOException {
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "callGoogle",  "### criteria:  " + googleCriteria);
-        this.googleCriteria = "";
-        googleResults.clear();
-        
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.prepTime}", String.class);
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "");
-
-        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "");
-
-        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "");
-
-        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleCriteria}", String.class);
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "");        
+        try {
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "callGoogle",  "### criteria:  " + googleCriteria);
+            this.googleCriteria = "";
+            googleResults.clear();
+            
+            ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.prepTime}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+    
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+    
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");
+    
+            ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleCriteria}", String.class);
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "");   
+        }
+        catch (Exception e){
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "clearGoogle", e.getMessage());
+        }
     }
     
     public void callGoogle(String googleCriteria) throws MalformedURLException, UnsupportedEncodingException, IOException {
@@ -367,18 +378,22 @@ public class RecipeService {
     }
     public List<Google> loadGoogleResultsFromWeb() throws MalformedURLException, UnsupportedEncodingException,   IOException {       
         
-        List<Google> googleResults = null;
-        if (googleCriteria.trim().length()>0) {
-            GoogleService gs = new GoogleService();        
-            gs.setGoogleCriteria(googleCriteria);
-            googleResults = gs.findSearchResults();      
-            //setGoogleResults(googleResults);
-            Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: '" + googleCriteria 
-                            + "' count: " + googleResults.size());
-        }
-        else
-            Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: 'CRITERIA NOT SPECIFIED'");
+        List<Google> googleResults = new ArrayList<Google>();
         
+        try {
+            if (googleCriteria.trim().length()>0) {
+                GoogleService gs = new GoogleService();        
+                gs.setGoogleCriteria(googleCriteria);
+                googleResults = gs.findSearchResults();      
+                Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: '" + googleCriteria 
+                                + "' count: " + googleResults.size());
+            }
+            else
+                Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: 'CRITERIA NOT SPECIFIED'");
+        }
+        catch (Exception e) {
+            Utility.ApplicationLogger.severe("RecipeService - loadGoogleResultsFromWeb: " + e.getMessage());
+        }
         return googleResults;
     }
     
@@ -421,22 +436,61 @@ public class RecipeService {
 
         }   
     }
-    public void processSelectedGoogleUrl(Google googleResult) throws MalformedURLException, ProtocolException, IOException {
+    public Boolean processSelectedGoogleUrl(Google googleResult) throws MalformedURLException, ProtocolException, IOException {
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "processSelectedGoogleUrl",googleResult.getUrl());
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.url}", String.class);
+        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        String parmUrl = (String)obj1; 
+        Boolean success = false;
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "processSelectedGoogleUrl",googleResult.getUrl()
+                  + ", parmUrl:" + parmUrl);
         
         try {
             if (googleResult.getUrl().trim().length()>0) { 
                 Recipe recipe = new Recipe(googleResult.getUrl(), googleResult.getPrepTime(), googleResult.getTitle());
-                recipe.saveRecipeToStore(recipe);       
+                success = recipe.saveRecipeToStore(recipe); 
+                if (success) showPopup();
             }   
         }
         catch(Exception e)     {
             Utility.ApplicationLogger.severe("RecipeService - processSelectedGoogleUrl: NO RESULTS " + e.getMessage());    
-        }                
+        } 
+        return success;
+        
     }
     
-    public void clearParms() {
+    public void showPopup() {
+
+        if (!isPopupOpen) {
+            Object errorMsg = AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
+                                                                      "popupUtilsShowPopup", new Object[] {
+                                                                      "_popShowId" });
+            isPopupOpen = true;
+            //wait a few seconds and then close the popup
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                  closePopup();
+                  this.cancel();
+                }
+
+            },2000);
+
+        }
+    }
+    private void closePopup() {
+
+        if (isPopupOpen) {
+            Object errorMsg = AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
+                                                                      "popupUtilsHidePopup", new Object[] {
+                                                                      "_popCloseId" });
+            isPopupOpen = false;
+        }
+    }
+
+   public void clearParms() {
      
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
         ve.setValue(AdfmfJavaUtilities.getELContext(), "");

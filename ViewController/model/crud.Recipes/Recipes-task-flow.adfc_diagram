@@ -84,11 +84,11 @@
       <property
          name="activityId">Google</property>
       <property
-         name="x">316.0</property>
+         name="x">232.0</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>Google&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">217.04004</property>
+         name="y">201.33887</property>
       <property
          name="page">/crud.Recipes/Google.amx</property>
       <property
@@ -198,28 +198,6 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase24"
-      from="WildcardControlFlowRule30">
-      <property
-         name="tosrcid">__20</property>
-      <property
-         name="fromOutcome">goFindAll</property>
-      <property
-         name="fromsrcid">__19</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase25"
-      to="View12">
-      <property
-         name="tosrcid">__22</property>
-      <property
-         name="fromOutcome">goEditRecipes</property>
-      <property
-         name="fromsrcid">__21</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
       id="ControlFlowCase23"
       from="View2"
       to="View12">
@@ -240,6 +218,28 @@
       <property
          name="fromsrcid">__1</property>
       <property
-         name="sdm:polyPoints">B50,232.0,109.0918,316.0,162.68945,T50</property>
+         name="sdm:polyPoints">B50,232.0,109.0918,232.0,146.98828,T50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase20"
+      from="WildcardControlFlowRule30">
+      <property
+         name="tosrcid">__20</property>
+      <property
+         name="fromOutcome">goFindAll</property>
+      <property
+         name="fromsrcid">__19</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase21"
+      to="View12">
+      <property
+         name="tosrcid">__22</property>
+      <property
+         name="fromOutcome">goEditRecipes</property>
+      <property
+         name="fromsrcid">__21</property>
    </ControlFlowCase>
 </SDM>

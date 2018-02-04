@@ -12,7 +12,7 @@
             </amx:commandLink>
         </amx:facet>
         <amx:facet name="secondary">
-            <amx:commandButton id="cb2" icon="/images/add.png" text="add recipe" action="google">
+            <amx:commandButton id="cb2" action="google" icon="/images/add.png" text="add recipe">
                 <amx:setPropertyListener id="spl1" from="#{true}" to="#{pageFlowScope.newMode}"/>
             </amx:commandButton>
         </amx:facet>        
@@ -28,13 +28,16 @@
                         <amx:actionListener id="al3" binding="#{bindings.prepareRecipeToEdit.execute}"/>
                         <amx:setPropertyListener id="spl01" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                         <amx:accessoryLayout id="al1">
-                            <amx:facet name="end">
+                        
+                            <amx:facet name="end"> <!-- DELETE -->
                                 <amx:commandLink actionListener="#{bindings.Delete.execute}"
                                                  disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">
+                                     <amx:showPopupBehavior popupId="p1" type="action" alignId="li1" decoration="anchor"/>
                                      <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                                      <amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>
-                                </amx:commandLink>
+                                 </amx:commandLink>
                             </amx:facet>
+                            
                             <amx:tableLayout width="100%" id="tl1">
                                 <amx:rowLayout id="rl1">
                                     <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf2">
@@ -58,6 +61,7 @@
                     </amx:listItem>
                 </amx:listView>
            </amx:facet>
+           
            <amx:facet name="bottom">
             <amx:tableLayout halign="center" borderWidth="0" width="100%"
                              inlineStyle="height:64px;background-color:#F6F6F7" id="tl2">
@@ -84,4 +88,17 @@
       </amx:facet>
     </amx:panelStretchLayout>
   </amx:panelPage>
+  
+  <amx:popup id="p1" autoDismiss="false" shortDesc="pop message"
+          inlineStyle="font-size:large;"  animation="slideUp" backgroundDimming="on">
+          <amx:outputText value="Are you sure?" id="ot2"/>
+            <amx:commandButton text="Yes" id="cbY">
+                  <amx:setPropertyListener id="spla1" from="#{true}" to="#{pageFlowScope.deleteRecipe}"/>
+                  <amx:closePopupBehavior id="cpb1" popupId="p1"/>
+            </amx:commandButton>
+            <amx:commandButton text="No" id="cbN">
+                  <amx:setPropertyListener id="spla2" from="#{false}" to="#{pageFlowScope.deleteRecipe}"/>
+                  <amx:closePopupBehavior id="cpb2" popupId="p1"/>
+            </amx:commandButton>
+  </amx:popup> 
 </amx:view>

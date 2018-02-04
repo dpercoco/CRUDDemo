@@ -717,6 +717,7 @@ public class Recipe {
     public Boolean saveRecipeToStore(Recipe recipe) {
         
         Boolean success = false;
+        String sqlType = "UPDATE";
         this.id = recipe.id;
         this.title = recipe.title;
         this.recipeUrl = recipe.recipeUrl;
@@ -734,6 +735,7 @@ public class Recipe {
                 newId = rs.getInt(1) + 1;
                 this.id = newId;
             }
+            
         } catch (SQLException e) {
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "addRecipe",
                       "##############SQL Exception:  " + e.getMessage());
@@ -746,8 +748,8 @@ public class Recipe {
         try {            
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Recipe: " + this.id + ", " + this.title);
             
-            RecipeService rSvc = new RecipeService();
-            rSvc.clearParms();
+            //RecipeService rSvc = new RecipeService();
+            //rSvc.clearParms();
             
             Connection conn = DBConnectionFactory.getConnection();
             Statement stmt = conn.createStatement();
@@ -761,7 +763,7 @@ public class Recipe {
             }
             
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveToStore", "title: " + this.getTitle()
-                        + ", url: " + this.getRecipeUrl());
+                        + ", url: " + this.getRecipeUrl() + ",ID:" + this.id);
             
             rs = stmt.executeQuery("SELECT * FROM RECIPES WHERE RID = " + this.id);
             rs.beforeFirst();
@@ -771,6 +773,7 @@ public class Recipe {
                         "', DESCRIPTION='" + this.getDescription() + "', PREPTIME='" + this.getPrepTime() + 
                         "' WHERE RID=" + this.id;
             } else {
+                sqlType = "INSERT";
                 sql =                    
                         "INSERT INTO RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME) VALUES (" +
                         this.id + ",'" + this.getTitle() + "','" + this.getRecipeUrl() + "','" + 
@@ -779,10 +782,10 @@ public class Recipe {
            
             int updateCount = stmt.executeUpdate(sql);
             if (updateCount == 0) {
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Update Failed!");
+                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", sqlType + " Failed! Recipe ID:" + this.id + " " + this.title + ", prepTime:" + this.prepTime);
             }
             else {
-                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", "Update PASSED!");
+                Trace.log(Utility.ApplicationLogger, Level.SEVERE, Recipe.class, "saveRecipeToStore", sqlType + " PASSED! Recipe ID:" + this.id + " " + this.title + ", prepTime:" + this.prepTime);
                 success = true;
             }
             

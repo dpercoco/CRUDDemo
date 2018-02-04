@@ -24,52 +24,38 @@
     // These methods are the DetailRecipe popUp
     
      popupUtilsShowPopup = function() {
-        alert ("popupUtilsShowPopup");
-     }
-     
-    /** 
-    popupUtilsShowPopup = function() {
-        alert ("popupUtilsShowPopup");
         //the argument is required and cannot be missing
         if (arguments.length > 0) {
             var popupOpener = document.getElementById(arguments[0]);
             if (popupOpener != null && popupOpener != undefined) {
-                adf.mf.api.amx.triggerBubbleEventListener(popupOpener,"tap");
+                adf.mf.api.amx.triggerBubbleEventListener(popupOpener, "tap");
             }
             else {
-                adf.mf.log.Application.logp(adf.mf.log.level.WARNING,
-                  "PopupUtils", "showPopup", "hidden button to launch
-                   popup not found");
+                adf.mf.log.Application.logp(adf.mf.log.level.WARNING, "PopupUtils", "showPopup", "hidden button to launch popup not found");
             }
         }
         else {
-            adf.mf.log.Application.logp(adf.mf.log.level.WARNING,
-              "PopupUtils", "showPopup", "Missing input argument");
+            adf.mf.log.Application.logp(adf.mf.log.level.WARNING, "PopupUtils", "showPopup", "Missing input argument");
         }
     }
 
     popupUtilsHidePopup = function() {
-        alert ("popupUtilsHidePopup");
         //the argument is required and cannot be missing
         if (arguments.length > 0) {
             var popupCloser = document.getElementById(arguments[0]);
 
             if (popupCloser != null && popupCloser != undefined) {
-                adf.mf.api.amx.triggerBubbleEventListener(popupCloser,"tap");
+                adf.mf.api.amx.triggerBubbleEventListener(popupCloser, "tap");
             }
             else {
-                adf.mf.log.Application.logp(adf.mf.log.level.WARNING,
-                "PopupUtils","showPopup", "hidden button to close popup
-                 not found");
+                adf.mf.log.Application.logp(adf.mf.log.level.WARNING, "PopupUtils", "showPopup", "hidden button to close popup not found");
             }
         }
         else {
-            adf.mf.log.Application.logp(adf.mf.log.level.WARNING,
-             "PopupUtils", "hidePopup", "Missing input argument");
+            adf.mf.log.Application.logp(adf.mf.log.level.WARNING, "PopupUtils", "hidePopup", "Missing input argument");
         }
     }
-    **/
-    
+        
     // device APIs are available
     //
     function onDeviceReady() {

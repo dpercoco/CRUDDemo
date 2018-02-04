@@ -8,6 +8,7 @@
   <adfmf:featureReference refId="crud.Springboard" id="fr2" showOnNavigationBar="false" showOnSpringboard="false"/>
   <adfmf:featureReference refId="crud.Aisles" id="fr5"/>
   <adfmf:featureReference refId="crud.Ingredients" id="fr6" showOnNavigationBar="false" showOnSpringboard="false"/>
+  <adfmf:featureReference refId="crud.Google" id="fr7"/>
   <adfmf:navigation>
     <adfmf:navigationBar enabled="false"/>
     <adfmf:springboard enabled="true" showSpringboardAtStartup="false" displayGotoSpringboardControl="false"

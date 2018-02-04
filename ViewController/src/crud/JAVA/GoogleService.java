@@ -155,7 +155,7 @@ public class GoogleService {
                     google.setTitle(title);
                     google.setUrl(url);
                     google.setChecked(false);
-                    //google.setPrepTime(getPrepTime(url));
+                    //google.setPrepTime(getPrepTime(url)); //TEST THIS
                     //if (ct%2==0) google.setChecked(true);
                     googleResults.add(google);            
                 }

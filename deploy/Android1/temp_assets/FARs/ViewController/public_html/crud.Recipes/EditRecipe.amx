@@ -6,26 +6,21 @@
             <amx:outputText value="#{bindings.title.inputValue}" id="ot1"/>
         </amx:facet>
         <amx:facet name="primary">
-            <amx:commandButton action="__back" id="cb1"  icon="/images/back.png">
+            <amx:commandButton action="__back" id="cb01" icon="/images/back.png">
             <amx:setPropertyListener id="spl0" from="#{false}" to="#{pageFlowScope.newMode}" type="action"/>
         </amx:commandButton>    
         </amx:facet>        
         <amx:facet name="secondary">
-                  <!--<amx:commandButton icon="/images/add.png" actionListener="#{bindings.prepareRecipeToAdd.execute}" text="Add Recipe"
-                                     disabled="#{!bindings.prepareRecipeToAdd.enabled}" id="cb5"/>-->
-                  <amx:commandButton id="cb2" action="__back" text="Save" inlineStyle="left:-5px" >
+                <amx:commandButton id="cb2" action="__back" text="Save" inlineStyle="left:-5px" >
                     <amx:actionListener id="al2" binding="#{bindings.saveRecipe.execute}"/>
                     <!--<amx:actionListener id="al3" binding="#{bindings.addRecipe.execute}"/>
                         <amx:actionListener id="al4" binding="#{bindings.reloadRecipes.execute}"/>-->
                 </amx:commandButton>
-                 <amx:commandButton action="__back" icon="/images/delete.png" actionListener="#{bindings.deleteRecipe.execute}" text=""
-                               disabled="#{!bindings.deleteRecipe.enabled}" id="cb4"/>       
-                <!--<amx:commandButton id="cb3" action="editIngredients" text="" icon="/images/edit.png"/>-->
                 
             <!-- Only display Google Search if in 'Create' mode 
                   ListRecipe.amx:   sets newMode=true
                   DetailRecipe.amx: sets newMode=false
-             -->    
+                 
              <amx:panelGroupLayout layout="horizontal" halign="end" valign="top" 
                     rendered="#{pageFlowScope.newMode=='true'?'true':'false'}" 
                     inlineStyle="width: 100%" id="pgl2">     
@@ -34,7 +29,7 @@
                     <amx:commandButton id="cb6" action="google" icon="/images/googleG.png">
                         <amx:actionListener id="al5" binding="#{bindings.callGoogle.execute}"/>
                     </amx:commandButton>
-             </amx:panelGroupLayout>
+             </amx:panelGroupLayout>-->
         </amx:facet>
         
         <!--<amx:validationGroup id="vg1">-->       
@@ -82,7 +77,7 @@
               </amx:facet>
               <amx:facet name="bottom">
                     <amx:commandButton icon="/images/add.png" action="editIngredient" actionListener="#{bindings.prepareIngredientToAdd.execute}"
-                        text="add ingredient" disabled="#{!bindings.prepareIngredientToAdd.enabled}" id="cb1">
+                        text="add ingredient" disabled="#{!bindings.prepareIngredientToAdd.enabled}" id="cb11">
                         <amx:setPropertyListener id="spl10" from="#{true}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
                             <amx:setPropertyListener id="spl11" from="#{bindings.id.inputValue}" to="#{pageFlowScope.selectedId}" type="action"/>
                     </amx:commandButton>

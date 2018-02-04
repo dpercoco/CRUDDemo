@@ -61,4 +61,13 @@
       </adfmf:amx>
     </adfmf:content>
   </adfmf:feature>
+  <adfmf:feature id="crud.Google" name="Google">
+    <adfmf:content id="crud.Google.1">
+      <adfmf:amx>
+        <adfmf:includes>
+          <adfmf:include type="JavaScript" file="js/displayUrl.js" id="i8"/>
+        </adfmf:includes>
+      </adfmf:amx>
+    </adfmf:content>
+  </adfmf:feature>
 </adfmf:features>

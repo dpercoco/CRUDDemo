@@ -2,67 +2,103 @@
 <amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
   <amx:panelPage id="pp1">
-        <amx:facet name="header">
-            <amx:image id="i1" source="/images/google_64.png" />
+        <amx:facet name="header">             
+            <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
+                hintText="Search Google" showClear="on" maximumLength="200" inputType="text"
+                autoCapitalize="none" inlineStyle="white-space:normal;width:825px;left:-30px" required="true"/> 
         </amx:facet>
-        <amx:facet name="primary"> 
-            <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
+        <amx:facet name="primary">
+           <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
                 <amx:actionListener id="al03" binding="#{bindings.clearGoogle.execute}" />            
                 <amx:actionListener id="al3" binding="#{bindings.reloadRecipes.execute}" />
-                <amx:setPropertyListener id="spl6"  from="''" to="#{bindings.googleCriteria.inputValue}"/>
             </amx:commandButton>
+            <amx:image id="i1" source="/images/google_64.png" inlineStyle="white-space: normal;width:64px;left-35px" />
+            <!--<amx:outputText value="Google Search" id="ot1" />keyboardDismiss="search" -->
+            <!--<amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" text=""
+                        disabled="#{!bindings.toggleSpringboard.enabled}" id="cl3"
+                        shortDesc="Springboard Link">
+                <amx:image id="i2" source="/images/springboard.svg" shortDesc="Springboard Image"/>
+            </amx:commandLink>-->
         </amx:facet>
-        <amx:facet name="secondary">            
-            <!--<amx:outputText value="#{pageFlowScope.id}" id="ot2" inlineStyle="display:none; "/>-->
-            <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
-                hintText="Search Google" showClear="on" keyboardDismiss="search" 
-                autoCapitalize="none" inlineStyle="width:90px"/>
+        
+         <amx:facet name="secondary">
             <amx:commandButton icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
-                               disabled="#{!bindings.callGoogle.enabled}" id="cb1"/>
-        </amx:facet>
-    
+                disabled="#{!bindings.callGoogle.enabled}" id="cb1" iconPosition="trailing"/>
+         </amx:facet>
+            
+        <amx:panelStretchLayout id="psl1"> 
+            <amx:facet name="center">
+            
     <!--<amx:refreshContainer id="rc1" busyText="Loading ..." actionListener="#{bindings.callGoogle.execute}" >
          <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it3" 
             hintText="Search Google" showClear="on" keyboardDismiss="search"  
             autoCapitalize="none" inlineStyle="width:80%"/>
         <amx:commandButton icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
                                disabled="#{!bindings.callGoogle.enabled}" id="cb4"/>-->
-        <amx:listView var="row" value="#{bindings.googleResults.collectionModel}"
-                      fetchSize="#{bindings.googleResults.rangeSize}" 
-                      initialScrollRowKeys="#{bindings.googleResults.collectionModel.selectedRow}"
-                      selectionListener="#{bindings.googleResults.collectionModel.makeCurrent}"
-                      showMoreStrategy="autoScroll" bufferStrategy="viewport" id="googleResults">
-           <amx:listItem id="li1" shortDesc="result">
-                <amx:accessoryLayout id="al1">
-                    <!--<amx:facet name="end">
-                        <amx:commandButton action="__back" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
-                                inlineStyle="background-color:green; color:white" id="cl2" text="Select" >-->
-                    <!--</amx:facet>-->                    
-                    <amx:tableLayout width="100%" id="tl1">
-                         <amx:rowLayout id="rl1">
-                                <amx:cellFormat rowSpan="1" valign="middle" width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf2">                                  
-                                    <amx:commandButton icon="/images/add.png" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
-                                                id="cl2" text="" >        
-                                            <amx:validationBehavior id="vb1" group="vg1"/>
-                                            <amx:setPropertyListener id="spl1"  from="#{row.url}" to="#{pageFlowScope.url}"/>
-                                            <amx:setPropertyListener id="spl4"  from="#{row.title}" to="#{pageFlowScope.title}"/>
-                                            <amx:setPropertyListener id="spl8"  from="#{row.prepTime}" to="#{pageFlowScope.prepTime}"/>
-                                            <amx:setPropertyListener id="spl7"  from="" to="#{bindings.googleCriteria.inputValue}"/>
-                                    </amx:commandButton>
-                                 </amx:cellFormat>
-                                 <amx:cellFormat width="90%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf02">                                  
-                                    <amx:outputText value="#{row.title}" id="ot3" inlineStyle="white-space: normal;height: 29px; margin-left: 10px;"
-                                             styleClass="adfmf-listItem-captionText-List"/>
-                                    <amx:commandLink actionListener="#{bindings.openUrl.execute}" text="#{row.url}" shortDesc="urlDisplay"
-                                             inlineStyle="white-space: normal;height: 29px; margin-left: 10px;"
-                                             styleClass="adfmf-listItem-captionText-List" id="cl1">
-                                        <amx:setPropertyListener id="spl2"  from="#{row.url}" to="#{bindings.url}"/>                
-                                    </amx:commandLink>
-                                </amx:cellFormat>
-                            </amx:rowLayout>
-                        </amx:tableLayout>
-                </amx:accessoryLayout>
-            </amx:listItem>
-        </amx:listView>
+                
+                <amx:listView var="row" value="#{bindings.googleResults.collectionModel}"
+                              fetchSize="#{bindings.googleResults.rangeSize}" 
+                              initialScrollRowKeys="#{bindings.googleResults.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.googleResults.collectionModel.makeCurrent}"
+                              showMoreStrategy="autoScroll" bufferStrategy="viewport" id="googleResults">
+                   <amx:listItem id="li1" shortDesc="result">
+                        <amx:setPropertyListener id="spl2"  from="#{row.title}" to="#{pageFlowScope.title}"/> 
+                        <amx:actionListener id="al07" binding="#{bindings.processSelectedGoogleUrl.execute}" />           
+                        <amx:accessoryLayout id="al1">       
+                            <amx:tableLayout width="100%" id="tl1">
+                                 <amx:rowLayout id="rl1">
+                                        <amx:cellFormat rowSpan="1" valign="middle" width="0%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf2">
+                                            <!--
+                                            <amx:commandButton icon="/images/add.png" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
+                                                id="cl22" inlineStyle="white-space: normal;height: 29px; margin-left: 5px;">
+                                                <amx:setPropertyListener id="spl1" from="#{row.url}" to="#{pageFlowScope.url}" />
+                                           </amx:commandButton>-->
+                                        </amx:cellFormat>
+                                        <amx:cellFormat valign="top" width="100%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf02">                                  
+                                            <amx:tableLayout width="100%" id="tl2" inlineStyle="white-space: normal;height: 15px; margin-left:20px;">
+                                                <amx:rowLayout id="rl2">
+                                                     <amx:cellFormat rowSpan="1" valign="middle" halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf12">
+                                                        <amx:image id="i2" source="/images/add.png" inlineStyle="white-space: normal;height: 15px; margin-left: 5px;"/>
+                                                     </amx:cellFormat>
+                                                     <amx:cellFormat rowSpan="1" valign="middle" halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf14">  
+                                                        <!--<amx:commandButton icon="/images/add.png" text="#{row.title}" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
+                                                            id="cl22" inlineStyle="white-space: normal;height: 29px; margin-left: 5px;"> 
+                                                        </amx:commandButton>-->
+                                                        <amx:outputText value="#{row.title}" id="ot3" inlineStyle="white-space: normal;height: 15px;"/>
+                                                     </amx:cellFormat>
+                                                </amx:rowLayout>
+                                                <amx:rowLayout id="rl22">
+                                                     <amx:cellFormat rowSpan="1" valign="middle"  halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf13">  
+                                                        <amx:commandLink actionListener="#{bindings.openUrl.execute}" text="#{row.url}" shortDesc="urlDisplay"
+                                                             inlineStyle="white-space: normal;height: 15px; margin-left: 25px;"
+                                                             styleClass="adfmf-listItem-captionText-List" id="cl1">
+                                                            <amx:setPropertyListener id="spl4"  from="#{row.url}" to="#{bindings.url}"/> 
+                                                        </amx:commandLink>
+                                                    </amx:cellFormat>
+                                                </amx:rowLayout>
+                                              </amx:tableLayout>
+                                        </amx:cellFormat>
+                                    </amx:rowLayout>
+                                </amx:tableLayout>
+                        </amx:accessoryLayout>
+                    </amx:listItem>
+                </amx:listView>
+            </amx:facet>
+        </amx:panelStretchLayout>   
+   
+        <amx:commandButton text="_hiddenShow" id="_popShowId" inlineStyle="visibility: hidden;" shortDesc="show">
+            <amx:showPopupBehavior id="spb1" popupId="p1" type="action" decoration="simple" alignId="pp1"
+                             align="overlapMiddleCenter"/>
+        </amx:commandButton>
+        <amx:commandButton text="_hiddenClose" id="_popCloseId" inlineStyle="visibility: hidden;" shortDesc="close">
+            <amx:closePopupBehavior id="cpb1" popupId="p1" type="action"/>
+        </amx:commandButton>
+    
   </amx:panelPage>
+  
+  <amx:popup id="p1" autoDismiss="true" shortDesc="pop message"
+          inlineStyle="font-size:large;" animation="slideUp">
+          <amx:outputText value="Added recipe #{pageFlowScope.title}" id="ot2"/>
+  </amx:popup>
+  
 </amx:view>

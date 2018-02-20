@@ -41,14 +41,14 @@
     <methodAction id="reloadRecipes" RequiresUpdateModel="true" Action="invokeMethod" MethodName="reloadRecipes"
                   IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider"/>
-    <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
-                  IsViewObjectMethod="false" DataControl="RecipeService"
-                  InstanceName="data.RecipeService.dataProvider"/>
     <methodAction id="prepareRecipeToEdit" RequiresUpdateModel="true" Action="invokeMethod"
                   MethodName="prepareRecipeToEdit" IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider">
       <NamedData NDName="recipeToEdit" NDValue="#{bindings.recipesIterator.currentRow.dataProvider}"
                  NDType="crud.JAVA.Recipe"/>
     </methodAction>
+    <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
+                  IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
   </bindings>
 </pageDefinition>

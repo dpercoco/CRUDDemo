@@ -35,6 +35,7 @@
                   dividerMode="all" showMoreStrategy="autoScroll" bufferStrategy="viewport" id="lv2"
                   styleClass="" collapsibleDividers="true">
           <amx:listItem id="li1" action="editRecipe">
+                <amx:actionListener id="al1" binding="bindings.prepareIngredientToEdit.execute" />
                 <amx:outputText value=" #{row.qtyStr} #{row.amountStr} #{row.measurement} 
                           #{row.container} #{row.item}"  styleClass="adfmf-listItem-captionText-Detail" id="ot5"/>
           </amx:listItem>

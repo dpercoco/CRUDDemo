@@ -62,8 +62,7 @@
                           <amx:listItem id="li1" action="editIngredient"> 
                           <amx:accessoryLayout id="al1">
                                 <amx:facet name="end">
-                                     <amx:commandButton actionListener="#{bindings.Delete.execute}"
-                                             text="Delete" disabled="#{!bindings.Delete.enabled}" id="cb5">
+                                     <amx:commandButton actionListener="#{bindings.prepareIngredientToEdit.execute}" text="Delete" id="cb5">
                                          <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedId}"/>
                                          <amx:actionListener id="al3" binding="#{bindings.deleteIngredient.execute}"/>
                                     </amx:commandButton>

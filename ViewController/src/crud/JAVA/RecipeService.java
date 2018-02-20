@@ -104,13 +104,24 @@ public class RecipeService {
         return recipes;
     }
     
-    
     public void deleteRecipe() {
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe", 
+                  recipe.getTitle() + " (" + recipe.getId() + ")");
+        
+        recipes.remove(recipe);
+        providerChangeSupport.fireProviderRefresh("recipes");
+        AdfmfJavaUtilities.flushDataChangeEvent();
+        deleteRecipeFromStore();
+    }
+    
+    public void deleteRecipeFromStore() {
         
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRid}", Integer.class);
         Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
         Integer recipeID = (Integer)obj1;         
-        recipe.deleteFromStore(recipeID);
+        recipe.deleteFromStore(recipe.getId());
+        //reloadRecipes();
     }
 
     public void reloadRecipes() {
@@ -239,8 +250,12 @@ public class RecipeService {
     }
     
     public void prepareIngredientToEdit(Ingredient ingredientToEdit) throws CloneNotSupportedException {
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareIngredientToEdit",
+                  ingredientToEdit.getItem() + " (" + ingredientToEdit.getId() + ")");
+        
         ingredient = ingredientToEdit;
-        ingredient.newItem = ingredient.item;
+        ingredient.newItem = ingredientToEdit.item;
     }
     
     public void prepareIngredientToAdd() {
@@ -304,30 +319,19 @@ public class RecipeService {
         Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
         Integer IngredientId = (Integer)obj1; 
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############deleteIngredient", " Recipe:" + recipe.getTitle()
-                  + ", Ingredient ID:" + IngredientId);
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############deleteIngredient", " Recipe:" 
+                  + recipe.getTitle() + ", Ingredient :" + ingredient.item + "(" + ingredient.id + ")");
         
-        Ingredient ingredient = getCurrentIngredient(IngredientId);
+        //Ingredient ingredient = getCurrentIngredient(IngredientId);
         Boolean success = ingredient.deleteIngredientFromStore(ingredient);
         
-        //reloadIngredients(); NOT NECESSARY
+        ingredients.remove(ingredient);
+        providerChangeSupport.fireProviderRefresh("ingredients");
+        AdfmfJavaUtilities.flushDataChangeEvent();
         
-        /**
-        if (success) {
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteIngredient", " Recipe:" + recipe.getTitle()
-                      + ", Number of ingredients (before):" + ingredients.size());
-            ingredients.remove(ingredient);
-            
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteIngredient", " Recipe:" + recipe.getTitle()
-                      + ", Number of ingredients (after):" + ingredients.size());
-            
-            //AdfmfJavaUtilities.setELValue("ingredients", ingredients);
-            //setIngredients(newIngredients);
-            //providerChangeSupport.fireProviderDelete("ingredients", rowKey);
-            //providerChangeSupport.fireProviderRefresh("ingredients");
-            //propertyChangeSupport.firePropertyChange("ingredients", null, ingredients);
-        }
-        **/
+        Ingredient i = new Ingredient();
+        i.deleteIngredientFromStore(ingredient);
+       
     }
     
     private Ingredient getCurrentIngredient(Integer id) {
@@ -573,6 +577,10 @@ public class RecipeService {
     }   
     
     public void prepareRecipeToEdit(Recipe recipeToEdit) throws CloneNotSupportedException {
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToEdit",
+                  recipeToEdit.getTitle() + " (" + recipeToEdit.getId() + ")");
+        
         recipe = recipeToEdit;
     }
     

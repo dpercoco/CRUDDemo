@@ -28,13 +28,15 @@
                         <amx:actionListener id="al3" binding="#{bindings.prepareRecipeToEdit.execute}"/>
                         <amx:setPropertyListener id="spl01" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                         <amx:accessoryLayout id="al1">
-                        
                             <amx:facet name="end"> <!-- DELETE -->
-                                <amx:commandLink actionListener="#{bindings.Delete.execute}"
-                                                 disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">
-                                     <amx:showPopupBehavior popupId="p1" type="action" alignId="li1" decoration="anchor"/>
+                                <!--<amx:commandLink actionListener="#{bindings.Delete.execute}"
+                                                 disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">-->
+                                  <amx:commandLink text="Delete">
                                      <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
-                                     <amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>
+                                     <amx:setPropertyListener id="spl19" from="#{row.title}" to="#{pageFlowScope.title}"/>
+                                     <amx:actionListener id="al0" binding="#{bindings.prepareRecipeToEdit.execute}"/>
+                                     <amx:showPopupBehavior popupId="p1" type="action" alignId="li1" decoration="anchor"/>                                     
+                                     <!--<amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>-->
                                  </amx:commandLink>
                             </amx:facet>
                             
@@ -91,14 +93,25 @@
   
   <amx:popup id="p1" autoDismiss="false" shortDesc="pop message"
           inlineStyle="font-size:large;"  animation="slideUp" backgroundDimming="on">
-          <amx:outputText value="Are you sure?" id="ot2"/>
-            <amx:commandButton text="Yes" id="cbY">
-                  <amx:setPropertyListener id="spla1" from="#{true}" to="#{pageFlowScope.deleteRecipe}"/>
-                  <amx:closePopupBehavior id="cpb1" popupId="p1"/>
-            </amx:commandButton>
-            <amx:commandButton text="No" id="cbN">
-                  <amx:setPropertyListener id="spla2" from="#{false}" to="#{pageFlowScope.deleteRecipe}"/>
-                  <amx:closePopupBehavior id="cpb2" popupId="p1"/>
-            </amx:commandButton>
+          <amx:outputText value="Delete recipe #{pageFlowScope.title}?" id="ot2"/>
+          <amx:tableLayout width="100%" id="tl3">
+                <amx:rowLayout id="r1">
+                    <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="c1">
+                        <!--<amx:commandButton actionListener="#{bindings.Delete.execute}" text="Yes"
+                                       disabled="#{!bindings.Delete.enabled}" id="cb1">-->
+                       <amx:commandButton text="Yes" id="cbY">
+                              <amx:setPropertyListener id="spla1" from="#{true}" to="#{pageFlowScope.deleteRecipe}"/>
+                              <amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>
+                              <amx:closePopupBehavior id="cpb1" popupId="p1"/>
+                        </amx:commandButton>
+                </amx:cellFormat>
+                    <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="c2">
+                        <amx:commandButton text="No" id="cbN">
+                              <amx:setPropertyListener id="spla2" from="#{false}" to="#{pageFlowScope.deleteRecipe}"/>
+                              <amx:closePopupBehavior id="cpb2" popupId="p1"/>
+                        </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
   </amx:popup> 
 </amx:view>

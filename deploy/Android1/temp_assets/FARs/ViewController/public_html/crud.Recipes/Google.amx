@@ -4,8 +4,8 @@
   <amx:panelPage id="pp1">
         <amx:facet name="header">             
             <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
-                hintText="Search Google" showClear="on" maximumLength="100" inputType="text"
-                autoCapitalize="none" inlineStyle="white-space:normal;width:625px;left:-40px" required="true"/> 
+                hintText="Search Google" showClear="on" maximumLength="200" inputType="text"
+                autoCapitalize="none" inlineStyle="white-space:normal;width:825px;left:-30px" required="true"/> 
         </amx:facet>
         <amx:facet name="primary">
            <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
@@ -57,12 +57,14 @@
                                         <amx:cellFormat valign="top" width="100%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cf02">                                  
                                             <amx:tableLayout width="100%" id="tl2" inlineStyle="white-space: normal;height: 15px; margin-left:20px;">
                                                 <amx:rowLayout id="rl2">
-                                                     <amx:cellFormat rowSpan="1" valign="middle" halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf12">  
+                                                     <amx:cellFormat rowSpan="1" valign="middle" halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf12">
+                                                        <amx:image id="i2" source="/images/add.png" inlineStyle="white-space: normal;height: 15px; margin-left: 5px;"/>
+                                                     </amx:cellFormat>
+                                                     <amx:cellFormat rowSpan="1" valign="middle" halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf14">  
                                                         <!--<amx:commandButton icon="/images/add.png" text="#{row.title}" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
                                                             id="cl22" inlineStyle="white-space: normal;height: 29px; margin-left: 5px;"> 
                                                         </amx:commandButton>-->
-                                                        <amx:image id="i2" source="/images/add.png"/>
-                                                        <amx:outputText value="#{row.title}" id="ot3" inlineStyle="white-space: normal;height: 15px; margin-left: 5px;"/>
+                                                        <amx:outputText value="#{row.title}" id="ot3" inlineStyle="white-space: normal;height: 15px;"/>
                                                      </amx:cellFormat>
                                                 </amx:rowLayout>
                                                 <amx:rowLayout id="rl22">
@@ -95,7 +97,7 @@
   </amx:panelPage>
   
   <amx:popup id="p1" autoDismiss="true" shortDesc="pop message"
-          inlineStyle="font-size:large;">
+          inlineStyle="font-size:large;" animation="slideUp">
           <amx:outputText value="Added recipe #{pageFlowScope.title}" id="ot2"/>
   </amx:popup>
   

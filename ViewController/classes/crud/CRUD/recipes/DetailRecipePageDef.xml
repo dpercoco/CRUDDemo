@@ -69,5 +69,11 @@
     <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
                   IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider"/>
+    <methodAction id="prepareIngredientToEdit" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="prepareIngredientToEdit" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="ingredientToEdit" NDValue="#{bindings.ingredients.currentRow.dataProvider}"
+                 NDType="crud.JAVA.Ingredient"/>
+    </methodAction>
   </bindings>
 </pageDefinition>

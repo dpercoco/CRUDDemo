@@ -11,7 +11,7 @@
       </amx:commandButton>
     </amx:facet>
     <amx:facet name="secondary">
-       <amx:commandButton action="__back" actionListener="#{bindings.saveIngredient.execute}" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Add Ingredient'}"
+       <amx:commandButton action="__back" actionListener="#{bindings.saveIngredient.execute}" text="#{pageFlowScope.newModeIngredient=='false'?'Save':'Save'}"
                          disabled="#{!bindings.saveIngredient.enabled}" id="cb3">
                <amx:setPropertyListener id="spl1" from="#{bindings.newItem.inputValue}" to="#{pageFlowScope.newItem}"/>
                <amx:validationBehavior group="vg1" id="vb1"/>

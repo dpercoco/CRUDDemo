@@ -106,7 +106,9 @@ public class RecipeService {
     
     public void deleteRecipe() {
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "deleteRecipe", 
+        setRecipe(); //Set recipe based on pageFlowScope.selectedRid
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "######## deleteRecipe", 
                   recipe.getTitle() + " (" + recipe.getId() + ")");
         
         recipes.remove(recipe);
@@ -267,7 +269,7 @@ public class RecipeService {
         ingredient = new Ingredient();
         ingredient.setId();
         ingredient.setRid(recipeID);
-        ingredient.setNewItem("new");
+        ingredient.setNewItem(" ");
         ingredient.setItem(" ");
         ingredient.setFoodGroup("Misc");
         
@@ -313,24 +315,17 @@ public class RecipeService {
         this.ingredient = ingredient;
     }
     
-    public void deleteIngredient() { //MOVE TO Ingredient.java
+    public void deleteIngredient() { 
         
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedId}", Integer.class);
-        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
-        Integer IngredientId = (Integer)obj1; 
+        setIngredient(); //Set ingredient object based on pageFlowScope.selectedId
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############deleteIngredient", " Recipe:" 
                   + recipe.getTitle() + ", Ingredient :" + ingredient.item + "(" + ingredient.id + ")");
         
-        //Ingredient ingredient = getCurrentIngredient(IngredientId);
-        Boolean success = ingredient.deleteIngredientFromStore(ingredient);
-        
         ingredients.remove(ingredient);
         providerChangeSupport.fireProviderRefresh("ingredients");
         AdfmfJavaUtilities.flushDataChangeEvent();
-        
-        Ingredient i = new Ingredient();
-        i.deleteIngredientFromStore(ingredient);
+        Boolean success = ingredient.deleteIngredientFromStore(ingredient);
        
     }
     
@@ -578,16 +573,26 @@ public class RecipeService {
     
     public void prepareRecipeToEdit(Recipe recipeToEdit) throws CloneNotSupportedException {
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToEdit",
-                  recipeToEdit.getTitle() + " (" + recipeToEdit.getId() + ")");
+        setRecipe(); //Set recipe based on pageFlowScope.selectedRid
         
-        recipe = recipeToEdit;
+        String recipeTitle = recipe.getTitle();
+        Integer recipeID = recipe.getId();
+        
+        //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
+        //Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());  
+        //String recipeTitle = (String)obj1;
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToEdit",
+                  recipeTitle + " (" + recipeID + ")");
+        
+        //recipe = recipeToEdit;
     }
     
     public void prepareRecipeToAdd() {
         
         recipe = new Recipe();
         recipe.setId();
+        ingredients.clear();
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
         ve.setValue(AdfmfJavaUtilities.getELContext(), "true");
         
@@ -622,6 +627,25 @@ public class RecipeService {
             int index = recipes.indexOf(recipe);
             recipes.set(index, recipe); 
         }
+    }
+    
+    public void setIngredient() {
+        
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedId}", Integer.class);
+        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        Integer IngredientId = (Integer)obj1; 
+        
+        for (Integer i=1; i<ingredients.size(); i++) {
+             Ingredient ing = (Ingredient) ingredients.get(i);
+             if (ing.getId()==IngredientId) {
+                 ingredient = ing;
+                 break;
+             }
+         }        
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############setIngredient",  
+            ingredient.getItem() + " (" + ingredient.getId() + "), Recipe ID," + recipe.getId()); 
+        
     }
     
     public void setRecipe() {  

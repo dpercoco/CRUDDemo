@@ -4,15 +4,15 @@
   <amx:panelPage id="pp1">
         <amx:facet name="header">             
             <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
-                hintText="Search Google" showClear="on" maximumLength="200" inputType="text"
-                autoCapitalize="none" inlineStyle="white-space:normal;width:825px;left:-30px" required="true"/> 
+                hintText="Search Google" showClear="on" maximumLength="300" inputType="text"
+                autoCapitalize="none" inlineStyle="white-space:normal;width:825px;left:-50px" required="true"/> 
         </amx:facet>
         <amx:facet name="primary">
            <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
                 <amx:actionListener id="al03" binding="#{bindings.clearGoogle.execute}" />            
                 <amx:actionListener id="al3" binding="#{bindings.reloadRecipes.execute}" />
             </amx:commandButton>
-            <amx:image id="i1" source="/images/google_64.png" inlineStyle="white-space: normal;width:64px;left-35px" />
+            <amx:image id="i1" source="/images/google_64.png" inlineStyle="white-space:normal;width:64px;left:-25px" />
             <!--<amx:outputText value="Google Search" id="ot1" />keyboardDismiss="search" -->
             <!--<amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" text=""
                         disabled="#{!bindings.toggleSpringboard.enabled}" id="cl3"
@@ -64,13 +64,13 @@
                                                         <!--<amx:commandButton icon="/images/add.png" text="#{row.title}" actionListener="#{bindings.processSelectedGoogleUrl.execute}"
                                                             id="cl22" inlineStyle="white-space: normal;height: 29px; margin-left: 5px;"> 
                                                         </amx:commandButton>-->
-                                                        <amx:outputText value="#{row.title}" id="ot3" inlineStyle="white-space: normal;height: 15px;"/>
+                                                        <amx:outputText value="#{row.title}" id="ot3" inlineStyle="white-space:normal;height:15px;margin-left: 25px;"/>
                                                      </amx:cellFormat>
                                                 </amx:rowLayout>
                                                 <amx:rowLayout id="rl22">
                                                      <amx:cellFormat rowSpan="1" valign="middle"  halign="start" height="#{deviceScope.device.os=='Android'?'18':'16'}px" id="cf13">  
                                                         <amx:commandLink actionListener="#{bindings.openUrl.execute}" text="#{row.url}" shortDesc="urlDisplay"
-                                                             inlineStyle="white-space: normal;height: 15px; margin-left: 25px;"
+                                                             inlineStyle="white-space: normal;height: 20px; margin-left: 25px;"
                                                              styleClass="adfmf-listItem-captionText-List" id="cl1">
                                                             <amx:setPropertyListener id="spl4"  from="#{row.url}" to="#{bindings.url}"/> 
                                                         </amx:commandLink>

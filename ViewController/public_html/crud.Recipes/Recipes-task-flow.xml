@@ -16,15 +16,6 @@
         <id>AislesTaskFlow</id>
       </task-flow-reference>
     </task-flow-call>
-    <view id="DetailRecipe">
-      <page>/crud.Recipes/DetailRecipe.amx</page>
-    </view>
-    <method-call id="clearParms">
-      <method>#{bindings.clearParms.execute}</method>
-      <outcome>
-        <fixed-outcome>edit</fixed-outcome>
-      </outcome>
-    </method-call>
     <view id="EditRecipe">
       <page>/crud.Recipes/EditRecipe.amx</page>
     </view>
@@ -42,10 +33,6 @@
         <from-outcome>aisles</from-outcome>
         <to-activity-id>Aisles</to-activity-id>
       </control-flow-case>
-      <control-flow-case id="__24">
-        <from-outcome>detail</from-outcome>
-        <to-activity-id>DetailRecipe</to-activity-id>
-      </control-flow-case>
       <control-flow-case id="__8">
         <from-outcome>edit</from-outcome>
         <to-activity-id>EditRecipe</to-activity-id>
@@ -53,24 +40,6 @@
       <control-flow-case id="__12">
         <from-outcome>google</from-outcome>
         <to-activity-id>Google</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
-    <control-flow-rule id="__6">
-      <from-activity-id>DetailRecipe</from-activity-id>
-      <control-flow-case id="__7">
-        <from-outcome>clear</from-outcome>
-        <to-activity-id>clearParms</to-activity-id>
-      </control-flow-case>
-      <control-flow-case id="__9">
-        <from-outcome>editRecipe</from-outcome>
-        <to-activity-id>EditRecipe</to-activity-id>
-      </control-flow-case>
-    </control-flow-rule>
-    <control-flow-rule id="__10">
-      <from-activity-id>clearParms</from-activity-id>
-      <control-flow-case id="__11">
-        <from-outcome>edit</from-outcome>
-        <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__14">

@@ -50,5 +50,8 @@
     <methodAction id="deleteRecipe" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteRecipe"
                   IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider"/>
+    <methodAction id="prepareRecipeToAdd" RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="prepareRecipeToAdd" IsViewObjectMethod="false" DataControl="RecipeService"
+                  InstanceName="data.RecipeService.dataProvider"/>
   </bindings>
 </pageDefinition>

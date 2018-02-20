@@ -12,8 +12,9 @@
             </amx:commandLink>
         </amx:facet>
         <amx:facet name="secondary">
-            <amx:commandButton id="cb2" action="google" icon="/images/add.png" text="add recipe">
+            <amx:commandButton id="cb2" icon="/images/add.png" text="add recipe">
                 <amx:setPropertyListener id="spl1" from="#{true}" to="#{pageFlowScope.newMode}"/>
+                <amx:showPopupBehavior popupId="p2" type="action" alignId="li1" decoration="anchor"/>
             </amx:commandButton>
         </amx:facet>        
         <amx:panelStretchLayout id="psl1">     
@@ -31,12 +32,10 @@
                             <amx:facet name="end"> <!-- DELETE -->
                                 <!--<amx:commandLink actionListener="#{bindings.Delete.execute}"
                                                  disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">-->
-                                  <amx:commandLink text="Delete">
+                                  <amx:commandLink text="Delete" actionListener="#{bindings.prepareRecipeToEdit.execute}">
                                      <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                                      <amx:setPropertyListener id="spl19" from="#{row.title}" to="#{pageFlowScope.title}"/>
-                                     <amx:actionListener id="al0" binding="#{bindings.prepareRecipeToEdit.execute}"/>
-                                     <amx:showPopupBehavior popupId="p1" type="action" alignId="li1" decoration="anchor"/>                                     
-                                     <!--<amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>-->
+                                     <amx:showPopupBehavior popupId="p1" type="action" alignId="li1" decoration="anchor"/>
                                  </amx:commandLink>
                             </amx:facet>
                             
@@ -91,24 +90,46 @@
     </amx:panelStretchLayout>
   </amx:panelPage>
   
-  <amx:popup id="p1" autoDismiss="false" shortDesc="pop message"
-          inlineStyle="font-size:large;"  animation="slideUp" backgroundDimming="on">
+  <amx:popup id="p1" autoDismiss="false" shortDesc="Confirm Delete"
+          inlineStyle="font-size:medium;" animation="slideUp" backgroundDimming="on">
           <amx:outputText value="Delete recipe #{pageFlowScope.title}?" id="ot2"/>
           <amx:tableLayout width="100%" id="tl3">
                 <amx:rowLayout id="r1">
                     <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="c1">
-                        <!--<amx:commandButton actionListener="#{bindings.Delete.execute}" text="Yes"
-                                       disabled="#{!bindings.Delete.enabled}" id="cb1">-->
-                       <amx:commandButton text="Yes" id="cbY">
+                        <amx:commandButton text="Yes" id="cbY">
                               <amx:setPropertyListener id="spla1" from="#{true}" to="#{pageFlowScope.deleteRecipe}"/>
                               <amx:actionListener id="al2" binding="#{bindings.deleteRecipe.execute}"/>
                               <amx:closePopupBehavior id="cpb1" popupId="p1"/>
                         </amx:commandButton>
-                </amx:cellFormat>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="r2">
                     <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="c2">
                         <amx:commandButton text="No" id="cbN">
                               <amx:setPropertyListener id="spla2" from="#{false}" to="#{pageFlowScope.deleteRecipe}"/>
                               <amx:closePopupBehavior id="cpb2" popupId="p1"/>
+                        </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+            </amx:tableLayout>
+  </amx:popup> 
+  
+  <amx:popup id="p2" autoDismiss="false" shortDesc="Add Recipe"
+          inlineStyle="font-size:medium;" animation="slideUp" backgroundDimming="on">
+          <amx:outputText value="Delete recipe #{pageFlowScope.title}?" id="ot5"/>
+          <amx:tableLayout width="100%" id="tl4">
+                <amx:rowLayout id="rr1">
+                    <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cc1">
+                        <amx:commandButton text="Google Search" id="cbG" action="google">
+                              <amx:closePopupBehavior id="clp1" popupId="p2"/>
+                        </amx:commandButton>
+                    </amx:cellFormat>
+                </amx:rowLayout>
+                <amx:rowLayout id="rr2">
+                    <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cc2">
+                        <amx:commandButton text="Add my own" id="cbA" action="edit">
+                              <amx:actionListener id="al6" binding="#{bindings.prepareRecipeToAdd.execute}"/>
+                              <amx:closePopupBehavior id="clp2" popupId="p21"/>
                         </amx:commandButton>
                     </amx:cellFormat>
                 </amx:rowLayout>

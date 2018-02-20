@@ -39,8 +39,6 @@
     <page path="/crud.FoodItems/FoodItems-task-flow.xml#FoodItemsTaskFlow@CreateFoodItem"
           usageId="crud_mobile_FoodItems_task_flow_FoodItems_task_flow_CreateFoodItemPageDef"/>
     <page path="/crud.Aisles/Aisles-task-flow.xml#AislesTaskFlow@CreateAisle" usageId="crud_mobile_Test_Test_CreateAislePageDef"/>
-    <page path="/crud.Recipes/Recipes-task-flow.xml#Recipes-task-flow@clearParms"
-          usageId="crud_mobile_Recipes_task_flow_New_Recipes_task_flow_clearParmsPageDef"/>
     <page path="/crud.Recipes/DetailNew.amx" usageId="crud_mobile_DetailNewPageDef"/>
     <page path="/crud.Recipes/EditIngredientsOLD.amx" usageId="crud_mobile_EditIngredientsPageDef"/>
     <page path="/crud.Recipes/EditIngredientsOLD.amx" usageId="crud_mobile_EditIngredients_NEWPageDef"/>
@@ -81,8 +79,6 @@
     <page id="crud_mobile_FoodItems_task_flow_FoodItems_task_flow_CreateFoodItemPageDef"
           path="crud.FoodItems.FoodItems_task_flow_FoodItems_task_flow_CreateFoodItemPageDef"/>
     <page id="crud_mobile_Test_Test_CreateAislePageDef" path="crud.Aisles.Test_Test_CreateAislePageDef"/>
-    <page id="crud_mobile_Recipes_task_flow_New_Recipes_task_flow_clearParmsPageDef"
-          path="crud.Recipes.Recipes_task_flow_New_Recipes_task_flow_clearParmsPageDef"/>
     <page id="crud_mobile_DetailNewPageDef" path="crud.Recipes.DetailNewPageDef"/>
     <page id="crud_mobile_EditIngredientsPageDef" path="crud.Recipes.EditIngredientsPageDef"/>
     <page id="crud_mobile_EditIngredients_NEWPageDef" path="crud.Recipes.EditIngredients_NEWPageDef"/>

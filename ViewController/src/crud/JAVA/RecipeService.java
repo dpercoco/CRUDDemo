@@ -578,10 +578,6 @@ public class RecipeService {
         String recipeTitle = recipe.getTitle();
         Integer recipeID = recipe.getId();
         
-        //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.title}", String.class);
-        //Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());  
-        //String recipeTitle = (String)obj1;
-        
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToEdit",
                   recipeTitle + " (" + recipeID + ")");
         
@@ -592,10 +588,24 @@ public class RecipeService {
         
         recipe = new Recipe();
         recipe.setId();
-        ingredients.clear();
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "true");
+        recipe.setTitle("");
+        recipe.setRecipeUrl("");
+        recipe.setDescription("");
+        recipe.setPrepTime("");
         
+        ingredients.clear();
+        
+        //providerChangeSupport.fireProviderRefresh("recipe");
+        providerChangeSupport.fireProviderRefresh("ingredients");
+        AdfmfJavaUtilities.flushDataChangeEvent();
+        
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
+        ve.setValue(AdfmfJavaUtilities.getELContext(), "true");    
+        
+        clearParms();        
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToAdd",
+                  recipe.getTitle() + " (" + recipe.getId() + ")");
     }   
     
     public void saveRecipe(Recipe recipe) {
@@ -605,6 +615,8 @@ public class RecipeService {
         String newMode = obj.toString();
         
         if (newMode == "true") {
+            recipe.setTitle(recipe.getRecipeUrl());
+            recipe.setRecipeUrl("");
             insertRecipe(recipe);   
         }
         else {
@@ -657,7 +669,6 @@ public class RecipeService {
         for (Integer i=1; i<recipes.size(); i++) {
              Recipe r = (Recipe) recipes.get(i);
              if (r.getId()==recipeID) {
-                 //recipe = recipes.get(recipeID);
                  recipe = r;
                  break;
              }
@@ -688,7 +699,8 @@ public class RecipeService {
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############getIngredients", "URL: " 
             + recipe.getRecipeUrl() + ", Recipe ID," + recipe.getId());       
         
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newModeIngredient}", Boolean.class);
+        //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newModeIngredient}", Boolean.class);
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
         Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
         String newMode = obj.toString();
         

@@ -16,20 +16,6 @@
                     <!--<amx:actionListener id="al3" binding="#{bindings.addRecipe.execute}"/>
                         <amx:actionListener id="al4" binding="#{bindings.reloadRecipes.execute}"/>-->
                 </amx:commandButton>
-                
-            <!-- Only display Google Search if in 'Create' mode 
-                  ListRecipe.amx:   sets newMode=true
-                  DetailRecipe.amx: sets newMode=false
-                 
-             <amx:panelGroupLayout layout="horizontal" halign="end" valign="top" 
-                    rendered="#{pageFlowScope.newMode=='true'?'true':'false'}" 
-                    inlineStyle="width: 100%" id="pgl2">     
-                    <amx:inputText value="#{bindings.googleCriteria.inputValue}" styleClass="amx-SearchBox" 
-                         hintText="Search Google" showClear="on" simple="true" keyboardDismiss="search" autoCapitalize="none" id="it1"/>
-                    <amx:commandButton id="cb6" action="google" icon="/images/googleG.png">
-                        <amx:actionListener id="al5" binding="#{bindings.callGoogle.execute}"/>
-                    </amx:commandButton>
-             </amx:panelGroupLayout>-->
         </amx:facet>
         
         <!--<amx:validationGroup id="vg1">-->       
@@ -44,13 +30,13 @@
         
         
         <amx:panelStretchLayout id="psl1">  
-              <amx:facet name="top">                                
+              <amx:facet name="top">              
                 <amx:inputText id="recipeUrl" value="#{bindings.recipeUrl.inputValue}" label="#{bindings.recipeUrl.hints.label}"
-                               inputType="text"  showClear="on" inlineStyle=" margin-left: 10px;white-space: normal;"  hintText="The url of the recipe"/>
+                               inputType="text"  showClear="on" inlineStyle="#{pageFlowScope.newMode=='true'?'title':'url'}" hintText="#{pageFlowScope.newMode=='true'?'The title of the recipe':'The url of the recipe'}"/>
                 <amx:inputText value="#{bindings.description.inputValue}" label="#{bindings.description.hints.label}"
-                               id="it9" inputType="text" showClear="on"  hintText="The description of the recipe"/>
+                               id="it9" inputType="text" showClear="on" inlineStyle=" margin-left: 10px;white-space: normal;" hintText="The description"/>
                 <amx:inputText id="prepTime" value="#{bindings.prepTime.inputValue}" label="#{bindings.prepTime.hints.label}"
-                               inputType="text" showClear="on"  hintText="The prepartion time of the recipe"/>
+                               inputType="text" showClear="on" inlineStyle=" margin-left: 10px;white-space: normal;" hintText="The preparation time"/>
               </amx:facet>
               <amx:facet name="center">
                     <amx:listView var="row" value="#{bindings.ingredients.collectionModel}"

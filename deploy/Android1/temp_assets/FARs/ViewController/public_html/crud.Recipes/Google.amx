@@ -4,15 +4,15 @@
   <amx:panelPage id="pp1">
         <amx:facet name="header">             
             <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
-                hintText="Search Google" showClear="on" maximumLength="300" inputType="text"
-                autoCapitalize="none" inlineStyle="white-space:normal;width:825px;left:-50px" required="true"/> 
+                hintText="" showClear="on" maximumLength="600" inputType="text" 
+                autoCapitalize="none" inlineStyle="width:60%;left:-50px" required="true"/> 
         </amx:facet>
         <amx:facet name="primary">
            <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
                 <amx:actionListener id="al03" binding="#{bindings.clearGoogle.execute}" />            
                 <amx:actionListener id="al3" binding="#{bindings.reloadRecipes.execute}" />
             </amx:commandButton>
-            <amx:image id="i1" source="/images/google_64.png" inlineStyle="white-space:normal;width:64px;left:-25px" />
+            <amx:image id="i1" source="/images/google_64.png" inlineStyle="width:60%; max-width:65%; height:auto; left:-20px;" />
             <!--<amx:outputText value="Google Search" id="ot1" />keyboardDismiss="search" -->
             <!--<amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" text=""
                         disabled="#{!bindings.toggleSpringboard.enabled}" id="cl3"

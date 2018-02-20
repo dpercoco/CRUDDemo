@@ -30,9 +30,7 @@
                         <amx:setPropertyListener id="spl01" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                         <amx:accessoryLayout id="al1">
                             <amx:facet name="end"> <!-- DELETE -->
-                                <!--<amx:commandLink actionListener="#{bindings.Delete.execute}"
-                                                 disabled="#{!bindings.Delete.enabled}" id="cl3" text="Delete">-->
-                                  <amx:commandLink text="Delete" actionListener="#{bindings.prepareRecipeToEdit.execute}">
+                                <amx:commandLink text="Delete" actionListener="#{bindings.prepareRecipeToEdit.execute}">
                                      <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
                                      <amx:setPropertyListener id="spl19" from="#{row.title}" to="#{pageFlowScope.title}"/>
                                      <amx:showPopupBehavior popupId="p1" type="action" alignId="li1" decoration="anchor"/>
@@ -115,12 +113,13 @@
   </amx:popup> 
   
   <amx:popup id="p2" autoDismiss="false" shortDesc="Add Recipe"
-          inlineStyle="font-size:medium;" animation="slideUp" backgroundDimming="on">
-          <amx:outputText value="Delete recipe #{pageFlowScope.title}?" id="ot5"/>
+          inlineStyle="font-size:medium;" animation="slideDown" backgroundDimming="on">
+          <!--<amx:outputText value="Delete recipe #{pageFlowScope.title}?" id="ot5"/>-->
           <amx:tableLayout width="100%" id="tl4">
                 <amx:rowLayout id="rr1">
                     <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cc1">
                         <amx:commandButton text="Google Search" id="cbG" action="google">
+                              <amx:setPropertyListener id="spl0" from="#{false}" to="#{pageFlowScope.newMode}" type="action"/>
                               <amx:closePopupBehavior id="clp1" popupId="p2"/>
                         </amx:commandButton>
                     </amx:cellFormat>

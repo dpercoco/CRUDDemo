@@ -69,6 +69,10 @@ public class Recipe {
     }
       
    public Recipe() {
+       this.id = -1;
+       this.title = "";
+       this.recipeUrl = ""; 
+       this.prepTime = "";
    }
    
    public Recipe(int id, String title, String url) {
@@ -286,7 +290,7 @@ public class Recipe {
             ResultSet result = stmt.executeQuery(sql);
             result.beforeFirst();
 
-            if (!result.next()) {
+            if (!result.next() && this.getRecipeUrl()!=null) {
                 getIngredientsFromWeb(this.getRecipeUrl());
             }
 

@@ -21,14 +21,16 @@
               <amx:facet name="center">
                 <amx:listView var="row" value="#{bindings.recipes.collectionModel}" 
                               fetchSize="#{bindings.recipes.rangeSize}"
+                              selectedRowKeys="#{bindings.recipes.collectionModel.selectedRow}"
                               initialScrollRowKeys="#{bindings.recipes.collectionModel.selectedRow}"
                               selectionListener="#{bindings.recipes.collectionModel.makeCurrent}" 
                               showMoreStrategy="autoScroll" 
                               bufferStrategy="viewport" id="lv2">
                     <amx:listItem id="li1" action="edit">
-                        <amx:actionListener id="al3" binding="#{bindings.prepareRecipeToEdit.execute}"/>
                         <amx:setPropertyListener id="spl01" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
+                        <amx:actionListener id="al3" binding="#{bindings.prepareRecipeToEdit.execute}"/>                        
                         <amx:accessoryLayout id="al1">
+                        
                             <amx:facet name="end"> <!-- DELETE -->
                                 <amx:commandLink text="Delete" actionListener="#{bindings.prepareRecipeToEdit.execute}">
                                      <amx:setPropertyListener id="spl9" from="#{row.id}" to="#{pageFlowScope.selectedRid}"/>
@@ -120,13 +122,16 @@
                     <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cc1">
                         <amx:commandButton text="Google Search" id="cbG" action="google">
                               <amx:setPropertyListener id="spl0" from="#{false}" to="#{pageFlowScope.newMode}" type="action"/>
+                              <amx:setPropertyListener id="spl8" from="#{true}" to="#{pageFlowScope.googleRecipe}" type="action"/>
                               <amx:closePopupBehavior id="clp1" popupId="p2"/>
                         </amx:commandButton>
                     </amx:cellFormat>
                 </amx:rowLayout>
                 <amx:rowLayout id="rr2">
                     <amx:cellFormat width="10%" height="#{deviceScope.device.os=='Android'?'36':'32'}px" id="cc2">
-                        <amx:commandButton text="Add my own" id="cbA" action="edit">
+                        <amx:commandButton text="My Own" id="cbA" action="edit">
+                              <amx:setPropertyListener id="spl7" from="#{true}" to="#{pageFlowScope.newMode}" type="action"/>
+                              <amx:setPropertyListener id="spl10" from="#{false}" to="#{pageFlowScope.googleRecipe}" type="action"/>
                               <amx:actionListener id="al6" binding="#{bindings.prepareRecipeToAdd.execute}"/>
                               <amx:closePopupBehavior id="clp2" popupId="p21"/>
                         </amx:commandButton>

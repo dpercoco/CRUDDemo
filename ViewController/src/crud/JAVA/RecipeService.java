@@ -292,6 +292,7 @@ public class RecipeService {
     }
     
     private void insertIngredient(Ingredient ingredient) {
+        
         boolean success = ingredient.saveIngredientToStore(ingredient);
         if (success) {
             //ingredients.add(ingredient);
@@ -578,8 +579,15 @@ public class RecipeService {
         String recipeTitle = recipe.getTitle();
         Integer recipeID = recipe.getId();
         
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToEdit",
-                  recipeTitle + " (" + recipeID + ")");
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
+        
+        if (recipe.getGoogleRecipe().equals("Y")) 
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "true");
+        else 
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "false");    
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "####prepareRecipeToEdit",
+                  recipeTitle + " (" + recipeID + ")" + ", googleRecipe:" + recipe.getGoogleRecipe());
         
         //recipe = recipeToEdit;
     }
@@ -595,12 +603,9 @@ public class RecipeService {
         
         ingredients.clear();
         
-        //providerChangeSupport.fireProviderRefresh("recipe");
+        providerChangeSupport.fireProviderRefresh("recipe");
         providerChangeSupport.fireProviderRefresh("ingredients");
         AdfmfJavaUtilities.flushDataChangeEvent();
-        
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "true");    
         
         clearParms();        
         
@@ -608,25 +613,42 @@ public class RecipeService {
                   recipe.getTitle() + " (" + recipe.getId() + ")");
     }   
     
-    public void saveRecipe(Recipe recipe) {
+    public void saveRecipe(Recipe r) {
         
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
         Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        String googleRecipe = obj.toString();
+                
+        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
+        obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
         String newMode = obj.toString();
         
         if (newMode == "true") {
             recipe.setTitle(recipe.getRecipeUrl());
             recipe.setRecipeUrl("");
-            insertRecipe(recipe);   
+            
+            recipe.setGoogleRecipe("N");
+            if (googleRecipe == "true") {
+                recipe.setGoogleRecipe("Y");
+            } 
+            
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###savingRecipe",
+                      recipe.getTitle() + " (" + recipe.getId() + ")");
+            
+            insertRecipe(recipe);
         }
         else {
             updateRecipe(recipe);    
         }
+
+        ingredients.clear();
         
+        //Set newMode == false
         ve.setValue(AdfmfJavaUtilities.getELContext(), "false");
     }
     
     private void insertRecipe(Recipe recipe) {
+        
         boolean success = recipe.saveRecipeToStore(recipe);
         if (success) {
             recipes.add(recipe);
@@ -679,6 +701,7 @@ public class RecipeService {
     }
         
     public void setRecipe(Recipe recipe) {
+        
         Recipe oldRecipe = this.recipe;
         this.recipe = recipe;
         propertyChangeSupport.firePropertyChange("recipe", oldRecipe, recipe);
@@ -694,23 +717,29 @@ public class RecipeService {
         //propertyChangeSupport.firePropertyChange("ingredients", oldIngredients, ingredients);
     }
 
-    public List<Ingredient> getIngredients() {
-        
-        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############getIngredients", "URL: " 
-            + recipe.getRecipeUrl() + ", Recipe ID," + recipe.getId());       
+    public List<Ingredient> getIngredients() {        
         
         //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newModeIngredient}", Boolean.class);
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
         Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
         String newMode = obj.toString();
         
+        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
+        obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        String googleRecipe = obj.toString();
+                
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############getIngredients", "URL: " 
+            + recipe.getRecipeUrl() + ", Recipe ID," + recipe.getId()
+            + ", newMode:" + newMode + ", googleRecipe:" + googleRecipe
+            + ", ingredientsEmpty:" + ingredients.isEmpty());    
+        
         if (newMode=="true") {
             //ingredients.clear();
         }
         else {
-            if(ingredients.isEmpty()) {
+            //if(ingredients.isEmpty()) { Ingredients could be empty if you just added a recipe without ingredients
                 ingredients = recipe.getIngredients();
-            }
+            //}
         }        
         return ingredients;
     }

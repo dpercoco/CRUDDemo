@@ -146,7 +146,7 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase20"
+      id="ControlFlowCase14"
       from="WildcardControlFlowRule30">
       <property
          name="tosrcid">__20</property>
@@ -157,7 +157,7 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase21"
+      id="ControlFlowCase15"
       to="View12">
       <property
          name="tosrcid">__22</property>

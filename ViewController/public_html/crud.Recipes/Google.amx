@@ -4,15 +4,15 @@
   <amx:panelPage id="pp1">
         <amx:facet name="header">             
             <amx:inputText value="#{bindings.googleCriteria.inputValue}" simple="true" id="it2" 
-                hintText="" showClear="on" maximumLength="600" inputType="text" 
-                autoCapitalize="none" inlineStyle="width:60%;max-width:60%;left:-50px" required="true"/> 
+                hintText="" showClear="on" inputType="text" inlineStyle="width:135%: left-100px;"
+                autoCapitalize="none" required="true"/> 
         </amx:facet>
         <amx:facet name="primary">
            <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
                 <amx:actionListener id="al03" binding="#{bindings.clearGoogle.execute}" />            
                 <amx:actionListener id="al3" binding="#{bindings.reloadRecipes.execute}" />
             </amx:commandButton>
-            <amx:image id="i1" source="/images/google_64.png" inlineStyle="width:60%; max-width:65%; height:auto; left:-20px;" />
+            <amx:image id="i1" source="/images/google_64.png" inlineStyle="max-width:40%; height:auto; left:-40px;" />
             <!--<amx:outputText value="Google Search" id="ot1" />keyboardDismiss="search" -->
             <!--<amx:commandLink actionListener="#{bindings.toggleSpringboard.execute}" text=""
                         disabled="#{!bindings.toggleSpringboard.enabled}" id="cl3"
@@ -23,7 +23,8 @@
         
          <amx:facet name="secondary">
             <amx:commandButton icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
-                disabled="#{!bindings.callGoogle.enabled}" id="cb1" iconPosition="trailing"/>
+                disabled="#{!bindings.callGoogle.enabled}" id="cb1" iconPosition="trailing"
+                inlineStyle="max-width:50%; height:auto;"/>
          </amx:facet>
             
         <amx:panelStretchLayout id="psl1"> 

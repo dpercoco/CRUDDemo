@@ -14,38 +14,10 @@
                       DataControl="RecipeService" BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator"/>
     <accessorIterator MasterBinding="RecipeServiceIterator" Binds="ingredient" RangeSize="25"
                       DataControl="RecipeService" BeanClass="crud.JAVA.Ingredient" id="ingredientIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipe" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipeIterator"/>
   </executables>
   <bindings>
-    <attributeValues IterBinding="recipesIterator" id="title">
-      <AttrNames>
-        <Item Value="title"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="recipesIterator" id="recipeUrl">
-      <AttrNames>
-        <Item Value="recipeUrl"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="recipesIterator" id="photo">
-      <AttrNames>
-        <Item Value="photo"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="recipesIterator" id="description">
-      <AttrNames>
-        <Item Value="description"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="recipesIterator" id="prepTime">
-      <AttrNames>
-        <Item Value="prepTime"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="recipesIterator" id="id">
-      <AttrNames>
-        <Item Value="id"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="RecipeServiceIterator" id="googleCriteria">
       <AttrNames>
         <Item Value="googleCriteria"/>
@@ -116,5 +88,40 @@
     <methodAction id="deleteIngredient" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteIngredient"
                   IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider"/>
+    <attributeValues IterBinding="recipeIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="recipeID">
+      <AttrNames>
+        <Item Value="recipeID"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="recipeUrl">
+      <AttrNames>
+        <Item Value="recipeUrl"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="item">
+      <AttrNames>
+        <Item Value="item"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="description">
+      <AttrNames>
+        <Item Value="description"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="prepTime">
+      <AttrNames>
+        <Item Value="prepTime"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

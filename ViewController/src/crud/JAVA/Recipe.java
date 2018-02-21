@@ -45,6 +45,7 @@ public class Recipe {
    private String prepTime="";
    private String recipeUrl="";
    private String item="";
+   private String googleRecipe="";
    private List<Ingredient> recipeIngredients = new ArrayList<Ingredient>();
    private static Map<String, Map<String, Ingredient>> shoppingItems = null;
    private static shoppingListProcess slp = new shoppingListProcess();
@@ -127,7 +128,7 @@ public class Recipe {
        
        if (title.trim().length()==0) return "";
        title = title.replace("\"", "");
-       title = title.replace("'", "");
+       title = title.replace("'","");
        return title;
    }
    public void setTitle(String title) {
@@ -152,7 +153,7 @@ public class Recipe {
        
        if (recipeUrl.trim().length()==0) return "";
        recipeUrl = recipeUrl.replace("\"", "");
-       recipeUrl = recipeUrl.replace("'", "");
+       recipeUrl = recipeUrl.replace("'","''");
        return recipeUrl;
    }
    public String getPhoto() {
@@ -167,6 +168,9 @@ public class Recipe {
         propertyChangeSupport.firePropertyChange("photo", oldItem, item);
     }
    public String getDescription() {
+       
+       description = description.replace("\"", "");
+       description = description.replace("'","");
        return description;
    }
    public void setDescription(String description) {
@@ -854,6 +858,15 @@ public class Recipe {
                       "##############Exception:  " + exception.getMessage());
 
         }
-    } 
-    
+    }
+
+    public void setGoogleRecipe(String googleRecipe) {
+        String oldGoogleRecipe = this.googleRecipe;
+        this.googleRecipe = googleRecipe;
+        propertyChangeSupport.firePropertyChange("googleRecipe", oldGoogleRecipe, googleRecipe);
+    }
+
+    public String getGoogleRecipe() {
+        return googleRecipe;
+    }
 }

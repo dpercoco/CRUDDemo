@@ -3,7 +3,7 @@
           xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
   <amx:panelPage id="pp1">
     <amx:facet name="header">
-      <amx:outputText value="#{bindings.title.inputValue}" id="ot1"/>
+        <amx:outputText value="#{bindings.title.inputValue}" id="ot2"/>
     </amx:facet>
     <amx:facet name="primary">
       <amx:commandButton action="__back" id="cb1"  icon="/images/back.png">
@@ -15,12 +15,12 @@
                          disabled="#{!bindings.saveIngredient.enabled}" id="cb3">
                <amx:setPropertyListener id="spl1" from="#{bindings.newItem.inputValue}" to="#{pageFlowScope.newItem}"/>
                <amx:validationBehavior group="vg1" id="vb1"/>
-               <amx:actionListener id="al2" binding="#{bindings.reloadIngredients.execute}" />
         </amx:commandButton>
         <amx:commandButton icon="/images/delete.png" actionListener="#{bindings.Delete.execute}" text=""
                          disabled="#{!bindings.Delete.enabled}" id="cb2">
              <amx:validationBehavior group="vg1" id="vb2"/>
-             <amx:setPropertyListener id="spl2" from="#{bindings.id.inputValue}" to="#{pageFlowScope.selectedId}"/>            
+             <amx:setPropertyListener id="spl3" from="#{bindings.ingredientID.inputValue}" to="#{pageFlowScope.selectedId}"/>            
+             <amx:setPropertyListener id="spl2" from="#{bindings.id.inputValue}" to="#{pageFlowScope.selectedRid}"/>            
              <amx:actionListener id="al3" binding="#{bindings.deleteIngredient.execute}" />
        </amx:commandButton>
     </amx:facet>

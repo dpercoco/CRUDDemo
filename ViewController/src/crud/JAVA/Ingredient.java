@@ -191,8 +191,29 @@ public class Ingredient {
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, Ingredient.class, "setAmountMeasurement",
                       "##############Exception:  " + e.getMessage());
         }
-} 
-
+   } 
+ 
+    public void setQtyContainer(String inStr) {
+        String temp = inStr.replaceAll("[^0-9/ a-z]", "").trim();
+        try {
+            if (temp.indexOf("/")>-1 && temp.indexOf(" ")>-1) {
+                    String[] f = temp.split(" ");
+                    String integerPart = f[0];
+                    String fractionPart = f[1];
+                    String[] fraction = fractionPart.split("/");
+                    int integer = Integer.parseInt(integerPart);
+                    int numerator = Integer.parseInt(fraction[0]);
+                    int denominator = Integer.parseInt(fraction[1]);
+                    double fractionDbl = (numerator * 100 / denominator);
+                    this.qty = integer + fractionDbl/100;
+            }
+            else this.qty = parse(temp);
+        }
+        catch(Exception e){}
+        String m = inStr.replaceAll("[^A-Za-z]", "").trim();
+        this.container = m;
+    } 
+    
    double parse(String ratio) {
         if (ratio.contains("/")) {
             String[] rat = ratio.split("/");
@@ -296,6 +317,86 @@ public class Ingredient {
     }
     
     public Ingredient buildIngredient(String foodItem) {
+        
+        Ingredient i = new Ingredient();
+        i.setRid(this.rid);
+        i.setId(this.id);
+        
+        try {   
+              String numeric = "[0-9]{1,2}(?:/[1-9]{1,1})?(?: [1-9]{1,1}/[1-9]{1,1})?";             
+              String measurements = "( )?(tbs|tablespoon|tsp|teaspoon|pound|oz|ounce)s? ";
+              String containers = "( )?(can|cup|bunch|box|bottle)s? ";
+              String adjectives = "(chopped|crushed) ";
+              String remaining = "", qty="";
+              int idx=-1;
+            
+              foodItem = foodItem.replaceAll("[()]","");
+              foodItem = foodItem.replaceAll("(of|on|to)","");
+              remaining = foodItem;
+              
+              String regex = numeric + measurements;          
+              Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+              Matcher m = p.matcher(foodItem); 
+              if (m.find()){
+                    remaining = remaining.replace(m.group(), "");
+                    i.setAmountMeasurement(m.group());
+                    idx=m.start();
+                    if (idx>0) {
+                        regex = numeric + containers;   
+                        p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+                        m = p.matcher(remaining); 
+                        if (m.find()) {
+                                //System.out.println(m.group());
+                                i.setQtyContainer(m.group());
+                                remaining = remaining.replace(m.group(), " ");
+                        }
+                        //qty = foodItem.substring(0,idx);
+                        //i.setQuantity(qty);
+                        //remaining = remaining.replaceAll("^" + qty, "");
+                    }
+              }
+              else {
+                      regex = "^" + numeric;          
+                      p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+                      m = p.matcher(foodItem); 
+                      if (m.find()){
+                              qty = m.group();
+                              i.setQuantity(qty);
+                              remaining = remaining.replaceAll("^" + qty, "");
+                      }
+              }
+              
+              regex = containers;     
+              p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+              m = p.matcher(foodItem); 
+              if (m.find()){
+                      i.setContainer(m.group());
+                      remaining = remaining.replace(m.group(), " ");
+              }
+              
+              regex = adjectives;     
+              p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+              m = p.matcher(foodItem); 
+              if (m.find()){
+                      i.setContainer(m.group());
+                      remaining = remaining.replace(m.group(), " ");
+              }
+              
+              i.setFoodItem(remaining); 
+            
+              String foodGroup = aisle.findFoodGroup(i.getFoodItem());
+              i.setFoodGroup(foodGroup);
+              //Utility.ApplicationLogger.severe("buildIngredient: foodItem " + i.getFoodItem() + ", foodGroup " + foodGroup); 
+             
+         }
+         catch (Exception e) {
+             Utility.ApplicationLogger.severe("setIngredient: ERROR " + foodItem + " " + e.getMessage()); 
+         }
+        
+         return i;
+     }
+    
+    public Ingredient buildIngredientOLD(String foodItem) {
         
         Ingredient i = new Ingredient();
         i.setRid(this.rid);

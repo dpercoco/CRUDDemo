@@ -13,12 +13,12 @@ COMMIT;
 
 REM INSERTING into RECIPES
  
-Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (1, "Chicken & Dumplings", "http://www.foodnetwork.com/recipes/paula-deen/chicken-and-dumplings-recipe.html", "Recipe courtesy of Paula Deen", "30 minutes","Y");
-Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (2, "Lasagne", "http://www.foodnetwork.com/recipes/mario-batali/lasagne-recipe.html", "Recipe courtesy of Mario Batali", "45 minutes","Y");
-Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (3, "Brownies", "http://www.foodnetwork.com/recipes/alton-brown/cocoa-brownies-recipe.html", "Recipe courtesy of Alton Brown", "15 minutes","Y");
-Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (4, "Meatballs", "http://www.foodnetwork.com/recipes/geoffrey-zakarian/meatballs.html", "Recipe courtesy of Geoffrey Zakarian", "10 minutes","Y");
-Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (5, "Baked Macaroni & Cheese", "http://www.foodnetwork.com/recipes/alton-brown/baked-macaroni-and-cheese-recipe.html", "Recipe courtesy of Alton Brown", "20 minutes","Y");
-Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (6, "Homestyle Meatloaf", "http://www.foodnetwork.com/recipes/paula-deen/homestyle-meatloaf-recipe.html", "Recipe courtesy of Paula Deen", "25 minutes","Y");
+Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (1, "Chicken & Dumplings", "http://www.foodnetwork.com/recipes/paula-deen/chicken-and-dumplings-recipe.html", "Recipe courtesy of Paula Deen", "30 minutes", "Y");
+Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (2, "Lasagne", "http://www.foodnetwork.com/recipes/mario-batali/lasagne-recipe.html", "Recipe courtesy of Mario Batali", "45 minutes", "Y");
+Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (3, "Brownies", "http://www.foodnetwork.com/recipes/alton-brown/cocoa-brownies-recipe.html", "Recipe courtesy of Alton Brown", "15 minutes", "Y");
+Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (4, "Meatballs", "http://www.foodnetwork.com/recipes/geoffrey-zakarian/meatballs.html", "Recipe courtesy of Geoffrey Zakarian", "10 minutes", "Y");
+Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (5, "Baked Macaroni & Cheese", "http://www.foodnetwork.com/recipes/alton-brown/baked-macaroni-and-cheese-recipe.html", "Recipe courtesy of Alton Brown", "20 minutes", "Y");
+Insert into RECIPES (RID,TITLE,RECIPEURL,DESCRIPTION,PREPTIME,GOOGLERECIPE) values (6, "Homestyle Meatloaf", "http://www.foodnetwork.com/recipes/paula-deen/homestyle-meatloaf-recipe.html", "Recipe courtesy of Paula Deen", "25 minutes", "Y");
 
 COMMIT;
 

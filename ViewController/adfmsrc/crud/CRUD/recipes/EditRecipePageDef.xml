@@ -123,5 +123,15 @@
         <Item Value="prepTime"/>
       </AttrNames>
     </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="googleRecipe">
+      <AttrNames>
+        <Item Value="googleRecipe"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RecipeServiceIterator" id="displayUrl">
+      <AttrNames>
+        <Item Value="displayUrl"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

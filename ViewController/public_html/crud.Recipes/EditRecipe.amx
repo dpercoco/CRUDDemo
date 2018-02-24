@@ -27,11 +27,14 @@
             </amx:panelFormLayout> 
         <!--</amx:validationGroup>-->
         
-        
         <amx:panelStretchLayout id="psl1">  
-              <amx:facet name="top">              
-                <amx:inputText id="recipeUrl" value="#{bindings.recipeUrl.inputValue}" label="#{pageFlowScope.newMode=='true'?'title':'url'}"
-                               inputType="text" showClear="on" inlineStyle="#{pageFlowScope.newMode=='false' and pageFlowScope.googleRecipe=='false'?'display:none;margin-left:4px;':'display:inline;margin-left:4px;'}" hintText=""/>
+              <amx:facet name="top">
+                <amx:inputText id="_recipeUrl" value="#{bindings.recipeUrl.inputValue}" label="#{pageFlowScope.newMode=='true'?'title':'url'}"
+                               inputType="text" showClear="on" 
+                               inlineStyle="#{pageFlowScope.displayURL=='true'?'display:block;margin-left:4px;':'display:none;margin-left:4px;'}" hintText=""/>
+               <!--<amx:inputText id="recipeUrl" value="#{bindings.recipeUrl.inputValue}" label="#{pageFlowScope.newMode=='true'?'title':'url'}"
+                               inputType="text" showClear="on" 
+                               inlineStyle="#{pageFlowScope.displayURL=='false'}?'display:none;margin-left:4px;':'display:inline;margin-left:4px;'}" hintText=""/>-->
                 <amx:inputText value="#{bindings.description.inputValue}" label="description"
                                id="it9" inputType="text" showClear="on" inlineStyle=" margin-left:4px;" hintText=""/>
                 <amx:inputText id="prepTime" value="#{bindings.prepTime.inputValue}" label="prep time"
@@ -62,7 +65,7 @@
               <amx:facet name="bottom">
                     <amx:commandButton icon="/images/add.png" action="editIngredient" actionListener="#{bindings.prepareIngredientToAdd.execute}"
                         text="add ingredient" disabled="#{!bindings.prepareIngredientToAdd.enabled}" id="cb11"
-                        inlineStyle="#{pageFlowScope.newMode=='true'?'display:none;':'display:inline;'}">
+                        inlineStyle="#{pageFlowScope.newMode=='true'?'visibility:hidden;':'visibility:visible;'}"><!-- display:none; display:block; -->
                         <amx:setPropertyListener id="spl10" from="#{true}" to="#{pageFlowScope.newModeIngredient}" type="action"/>
                             <amx:setPropertyListener id="spl11" from="#{bindings.id.inputValue}" to="#{pageFlowScope.selectedId}" type="action"/>
                     </amx:commandButton>

@@ -1,59 +1,51 @@
 package crud.JAVA;
 
-import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
-import crud.application.DBConnectionFactory;
-
-import crud.application.LifeCycleListenerImpl;
-
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
+//import com.gargoylesoftware.htmlunit.WebClient;
+//import com.gargoylesoftware.htmlunit.html.HtmlPage;
+//import crud.application.DBConnectionFactory;
+//import crud.application.LifeCycleListenerImpl;
+//import java.io.BufferedReader;
+//import java.io.InputStreamReader;
+//import java.io.UnsupportedEncodingException;
+//import java.net.HttpURLConnection;
+//import java.net.InetSocketAddress;
 
 import java.io.UnsupportedEncodingException;
-
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import javax.el.ValueExpression;
+
+/***
+import java.util.Map;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import jxl.read.biff.BiffException;
+
 import java.net.Proxy;
 import java.net.URL;
-
 import java.net.URLConnection;
-
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-
-import javax.el.ValueExpression;
-
-import jxl.read.biff.BiffException;
-
 import oracle.adf.model.binding.DCBindingContainer;
-
 import oracle.adfmf.amx.event.ActionEvent;
 import oracle.adfmf.amx.event.ValueChangeEvent;
 import oracle.adfmf.bindings.dbf.AmxAttributeBinding;
 import oracle.adfmf.bindings.dbf.AmxCollectionModel;
 import oracle.adfmf.bindings.dbf.AmxIteratorBinding;
 import oracle.adfmf.bindings.dbf.AmxTreeBinding;
+**/
 import oracle.adfmf.bindings.iterator.BasicIterator;
 import oracle.adfmf.dc.bean.ConcreteJavaBeanObject;
 import oracle.adfmf.framework.FeatureContext;
@@ -74,14 +66,13 @@ public class RecipeService {
     private Ingredient ingredient;
     private List<Recipe> recipes = new ArrayList<Recipe>();
     private List<Ingredient> ingredients = new ArrayList<Ingredient>();
-    private static Map<String, Map<String, Ingredient>> shoppingItems = null;
     private transient PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
     private transient ProviderChangeSupport providerChangeSupport = new ProviderChangeSupport(this);
-    private static shoppingListProcess slp = new shoppingListProcess();
     List<Google> googleResults = new ArrayList<Google>(); //This will automatically produce CREATE, DELETE methods in Data Controls, Operations
     String googleCriteria = "";
     String selectedUrl = "";
     String selectedTitle = "";
+    boolean displayUrl = true;
     boolean isPopupOpen = false;
     
     public RecipeService() {
@@ -119,9 +110,9 @@ public class RecipeService {
     
     public void deleteRecipeFromStore() {
         
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRid}", Integer.class);
-        Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
-        Integer recipeID = (Integer)obj1;         
+        //ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRid}", Integer.class);
+        //Object obj1 = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        //Integer recipeID = (Integer)obj1;         
         recipe.deleteFromStore(recipe.getId());
         //reloadRecipes();
     }
@@ -143,7 +134,6 @@ public class RecipeService {
 
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes", "");
         ingredients.clear();
-        recipe = new Recipe();
         ingredients = recipe.getIngredientsFromStore();
         
     }
@@ -229,7 +219,7 @@ public class RecipeService {
         //}
         
         
-        Ingredient ingredient= new Ingredient();
+        //Ingredient ingredient= new Ingredient();
         //ingredient = ingredients.get(IngredientId);
         //ingredients.set(IngredientId, ingredient);
         //Iterator it = ingredients.iterator();        
@@ -323,18 +313,19 @@ public class RecipeService {
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############deleteIngredient", " Recipe:" 
                   + recipe.getTitle() + ", Ingredient :" + ingredient.item + "(" + ingredient.id + ")");
         
-        ingredients.remove(ingredient);
-        providerChangeSupport.fireProviderRefresh("ingredients");
-        AdfmfJavaUtilities.flushDataChangeEvent();
         Boolean success = ingredient.deleteIngredientFromStore(ingredient);
-       
+        if (success) {
+            ingredients.remove(ingredient);
+            providerChangeSupport.fireProviderRefresh("ingredients");
+            AdfmfJavaUtilities.flushDataChangeEvent();
+        }
     }
     
-    private Ingredient getCurrentIngredient(Integer id) {
+    private Ingredient getCurrentIngredientXXX(Integer id) {
         
         Ingredient ingredient = new Ingredient();
         for (Integer i = 1; i < ingredients.size(); i++) {
-            ingredient = (Ingredient) ingredients.get(i);
+            ingredient = ingredients.get(i);
             if (ingredient.getId() == id) {
                 return ingredient;
             }
@@ -407,7 +398,7 @@ public class RecipeService {
     
     public void setGoogleResults(List<Google> googleResults) {
         
-        List<Google> oldGoogleResults = this.googleResults;
+        //List<Google> oldGoogleResults = this.googleResults;
         this.googleResults = googleResults;
     } 
     
@@ -461,11 +452,10 @@ public class RecipeService {
     }
     
     public void showPopup() {
-
+        //Used by Google.amx
         if (!isPopupOpen) {
             Object errorMsg = AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
-                                                                      "popupUtilsShowPopup", new Object[] {
-                                                                      "_popShowId" });
+                           "popupUtilsShowPopup", new Object[] {"_popShowId" });
             isPopupOpen = true;
             //wait a few seconds and then close the popup
             Timer timer = new Timer();
@@ -477,15 +467,13 @@ public class RecipeService {
                 }
 
             },2000);
-
         }
     }
     private void closePopup() {
 
         if (isPopupOpen) {
             Object errorMsg = AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
-                                                                      "popupUtilsHidePopup", new Object[] {
-                                                                      "_popCloseId" });
+                   "popupUtilsHidePopup", new Object[] {"_popCloseId" });
             isPopupOpen = false;
         }
     }
@@ -502,7 +490,7 @@ public class RecipeService {
         ve.setValue(AdfmfJavaUtilities.getELContext(), "");
              
     }
-    private String getCurrentUrl() {
+    private String getCurrentUrlXXX() {
         
         ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{bindings.googleResultsIterator.currentRow.dataProvider}",  Object.class);
         Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());
@@ -576,15 +564,10 @@ public class RecipeService {
         
         setRecipe(); //Set recipe based on pageFlowScope.selectedRid
         
+        setDisplayRecipeURL("false");
+        
         String recipeTitle = recipe.getTitle();
         Integer recipeID = recipe.getId();
-        
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
-        
-        if (recipe.getGoogleRecipe().equals("Y")) 
-            ve.setValue(AdfmfJavaUtilities.getELContext(), "true");
-        else 
-            ve.setValue(AdfmfJavaUtilities.getELContext(), "false");    
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "####prepareRecipeToEdit",
                   recipeTitle + " (" + recipeID + ")" + ", googleRecipe:" + recipe.getGoogleRecipe());
@@ -592,7 +575,41 @@ public class RecipeService {
         //recipe = recipeToEdit;
     }
     
+    public void setDisplayRecipeURL(String newMode) {
+        
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
+        String googleRecipe = recipe.getGoogleRecipe();
+        String showUrl = "";
+        
+        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.displayURL}", Boolean.class);
+        if (newMode == "false" && googleRecipe.equals("N")) { 
+            displayUrl = false;
+            showUrl = "N";
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "false");
+        }
+        else  {
+            displayUrl = true; 
+            showUrl = "Y";
+            ve.setValue(AdfmfJavaUtilities.getELContext(), "true"); 
+        }
+        
+        //AdfmfJavaUtilities.flushDataChangeEvent();
+        AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
+                                   "showHideText", new Object[] {"_recipeUrl", showUrl});
+        
+        Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "#######setDisplayRecipeURL",
+                  recipe.getTitle() + " (" + recipe.getId() + "), newMode:" + newMode 
+                  + ", googleRecipe:" + googleRecipe
+                  + ", displayURL:" + displayUrl);
+    }
+    
     public void prepareRecipeToAdd() {
+        
+        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
+        Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        String googleRecipeObj = obj.toString();                
+        String googleRecipe = "N";
+        if (googleRecipeObj == "true") googleRecipe = "Y";
         
         recipe = new Recipe();
         recipe.setId();
@@ -600,8 +617,10 @@ public class RecipeService {
         recipe.setRecipeUrl("");
         recipe.setDescription("");
         recipe.setPrepTime("");
-        
+        recipe.setGoogleRecipe(googleRecipe);
         ingredients.clear();
+        
+        setDisplayRecipeURL("true");
         
         providerChangeSupport.fireProviderRefresh("recipe");
         providerChangeSupport.fireProviderRefresh("ingredients");
@@ -610,32 +629,33 @@ public class RecipeService {
         clearParms();        
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###prepareRecipeToAdd",
-                  recipe.getTitle() + " (" + recipe.getId() + ")");
+                  recipe.getTitle() + " (" + recipe.getId() + ")" + ", googleRecipe:" + googleRecipe);
     }   
     
     public void saveRecipe(Recipe r) {
         
-        ValueExpression ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
-        Object obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
-        String googleRecipe = obj.toString();
-                
-        ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
-        obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        ValueExpression veNewMode = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.newMode}", Boolean.class);
+        Object obj = veNewMode.getValue(AdfmfJavaUtilities.getELContext());        
         String newMode = obj.toString();
         
         if (newMode == "true") {
             recipe.setTitle(recipe.getRecipeUrl());
             recipe.setRecipeUrl("");
             
-            recipe.setGoogleRecipe("N");
-            if (googleRecipe == "true") {
-                recipe.setGoogleRecipe("Y");
-            } 
-            
-            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###savingRecipe",
-                      recipe.getTitle() + " (" + recipe.getId() + ")");
+            //recipe.setGoogleRecipe("N");
+            //if (googleRecipe == "true") {
+            //    recipe.setGoogleRecipe("Y");
+            //} 
             
             insertRecipe(recipe);
+            
+            ValueExpression veRid = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.selectedRid}", Integer.class);
+            veRid.setValue(AdfmfJavaUtilities.getELContext(), recipe.getId());
+            
+            setRecipe();
+            
+            Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "###saveRecipe",
+                      recipe.getTitle() + " (" + recipe.getId() + ")" + ", googleRecipe:" + recipe.getGoogleRecipe());        
         }
         else {
             updateRecipe(recipe);    
@@ -643,8 +663,9 @@ public class RecipeService {
 
         ingredients.clear();
         
-        //Set newMode == false
-        ve.setValue(AdfmfJavaUtilities.getELContext(), "false");
+        veNewMode.setValue(AdfmfJavaUtilities.getELContext(), "false"); //Set newMode == false
+        
+        setDisplayRecipeURL("false");
     }
     
     private void insertRecipe(Recipe recipe) {
@@ -670,7 +691,7 @@ public class RecipeService {
         Integer IngredientId = (Integer)obj1; 
         
         for (Integer i=1; i<ingredients.size(); i++) {
-             Ingredient ing = (Ingredient) ingredients.get(i);
+             Ingredient ing = ingredients.get(i);
              if (ing.getId()==IngredientId) {
                  ingredient = ing;
                  break;
@@ -689,7 +710,7 @@ public class RecipeService {
         Integer recipeID = (Integer)obj1; 
         
         for (Integer i=1; i<recipes.size(); i++) {
-             Recipe r = (Recipe) recipes.get(i);
+             Recipe r = recipes.get(i);
              if (r.getId()==recipeID) {
                  recipe = r;
                  break;
@@ -712,7 +733,8 @@ public class RecipeService {
     }
     
     public void setIngredients(List<Ingredient> ingredients) {
-        List<Ingredient> oldIngredients = this.ingredients;
+        
+        //List<Ingredient> oldIngredients = this.ingredients;
         this.ingredients = ingredients;
         //propertyChangeSupport.firePropertyChange("ingredients", oldIngredients, ingredients);
     }
@@ -725,12 +747,12 @@ public class RecipeService {
         String newMode = obj.toString();
         
         ve = AdfmfJavaUtilities.getValueExpression("#{pageFlowScope.googleRecipe}", Boolean.class);
-        obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
-        String googleRecipe = obj.toString();
+        //obj = ve.getValue(AdfmfJavaUtilities.getELContext());        
+        //String googleRecipe = obj.toString();
                 
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "##############getIngredients", "URL: " 
             + recipe.getRecipeUrl() + ", Recipe ID," + recipe.getId()
-            + ", newMode:" + newMode + ", googleRecipe:" + googleRecipe
+            + ", newMode:" + newMode + ", googleRecipe:" + recipe.getGoogleRecipe()
             + ", ingredientsEmpty:" + ingredients.isEmpty());    
         
         if (newMode=="true") {
@@ -750,5 +772,15 @@ public class RecipeService {
 
     public void removeProviderChangeListener(ProviderChangeListener listener)   {
       providerChangeSupport.removeProviderChangeListener(listener);
+    }
+
+    public void setDisplayUrl(boolean displayUrl) {
+        boolean oldDisplayUrl = this.displayUrl;
+        this.displayUrl = displayUrl;
+        propertyChangeSupport.firePropertyChange("displayUrl", oldDisplayUrl, displayUrl);
+    }
+
+    public boolean isDisplayUrl() {
+        return displayUrl;
     }
 }

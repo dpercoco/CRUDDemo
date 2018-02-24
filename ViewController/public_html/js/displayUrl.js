@@ -21,9 +21,25 @@
    
     document.addEventListener("showpagecomplete", initialise, false);
     
-    // These methods are the DetailRecipe popUp
+    // These methods are the Google, DetailRecipe popUp
     
-     popupUtilsShowPopup = function() {
+    showHideText = function() {
+        //the argument is required and cannot be missing
+        if (arguments.length > 0) {
+            var ele = document.getElementById(arguments[0]);
+            var showText = arguments[1];
+            //if ((ele.style.display == "block") || (ele.style.display == "")) {
+            //alert (arguments[0] + " show:" + showText);
+            if (showText == "N") {
+                ele.style.display = "none";               
+            }
+            else {
+                ele.style.display = "block";              
+            }
+        }
+    }
+    
+    popupUtilsShowPopup = function() {
         //the argument is required and cannot be missing
         if (arguments.length > 0) {
             var popupOpener = document.getElementById(arguments[0]);

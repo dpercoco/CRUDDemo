@@ -82,13 +82,14 @@ public class Recipe {
          this.title = title;
          this.recipeUrl = url; 
     } 
-   public Recipe(int id, String title, String url, String description, String prepTime) {
+   public Recipe(int id, String title, String url, String description, String prepTime, String googleRecipe) {
          super();
          this.id = id;
          this.title = title;
          this.recipeUrl = url; 
          this.description = description;
          this.prepTime = prepTime;
+         this.googleRecipe = googleRecipe;
     } 
    public Recipe(int id) {
        this.id = id;
@@ -257,8 +258,11 @@ public class Recipe {
                 if (preptime.equals("null")) {
                     preptime = "";
                 }
-
-                Recipe r = new Recipe(id, title, url, description, preptime);
+                String googleRecipe = rs.getString("GOOGLERECIPE");
+                if (googleRecipe.equals("null")) {
+                    googleRecipe = "";
+                }
+                Recipe r = new Recipe(id, title, url, description, preptime, googleRecipe);
 
                 if (!title.isEmpty()) {
                     recipes.add(r);
@@ -859,13 +863,14 @@ public class Recipe {
 
         }
     }
-
+    
     public void setGoogleRecipe(String googleRecipe) {
+        
         String oldGoogleRecipe = this.googleRecipe;
         this.googleRecipe = googleRecipe;
         propertyChangeSupport.firePropertyChange("googleRecipe", oldGoogleRecipe, googleRecipe);
     }
-
+    
     public String getGoogleRecipe() {
         return googleRecipe;
     }

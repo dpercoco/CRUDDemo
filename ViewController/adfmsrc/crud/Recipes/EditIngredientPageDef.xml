@@ -11,6 +11,10 @@
                       BeanClass="crud.JAVA.Recipe" id="recipesIterator"/>
     <accessorIterator MasterBinding="RecipeServiceIterator" Binds="ingredient" RangeSize="25"
                       DataControl="RecipeService" BeanClass="crud.JAVA.Ingredient" id="ingredientIterator"/>
+    <accessorIterator MasterBinding="RecipeServiceIterator" Binds="recipe" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Recipe" id="recipeIterator"/>
+    <accessorIterator MasterBinding="recipeIterator" Binds="ingredients" RangeSize="25" DataControl="RecipeService"
+                      BeanClass="crud.JAVA.Ingredient" id="ingredientsIterator1"/>
   </executables>
   <bindings>
     <methodAction id="deleteIngredient" RequiresUpdateModel="true" Action="invokeMethod" MethodName="deleteIngredient"
@@ -20,16 +24,6 @@
                   IsViewObjectMethod="false" DataControl="RecipeService"
                   InstanceName="data.RecipeService.dataProvider"/>
     <action IterBinding="ingredientsIterator" id="Delete" RequiresUpdateModel="false" Action="removeCurrentRow"/>
-    <attributeValues IterBinding="recipesIterator" id="title">
-      <AttrNames>
-        <Item Value="title"/>
-      </AttrNames>
-    </attributeValues>
-    <attributeValues IterBinding="ingredientIterator" id="id">
-      <AttrNames>
-        <Item Value="id"/>
-      </AttrNames>
-    </attributeValues>
     <attributeValues IterBinding="ingredientIterator" id="newItem">
       <AttrNames>
         <Item Value="newItem"/>
@@ -44,5 +38,20 @@
                   IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
         <NamedData NDName="ingredient" NDType="crud.JAVA.Ingredient" NDValue="#{bindings.ingredientIterator.currentRow.dataProvider}"/>
     </methodAction>
+    <attributeValues IterBinding="recipeIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="recipeIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="ingredientsIterator1" id="ingredientID">
+      <AttrNames>
+        <Item Value="ingredientID"/>
+      </AttrNames>
+    </attributeValues>
   </bindings>
 </pageDefinition>

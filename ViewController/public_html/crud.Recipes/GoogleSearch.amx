@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1" inlineStyle="background-color:#f9f9f9;">
+    <amx:facet name="header">
+    </amx:facet>
+    <amx:facet name="primary">
+      <amx:commandButton action="__back"  text="" icon="/images/back.png"  id="cb1"/>
+    </amx:facet>
+    <amx:panelStretchLayout id="psl1">
+      <amx:facet name="top">        
+             <amx:panelGroupLayout layout="horizontal" valign="bottom" id="pgl2" halign="center">
+                 <amx:spacer id="s2" height="100"/>
+              </amx:panelGroupLayout>
+              
+              <amx:tableLayout id="tl1" width="100%" halign="center">
+                  <amx:rowLayout>
+                     <amx:cellFormat halign="center" width="100%">
+                        <amx:image id="i1" source="/images/google_124.png" inlineStyle="max-width:80%; height:auto;" />
+                    </amx:cellFormat>
+                  </amx:rowLayout>
+                  <amx:rowLayout> <!--padding:2px 6px 0px 6px;  margin: 4px 0-->
+                     <amx:cellFormat halign="center" width="100%">
+                         <amx:inputText value="#{bindings.googleCriteria.inputValue}" id="it1"
+                               inlineStyle="background-color:#ffffff; color:#999; margin-left:6px; white-space:normal; font-weight:bold; font-size:14px;
+                               width:90%;display:inline-block; border:1px solid #ccc; border-radius:4px; box-sizing: border-box;"
+                               showClear="on" inputType="text" hintText="Search Google"/>
+                        <amx:commandButton action="results" icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
+                                   disabled="#{!bindings.callGoogle.enabled}" id="cb2"/>
+                     </amx:cellFormat>
+                  </amx:rowLayout>
+              </amx:tableLayout>
+              
+      </amx:facet>
+      
+      <amx:facet name="center">
+      </amx:facet>
+    </amx:panelStretchLayout>
+  </amx:panelPage>
+</amx:view>

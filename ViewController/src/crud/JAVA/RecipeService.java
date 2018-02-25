@@ -121,8 +121,7 @@ public class RecipeService {
         
         try {
             Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "reloadRecipes", "");
-            recipes.clear();
-            recipe = new Recipe();
+            //recipe = new Recipe();
             recipes = recipe.getRecipesFromStore(); 
         }
         catch (Exception e){
@@ -440,8 +439,13 @@ public class RecipeService {
         try {
             if (googleResult.getUrl().trim().length()>0) { 
                 Recipe recipe = new Recipe(googleResult.getUrl(), googleResult.getPrepTime(), googleResult.getTitle());
-                success = recipe.saveRecipeToStore(recipe); 
-                if (success) showPopup();
+                success = insertRecipe(recipe);
+                
+                //success = recipe.saveRecipeToStore(recipe); 
+                if (success) {
+                    showPopup();
+                //    recipes.add(recipe);
+                }
             }   
         }
         catch(Exception e)     {
@@ -593,14 +597,14 @@ public class RecipeService {
             ve.setValue(AdfmfJavaUtilities.getELContext(), "true"); 
         }
         
-        //AdfmfJavaUtilities.flushDataChangeEvent();
+        //Call Java function: showHideText;
         AdfmfContainerUtilities.invokeContainerJavaScriptFunction(FeatureContext.getCurrentFeatureId(),
                                    "showHideText", new Object[] {"_recipeUrl", showUrl});
         
         Trace.log(Utility.ApplicationLogger, Level.SEVERE, RecipeService.class, "#######setDisplayRecipeURL",
                   recipe.getTitle() + " (" + recipe.getId() + "), newMode:" + newMode 
                   + ", googleRecipe:" + googleRecipe
-                  + ", displayURL:" + displayUrl);
+                  + ", displayURL:" + showUrl);
     }
     
     public void prepareRecipeToAdd() {
@@ -668,12 +672,13 @@ public class RecipeService {
         setDisplayRecipeURL("false");
     }
     
-    private void insertRecipe(Recipe recipe) {
+    private boolean insertRecipe(Recipe recipe) {
         
         boolean success = recipe.saveRecipeToStore(recipe);
         if (success) {
             recipes.add(recipe);
         }
+        return success;
     }
 
     private void updateRecipe(Recipe recipe) {

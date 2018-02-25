@@ -18,12 +18,12 @@
             </amx:commandButton>
         </amx:facet>        
         <amx:panelStretchLayout id="psl1">     
-              <amx:facet name="center">
+              <amx:facet name="center"> <!--selectionListener="#{bindings.recipes.collectionModel.makeCurrent}" 
+                              -->
                 <amx:listView var="row" value="#{bindings.recipes.collectionModel}" 
                               fetchSize="#{bindings.recipes.rangeSize}"
                               selectedRowKeys="#{bindings.recipes.collectionModel.selectedRow}"
                               initialScrollRowKeys="#{bindings.recipes.collectionModel.selectedRow}"
-                              selectionListener="#{bindings.recipes.collectionModel.makeCurrent}" 
                               showMoreStrategy="autoScroll" 
                               bufferStrategy="viewport" id="lv2">
                     <amx:listItem id="li1" action="edit">

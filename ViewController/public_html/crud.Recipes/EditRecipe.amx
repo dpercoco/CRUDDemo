@@ -40,11 +40,11 @@
                 <amx:inputText id="prepTime" value="#{bindings.prepTime.inputValue}" label="prep time"
                                inputType="text" showClear="on" inlineStyle=" margin-left:4px;" hintText=""/>
               </amx:facet>
-              <amx:facet name="center">
+              <amx:facet name="center"> <!--selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}"
+                                  -->
                     <amx:listView var="row" value="#{bindings.ingredients.collectionModel}"
                                   fetchSize="#{bindings.ingredients.rangeSize}"
                                   initialScrollRowKeys="#{bindings.ingredients.collectionModel.selectedRow}"
-                                  selectionListener="#{bindings.ingredients.collectionModel.makeCurrent}"
                                   dividerAttribute="foodGroup" dividerMode="all" showMoreStrategy="autoScroll"
                                   bufferStrategy="viewport" id="lv1">
                           <amx:listItem id="li1" action="editIngredient"> 

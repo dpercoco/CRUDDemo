@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel" version="12.2.1.22.33" id="GoogleSearchPageDef"
+                Package="crud.Recipes">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="root" RangeSize="25" DataControl="RecipeService" id="RecipeServiceIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="RecipeServiceIterator" id="googleCriteria">
+      <AttrNames>
+        <Item Value="googleCriteria"/>
+      </AttrNames>
+    </attributeValues>
+     <methodAction id="callGoogle" RequiresUpdateModel="true" Action="invokeMethod" MethodName="callGoogle"
+                  IsViewObjectMethod="false" DataControl="RecipeService" InstanceName="data.RecipeService.dataProvider">
+      <NamedData NDName="googleCriteria" NDValue="#{bindings.googleCriteria.inputValue}" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

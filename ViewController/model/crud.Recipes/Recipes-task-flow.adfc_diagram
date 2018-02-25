@@ -7,13 +7,13 @@
       <property
          name="activityId">ListRecipes</property>
       <property
-         name="x">232.0</property>
+         name="x">224.0</property>
       <property
          name="start">true</property>
       <property
          name="description">&lt;html>&lt;p>&lt;b>ListRecipes&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">55.442383</property>
+         name="y">54.74121</property>
       <property
          name="page">/crud.Recipes/ListRecipe.amx</property>
       <property
@@ -54,15 +54,15 @@
    <View
       id="View16">
       <property
-         name="activityId">Google</property>
+         name="activityId">GoogleResults</property>
       <property
-         name="x">232.0</property>
+         name="x">293.0</property>
       <property
-         name="description">&lt;html>&lt;p>&lt;b>Google&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+         name="description">&lt;html>&lt;p>&lt;b>GoogleResults&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
       <property
-         name="y">201.33887</property>
+         name="y">217.6377</property>
       <property
-         name="page">/crud.Recipes/Google.amx</property>
+         name="page">/crud.Recipes/GoogleResults.amx</property>
       <property
          name="exceptionHandler">false</property>
    </View>
@@ -104,7 +104,7 @@
       <property
          name="fromsrcid">__1</property>
       <property
-         name="sdm:polyPoints">L50,191.0,55.091797,83.0,55.844727,R50</property>
+         name="sdm:polyPoints">L50,183.0,54.390625,83.0,55.844727,R50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
@@ -128,25 +128,11 @@
       <property
          name="fromOutcome">edit</property>
       <property
-         name="sdm:polyPoints">R50,273.0,55.091797,332.0,54.936523,L50</property>
+         name="sdm:polyPoints">R50,265.0,54.390625,332.0,54.936523,L50</property>
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase26"
-      from="View2"
-      to="View16">
-      <property
-         name="tosrcid">__12</property>
-      <property
-         name="fromOutcome">google</property>
-      <property
-         name="fromsrcid">__1</property>
-      <property
-         name="sdm:polyPoints">B50,232.0,109.0918,232.0,146.98828,T50</property>
-   </ControlFlowCase>
-   <ControlFlowCase
-      islink="true"
-      id="ControlFlowCase14"
+      id="ControlFlowCase17"
       from="WildcardControlFlowRule30">
       <property
          name="tosrcid">__20</property>
@@ -157,7 +143,7 @@
    </ControlFlowCase>
    <ControlFlowCase
       islink="true"
-      id="ControlFlowCase15"
+      id="ControlFlowCase18"
       to="View12">
       <property
          name="tosrcid">__22</property>
@@ -165,5 +151,40 @@
          name="fromOutcome">goEditRecipes</property>
       <property
          name="fromsrcid">__21</property>
+   </ControlFlowCase>
+   <View
+      id="View14">
+      <property
+         name="activityId">GoogleSearch</property>
+      <property
+         name="x">174.3584</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>GoogleSearch&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="y">218.09766</property>
+      <property
+         name="page">/crud.Recipes/GoogleSearch.amx</property>
+      <property
+         name="exceptionHandler">false</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase15"
+      from="View2"
+      to="View14">
+      <property
+         name="fromOutcome">google</property>
+      <property
+         name="sdm:polyPoints">B50,224.0,108.390625,174.3584,163.74707,T50</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase16"
+      from="View14"
+      to="View16">
+      <property
+         name="fromOutcome">results</property>
+      <property
+         name="sdm:polyPoints">R50,215.3584,217.74707,252.0,217.28711,L50</property>
    </ControlFlowCase>
 </SDM>

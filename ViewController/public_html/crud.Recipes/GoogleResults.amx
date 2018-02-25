@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<amx:view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amx="http://xmlns.oracle.com/adf/mf/amx"
+          xmlns:dvtm="http://xmlns.oracle.com/adf/mf/amx/dvt">
+  <amx:panelPage id="pp1">
+        <amx:facet name="header">             
+            <amx:inputText value="#{bindings.googleCriteria.inputValue}" id="it2" inlineStyle="font-size:14px;"
+                hintText="" showClear="on" inputType="text" autoCapitalize="none" /> 
+        </amx:facet>
+        
+        <amx:facet name="primary">
+           <amx:commandButton action="__back"  text="" icon="/images/back.png" id="cb3">
+                <amx:actionListener id="al03" binding="#{bindings.clearGoogle.execute}" />            
+           </amx:commandButton>
+        </amx:facet>
+        
+         <amx:facet name="secondary">
+            <amx:commandButton icon="/images/search.png" actionListener="#{bindings.callGoogle.execute}" text=""
+                disabled="#{!bindings.callGoogle.enabled}" id="cb1"/>
+         </amx:facet>
+            
+        <amx:panelStretchLayout id="psl1"> 
+            <amx:facet name="center">
+                
+                <amx:listView var="row" value="#{bindings.googleResults.collectionModel}"
+                              fetchSize="#{bindings.googleResults.rangeSize}" 
+                              initialScrollRowKeys="#{bindings.googleResults.collectionModel.selectedRow}"
+                              selectionListener="#{bindings.googleResults.collectionModel.makeCurrent}"
+                              showMoreStrategy="autoScroll" bufferStrategy="viewport" id="googleResults">
+                   <amx:listItem id="li1" shortDesc="result">
+                        <amx:setPropertyListener id="spl2"  from="#{row.title}" to="#{pageFlowScope.title}"/> 
+                        <amx:actionListener id="al07" binding="#{bindings.processSelectedGoogleUrl.execute}" />           
+                        
+                        <amx:tableLayout id="tl1" width="100%" halign="center">
+                          <amx:rowLayout>
+                             <amx:cellFormat id="cf11" width="40px" halign="center">
+                                <amx:image id="i2" source="/images/add.png"/>
+                             </amx:cellFormat>
+                             <amx:cellFormat id="cf12" width="100%" height="43px">
+                                <amx:outputText value="#{row.title}" id="ot3" inlineStyle="height:15px;"/>
+                             </amx:cellFormat>
+                          </amx:rowLayout>
+                          <amx:rowLayout> 
+                             <amx:cellFormat id="cf13" width="40px">
+                                 <amx:spacer id="s1"/>
+                             </amx:cellFormat>
+                             <amx:cellFormat id="cf14" width="100%" height="43px">
+                                <amx:commandLink actionListener="#{bindings.openUrl.execute}" text="#{row.url}" shortDesc="urlDisplay"
+                                 styleClass="adfmf-listItem-captionText-List" id="cl1">
+                                <amx:setPropertyListener id="spl4"  from="#{row.url}" to="#{bindings.url}"/> 
+                            </amx:commandLink>
+                             </amx:cellFormat>
+                          </amx:rowLayout>
+                      </amx:tableLayout>
+                      
+                    </amx:listItem>
+                </amx:listView>
+            </amx:facet>
+        </amx:panelStretchLayout>   
+   
+        <amx:commandButton text="_hiddenShow" id="_popShowId" inlineStyle="visibility: hidden;" shortDesc="show">
+            <amx:showPopupBehavior id="spb1" popupId="p1" type="action" decoration="simple" alignId="pp1"
+                             align="overlapMiddleCenter"/>
+        </amx:commandButton>
+        <amx:commandButton text="_hiddenClose" id="_popCloseId" inlineStyle="visibility: hidden;" shortDesc="close">
+            <amx:closePopupBehavior id="cpb1" popupId="p1" type="action"/>
+        </amx:commandButton>
+    
+  </amx:panelPage>
+  
+  <amx:popup id="p1" autoDismiss="true" shortDesc="pop message"
+          inlineStyle="font-size:large;" animation="slideUp">
+          <amx:outputText value="Added recipe #{pageFlowScope.title}" id="ot2"/>
+  </amx:popup>
+  
+</amx:view>

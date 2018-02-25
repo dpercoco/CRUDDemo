@@ -19,14 +19,17 @@
     <view id="EditRecipe">
       <page>/crud.Recipes/EditRecipe.amx</page>
     </view>
-    <view id="Google">
-      <page>/crud.Recipes/Google.amx</page>
+    <view id="GoogleResults">
+      <page>/crud.Recipes/GoogleResults.amx</page>
     </view>
     <view id="EditIngredient">
       <page>/crud.Recipes/EditIngredient.amx</page>
     </view>
     <!--<method-call id="findAll">
     </method-call>-->
+    <view id="GoogleSearch">
+      <page>/crud.Recipes/GoogleSearch.amx</page>
+    </view>
     <control-flow-rule id="__1">
       <from-activity-id>ListRecipes</from-activity-id>
       <control-flow-case id="__3">
@@ -37,9 +40,9 @@
         <from-outcome>edit</from-outcome>
         <to-activity-id>EditRecipe</to-activity-id>
       </control-flow-case>
-      <control-flow-case id="__12">
+      <control-flow-case id="__4">
         <from-outcome>google</from-outcome>
-        <to-activity-id>Google</to-activity-id>
+        <to-activity-id>GoogleSearch</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <control-flow-rule id="__14">
@@ -61,6 +64,13 @@
       <control-flow-case id="__22">
         <from-outcome>goEditRecipes</from-outcome>
         <to-activity-id>EditRecipe</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__6">
+      <from-activity-id>GoogleSearch</from-activity-id>
+      <control-flow-case id="__7">
+        <from-outcome>results</from-outcome>
+        <to-activity-id>GoogleResults</to-activity-id>
       </control-flow-case>
     </control-flow-rule>
     <page-flow-scope-behavior>

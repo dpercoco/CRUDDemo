@@ -29,7 +29,7 @@
             var ele = document.getElementById(arguments[0]);
             var showText = arguments[1];
             //if ((ele.style.display == "block") || (ele.style.display == "")) {
-            alert (arguments[0] + " show:" + showText);
+            //alert (arguments[0] + " show:" + showText);
             if (showText == "N") {
                 ele.style.display = "none";               
             }

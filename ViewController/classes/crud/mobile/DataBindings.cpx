@@ -24,7 +24,7 @@
     <page path="/crud.CRUD/recipes/Test.amx" usageId="crud_mobile_TestPageDef"/>
     <page path="/crud.CRUD/recipes/Home.amx" usageId="crud_mobile_HomePageDef"/>
     <page path="/crud.CRUD/recipes/Home1.amx" usageId="crud_mobile_Home1PageDef"/>
-    <page path="/crud.Recipes/Google.amx" usageId="crud_mobile_GooglePageDef"/>
+    <page path="/crud.Recipes/GoogleResults.amx" usageId="crud_mobile_GooglePageDef"/>
     <page path="/crud.Recipes/Recipes-task-flow-Old.xml#RecipesTaskflow@clearParms"
           usageId="crud_mobile_RecipesTaskflow_RecipesTaskflow_clearParmsPageDef"/>
     <page path="/crud.Aisles/ListAisles.amx" usageId="crud_mobile_FoodItemsPageDef"/>
@@ -44,6 +44,7 @@
     <page path="/crud.Recipes/EditIngredientsOLD.amx" usageId="crud_mobile_EditIngredients_NEWPageDef"/>
     <page path="/crud.Recipes/EditIngredient.amx" usageId="crud_mobile_EditIngredientPageDef"/>
     <page path="/crud.Recipes/UpdateRecipe.amx" usageId="crud_mobile_UpdateIngredientPageDef"/>
+    <page path="/crud.Recipes/GoogleSearch.amx" usageId="crud_mobile_GoogleSearchPageDef1"/>
   </pageMap>
   <pageDefinitionUsages>
     <page id="crud_mobile_PeoplePageDef" path="crud.CRUD.PeoplePageDef"/>
@@ -84,6 +85,7 @@
     <page id="crud_mobile_EditIngredients_NEWPageDef" path="crud.Recipes.EditIngredients_NEWPageDef"/>
     <page id="crud_mobile_EditIngredientPageDef" path="crud.Recipes.EditIngredientPageDef"/>
     <page id="crud_mobile_UpdateIngredientPageDef" path="crud.Recipes.UpdateIngredientPageDef"/>
+    <page id="crud_mobile_GoogleSearchPageDef1" path="crud.Recipes.GoogleSearchPageDef"/>
   </pageDefinitionUsages>
   <dataControlUsages>
     <dc id="AisleService" path="crud.mobile.AisleService"/>
